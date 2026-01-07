@@ -192,34 +192,50 @@ export const EDUCATION = [
     year: "2025 - 2025",
     period: "July 2025 - December 2025",
     grade: "In Progress",
-    description: "Comprehensive full-stack web development program focusing on modern JavaScript frameworks, MERN stack development, and industry best practices. Learning advanced React.js, Node.js, MongoDB, and professional development workflows.",
-    icon: "computer"
+    description: "Comprehensive full-stack web development program focusing on modern JavaScript frameworks, MERN stack development, and industry best practices. Learning advanced React.js, Node.js, MongoDB, Express.js, and professional development workflows with hands-on projects.",
+    skills: ["React.js", "Node.js", "MongoDB", "Express.js", "JavaScript ES6+", "REST APIs"],
+    icon: "laptop_mac",
+    bgColor: "from-blue-500/20 to-purple-500/20",
+    borderColor: "border-blue-500/20",
+    textColor: "text-blue-500"
   },
   {
     degree: "Diploma in Engineering of Computer Science & Technology",
     institution: "A K Khan UCEP Polytechnic Institute (AKKUPI)",
     year: "2020 - 2024",
     grade: "CGPA: 3.41/4.00",
-    description: "Focused on software engineering, data structures, algorithms, and web development. Completed capstone project on full-stack web application development.",
-    icon: "school"
+    description: "Focused on software engineering, data structures, algorithms, and web development. Completed capstone project on full-stack web application development with modern technologies and best practices.",
+    skills: ["Programming", "Data Structures", "Algorithms", "Web Development", "Database Management", "Software Engineering"],
+    icon: "engineering",
+    bgColor: "from-green-500/20 to-teal-500/20",
+    borderColor: "border-green-500/20",
+    textColor: "text-green-500"
   },
   {
     degree: "Higher Secondary Certificate (HSC)",
     institution: "Govt. Hazi Muhammad Mohsin College, Chattogram",
-    Board:"BOU",
+    board: "BOU (Bangladesh Open University)",
     year: "2019 - 2021",
     grade: "GPA: 3.82/5.00",
-    description: "Commerce background with focus on Accounting, and Finance & Banking. Achieved excellent results in all subjects.",
-    icon: "menu_book"
-  }
+    description: "Commerce background with focus on Accounting, Finance & Banking, and Business Studies. Achieved excellent results in all subjects with strong analytical and mathematical skills.",
+    skills: ["Accounting", "Finance & Banking", "Business Studies", "Economics", "Mathematics"],
+    icon: "account_balance",
+    bgColor: "from-orange-500/20 to-red-500/20",
+    borderColor: "border-orange-500/20",
+    textColor: "text-orange-500"
+  },
   {
     degree: "Secondary School Certificate (SSC)",
     institution: "Sanowara Islam Boys' High School, Chattogram",
-    Board:"BOU",
+    board: "BOU (Bangladesh Open University)",
     year: "2017 - 2018",
     grade: "GPA: 2.65/5.00",
-    description: "Commerce background with focus on Accounting, and Finance & Banking. Achieved excellent results in all subjects.",
-    icon: "menu_book"
+    description: "Commerce background with foundational knowledge in Accounting, Business Studies, and Mathematics. Built strong analytical thinking and problem-solving skills during secondary education.",
+    skills: ["Basic Accounting", "Business Studies", "Mathematics", "General Science", "English"],
+    icon: "school",
+    bgColor: "from-purple-500/20 to-pink-500/20",
+    borderColor: "border-purple-500/20",
+    textColor: "text-purple-500"
   }
 ];
 

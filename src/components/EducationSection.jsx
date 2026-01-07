@@ -10,6 +10,40 @@ import {
   cardHover
 } from '../utils/animations';
 
+// Function to get appropriate icon for each skill
+const getSkillIcon = (skill) => {
+  const skillIcons = {
+    // Programming & Development
+    'React.js': 'code',
+    'Node.js': 'dns',
+    'MongoDB': 'storage',
+    'Express.js': 'api',
+    'JavaScript ES6+': 'javascript',
+    'REST APIs': 'cloud_sync',
+    'Programming': 'code',
+    'Data Structures': 'account_tree',
+    'Algorithms': 'psychology',
+    'Web Development': 'web',
+    'Database Management': 'storage',
+    'Software Engineering': 'engineering',
+    
+    // Business & Commerce
+    'Accounting': 'calculate',
+    'Finance & Banking': 'account_balance_wallet',
+    'Business Studies': 'business',
+    'Economics': 'trending_up',
+    'Mathematics': 'functions',
+    'Basic Accounting': 'receipt',
+    'General Science': 'science',
+    'English': 'translate',
+    
+    // Default
+    'default': 'star'
+  };
+  
+  return skillIcons[skill] || skillIcons['default'];
+};
+
 const EducationSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -126,7 +160,7 @@ const EducationSection = () => {
                     {/* Header */}
                     <div className="flex items-start gap-4 mb-6">
                       <motion.div 
-                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 flex items-center justify-center text-green-500 flex-shrink-0 border border-green-500/20"
+                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${EDUCATION[index].bgColor} flex items-center justify-center ${EDUCATION[index].textColor} flex-shrink-0 border ${EDUCATION[index].borderColor}`}
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.5 }}
                       >
@@ -154,20 +188,39 @@ const EducationSection = () => {
                           <span className="text-slate-600 dark:text-slate-400">
                             {EDUCATION[index].year}
                           </span>
+                          {EDUCATION[index].board && (
+                            <>
+                              <span className="hidden sm:inline text-slate-400">•</span>
+                              <span className="text-slate-500 dark:text-slate-400 text-sm">
+                                {EDUCATION[index].board}
+                              </span>
+                            </>
+                          )}
                         </div>
                         
                         {EDUCATION[index].period && (
-                          <div className="mb-3">
+                          <div className="mb-3 flex items-center gap-2">
+                            <span className="material-icons-outlined text-sm text-slate-500">schedule</span>
                             <span className="text-slate-500 dark:text-slate-400 text-sm">
                               Duration: {EDUCATION[index].period}
                             </span>
                           </div>
                         )}
                         
+                        {EDUCATION[index].board && (
+                          <div className="mb-3 flex items-center gap-2">
+                            <span className="material-icons-outlined text-sm text-slate-500">verified</span>
+                            <span className="text-slate-500 dark:text-slate-400 text-sm">
+                              Board: {EDUCATION[index].board}
+                            </span>
+                          </div>
+                        )}
+                        
                         <motion.div 
-                          className="inline-block px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-sm font-semibold mb-4"
+                          className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${EDUCATION[index].bgColor} ${EDUCATION[index].textColor} text-sm font-semibold mb-4 flex items-center gap-2`}
                           whileHover={{ scale: 1.05 }}
                         >
+                          <span className="material-icons-outlined text-sm">grade</span>
                           {EDUCATION[index].grade}
                         </motion.div>
                       </div>
@@ -175,11 +228,44 @@ const EducationSection = () => {
                     
                     {/* Description */}
                     <motion.p 
-                      className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed"
+                      className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4"
                       variants={staggerItem}
                     >
                       {EDUCATION[index].description}
                     </motion.p>
+
+                    {/* Skills/Subjects */}
+                    {EDUCATION[index].skills && (
+                      <div>
+                        <motion.h4 
+                          className="text-slate-900 dark:text-white font-semibold mb-3 text-sm flex items-center gap-2"
+                          variants={staggerItem}
+                        >
+                          <span className="material-icons-outlined text-sm text-green-500">auto_awesome</span>
+                          Key Subjects & Skills:
+                        </motion.h4>
+                        <motion.div 
+                          className="flex flex-wrap gap-2"
+                          variants={staggerContainer}
+                        >
+                          {EDUCATION[index].skills.map((skill, skillIndex) => (
+                            <motion.span 
+                              key={skillIndex}
+                              className={`px-3 py-1 rounded-full bg-gradient-to-r ${EDUCATION[index].bgColor} ${EDUCATION[index].textColor} text-xs font-medium border ${EDUCATION[index].borderColor} flex items-center gap-1`}
+                              variants={staggerItem}
+                              custom={skillIndex}
+                              whileHover={{ scale: 1.05, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <span className="material-icons-outlined text-xs">
+                                {getSkillIcon(skill)}
+                              </span>
+                              {skill}
+                            </motion.span>
+                          ))}
+                        </motion.div>
+                      </div>
+                    )}
                   </motion.div>
                 </motion.div>
 
@@ -221,6 +307,28 @@ const EducationSection = () => {
         transition={{ duration: 3.5, repeat: Infinity }}
       >
         📚
+      </motion.div>
+
+      <motion.div 
+        className="absolute top-1/2 left-5 text-purple-400/20 text-3xl font-bold select-none pointer-events-none"
+        animate={{ 
+          rotate: [0, 360],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{ duration: 6, repeat: Infinity }}
+      >
+        💡
+      </motion.div>
+
+      <motion.div 
+        className="absolute bottom-1/3 right-5 text-orange-400/20 text-3xl font-bold select-none pointer-events-none"
+        animate={{ 
+          y: [0, -15, 0],
+          x: [0, -10, 0]
+        }}
+        transition={{ duration: 4.5, repeat: Infinity }}
+      >
+        🏆
       </motion.div>
     </motion.section>
   );
