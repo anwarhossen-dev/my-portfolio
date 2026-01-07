@@ -1,0 +1,50 @@
+{
+  "name": "portfolio-react",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Professional portfolio website built with React and Tailwind CSS",
+  "author": "MD. Anwar Hossen",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,md}\"",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@react-spring/web": "^10.0.3",
+    "framer-motion": "^10.18.0",
+    "gsap": "^3.14.2",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
+    "vite": "^4.4.5"
+  },
+  "keywords": [
+    "portfolio",
+    "react",
+    "tailwindcss",
+    "vite",
+    "responsive",
+    "modern"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/https://localchefbazaar-612c0.web.app"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/portfolio-react/issues"
+  },
+  "homepage": "https://yourusername.github.io/portfolio-react"
+}

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Professional Portfolio - MD. Anwar Hossen - MERN Stack Developer" />
+    <meta name="keywords" content="portfolio, react, developer, MERN stack, web development" />
+    <meta name="author" content="MD. Anwar Hossen" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="MD. Anwar Hossen - Portfolio" />
+    <meta property="og:description" content="Professional MERN Stack Developer Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yourportfolio.com" />
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    
+    <title>MD. Anwar Hossen - Professional Portfolio</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Professional Portfolio - MD. Anwar Hossen</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0ea5e9", // Sky blue/Cyan as seen in Home button
+                        secondary: "#d946ef", // Fuschia/Pink for gradients
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0B1121",
+                        "surface-dark": "#161e32",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        display: ["Outfit", "sans-serif"],
+                        sans: ["Outfit", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'hero-gradient': 'linear-gradient(to right bottom, #0ea5e9, #8b5cf6, #d946ef)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1121;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .glow-effect {
+            box-shadow: 0 0 40px -10px rgba(14, 165, 233, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-300">
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-primary/10 rounded-full blur-3xl opacity-30 dark:opacity-20"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40rem] h-[40rem] bg-secondary/10 rounded-full blur-3xl opacity-30 dark:opacity-20"></div>
+<div class="absolute top-1/4 left-1/4 text-9xl text-slate-200 dark:text-slate-800 opacity-20 font-mono select-none">&lt;/&gt;</div>
+<div class="absolute bottom-1/3 right-1/4 text-9xl text-slate-200 dark:text-slate-800 opacity-20 font-mono select-none">{ }</div>
+</div>
+<div class="flex flex-col md:flex-row h-screen relative z-10">
+<aside class="hidden md:flex flex-col justify-between items-center w-24 bg-surface-light/80 dark:bg-surface-dark/50 border-r border-slate-200 dark:border-slate-800 backdrop-blur-sm py-8 fixed h-full z-50">
+<div class="relative group cursor-pointer">
+<div class="w-12 h-12 rounded-full border-2 border-slate-300 dark:border-slate-700 flex items-center justify-center text-xs font-bold text-primary transition-all group-hover:border-primary group-hover:scale-110">
+                    AH
+                </div>
+</div>
+<div class="flex flex-col gap-6 items-center">
+<a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:bg-[#333] transition-all duration-300 transform hover:scale-110" href="#">
+<i class="fab fa-github text-xl"></i>
+</a>
+<a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:bg-[#0077b5] transition-all duration-300 transform hover:scale-110" href="#">
+<i class="fab fa-linkedin-in text-xl"></i>
+</a>
+<a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:bg-[#1877f2] transition-all duration-300 transform hover:scale-110" href="#">
+<i class="fab fa-facebook-f text-xl"></i>
+</a>
+<a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:bg-[#25D366] transition-all duration-300 transform hover:scale-110" href="#">
+<i class="fab fa-whatsapp text-xl"></i>
+</a>
+<a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:bg-secondary transition-all duration-300 transform hover:scale-110" href="#">
+<span class="material-icons-outlined text-lg">email</span>
+</a>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center animate-bounce cursor-pointer hover:border-primary hover:text-primary transition-colors">
+<span class="material-icons-outlined text-sm">arrow_downward</span>
+</div>
+</div>
+</aside>
+<main class="flex-1 md:ml-24 flex flex-col h-full overflow-y-auto scroll-smooth">
+<header class="w-full px-6 py-4 flex justify-between items-center bg-white/50 dark:bg-[#0B1121]/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200/50 dark:border-slate-800/50">
+<div class="flex items-center gap-2 md:hidden">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">AH</div>
+</div>
+<nav class="hidden md:flex ml-auto items-center bg-white dark:bg-surface-dark px-2 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 shadow-lg dark:shadow-none">
+<a class="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium transition-colors" href="#">
+<span class="material-icons-outlined text-sm">home</span>
+<span class="text-sm">Home</span>
+</a>
+<a class="flex items-center gap-2 px-4 py-2 rounded-full text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" href="#about">
+<span class="material-icons-outlined text-sm">person</span>
+<span class="text-sm">About</span>
+</a>
+<a class="flex items-center gap-2 px-4 py-2 rounded-full text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" href="#skills">
+<span class="material-icons-outlined text-sm">bolt</span>
+<span class="text-sm">Skills</span>
+</a>
+<a class="flex items-center gap-2 px-4 py-2 rounded-full text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" href="#">
+<span class="material-icons-outlined text-sm">work_outline</span>
+<span class="text-sm">Experience</span>
+</a>
+<a class="flex items-center gap-2 px-4 py-2 rounded-full text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" href="#">
+<span class="material-icons-outlined text-sm">folder_open</span>
+<span class="text-sm">Projects</span>
+</a>
+<a class="flex items-center gap-2 px-4 py-2 rounded-full text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" href="#">
+<span class="material-icons-outlined text-sm">mail_outline</span>
+<span class="text-sm">Contact</span>
+</a>
+</nav>
+<button class="md:hidden text-slate-800 dark:text-white p-2">
+<span class="material-icons-outlined">menu</span>
+</button>
+</header>
+<section class="flex flex-col lg:flex-row items-center justify-center px-6 lg:px-16 py-12 gap-12 max-w-7xl mx-auto w-full min-h-[calc(100vh-80px)]">
+<div class="flex-1 w-full text-center lg:text-left space-y-6 order-2 lg:order-1">
+<div class="inline-block px-4 py-2 rounded-full bg-slate-200 dark:bg-surface-dark border border-slate-300 dark:border-slate-700">
+<span class="text-primary font-semibold text-sm tracking-wide">Hello, I'm</span>
+</div>
+<h1 class="text-5xl lg:text-7xl font-bold tracking-tight leading-tight">
+<span class="block text-slate-900 dark:text-white mb-2">MD. Anwar</span>
+<span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-pulse">Hossen</span>
+</h1>
+<div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 text-lg sm:text-xl font-medium text-slate-600 dark:text-slate-300">
+<span class="text-secondary font-mono">&lt;/&gt;</span>
+<span>MERN Stack Developer</span>
+<span class="hidden sm:inline text-primary">||</span>
+<span>WordPress Developer</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        I am a passionate and dedicated developer with expertise in building scalable web applications. With a strong foundation in <span class="text-primary">MongoDB, Express, React, and Node.js</span>, I transform ideas into seamless digital experiences. I am also a WordPress Elementor Developer.
+                    </p>
+<div class="flex flex-col sm:flex-row items-center gap-4 pt-4 justify-center lg:justify-start">
+<div class="p-[2px] rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+<button class="px-8 py-3 rounded-full bg-white dark:bg-[#0B1121] text-slate-900 dark:text-white font-semibold flex items-center gap-2 hover:bg-opacity-90 transition-all">
+<span class="material-icons-outlined text-sm">download</span>
+                                Download Resume
+                            </button>
+</div>
+<button class="px-8 py-[14px] rounded-full border border-slate-300 dark:border-slate-700 hover:border-primary text-slate-700 dark:text-slate-300 hover:text-primary font-semibold flex items-center gap-2 transition-all">
+<span class="material-icons-outlined text-sm">send</span>
+                            Contact Me
+                        </button>
+</div>
+<div class="hidden lg:flex items-center gap-2 pt-12 text-slate-400 text-sm">
+<span class="animate-bounce">Scroll Down</span>
+<div class="h-8 w-4 border border-slate-600 rounded-full flex justify-center pt-1">
+<div class="w-1 h-2 bg-primary rounded-full animate-ping"></div>
+</div>
+</div>
+</div>
+<div class="flex-1 w-full flex justify-center items-center relative order-1 lg:order-2">
+<div class="absolute inset-0 m-auto w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] rounded-full border border-slate-200 dark:border-slate-800 animate-[spin_10s_linear_infinite]"></div>
+<div class="absolute inset-0 m-auto w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] rounded-full border border-dashed border-slate-300 dark:border-slate-700 animate-[spin_15s_linear_infinite_reverse]"></div>
+<div class="relative w-[260px] h-[260px] sm:w-[380px] sm:h-[380px] rounded-full p-2 bg-gradient-to-b from-cyan-500 to-purple-600 glow-effect">
+<div class="w-full h-full rounded-full bg-background-light dark:bg-background-dark overflow-hidden relative z-10 border-4 border-background-light dark:border-background-dark">
+<img alt="Portrait of MD. Anwar Hossen" class="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMpyVHD2fK-ylkjCPwtejb2Vk8I8M9x00i_jRERQGbTUDYAr9ZFcGEocmKtIKqfnAsANxwGhqkgC7lj855Xh5F56w_BTAegsG9ILUU4mTlV5UF07sS-DVsHt8ZugtsrloErWmRaIjqjakGSxkUAnSQyH-b5JjgIgYCrTpRQQfsZGHkIYxj8AWLaI6wVO0ryP2YMQdCRS01uB_68F4O7qWc03poPXiPixpQWRsejVHlOYiIi7cN2DZM1sUnbX0dcTE3wq8mHDQ1NDE"/>
+</div>
+<div class="absolute bottom-4 -right-4 sm:bottom-8 sm:-right-6 bg-surface-light dark:bg-surface-dark p-3 pr-5 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 flex items-center gap-3 animate-float z-20">
+<div class="flex -space-x-3">
+<div class="w-8 h-8 rounded-full bg-[#61DAFB] flex items-center justify-center border-2 border-white dark:border-surface-dark">
+<i class="fab fa-react text-surface-dark text-xs"></i>
+</div>
+<div class="w-8 h-8 rounded-full bg-[#68A063] flex items-center justify-center border-2 border-white dark:border-surface-dark">
+<i class="fab fa-node-js text-white text-xs"></i>
+</div>
+<div class="w-8 h-8 rounded-full bg-white flex items-center justify-center border-2 border-white dark:border-surface-dark">
+<i class="fas fa-leaf text-green-500 text-xs"></i>
+</div>
+</div>
+<div class="text-left">
+<p class="text-sm font-bold text-slate-900 dark:text-white">2+ Years</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Experience</p>
+</div>
+</div>
+<div class="absolute -bottom-10 right-20 text-secondary text-2xl font-bold opacity-50 select-none">++</div>
+<div class="absolute bottom-20 -left-10 text-primary text-xl font-bold opacity-50 select-none">**</div>
+</div>
+</div>
+</section>
+<section class="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full flex flex-col justify-center relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" id="about">
+<div class="flex flex-col items-center text-center mb-16">
+<div class="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4">
+<span class="text-primary font-semibold text-xs tracking-widest uppercase">My Introduction</span>
+</div>
+<h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">
+                        About <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Me</span>
+</h2>
+<div class="w-24 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full mt-4"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="group relative p-8 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-icons-outlined text-primary text-3xl">history_edu</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">My Journey</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            My coding odyssey began with a fascination for digital creation. From my first "Hello World" to architecting complex systems, my journey has been fueled by curiosity. Over the last 2+ years, I've transformed from a novice explorer into a proficient developer, constantly pushing the boundaries of what's possible on the web.
+                        </p>
+</div>
+<div class="group relative p-8 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-secondary/10 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-icons-outlined text-secondary text-3xl">code</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-secondary transition-colors">What I Do</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            I thrive in the MERN stack ecosystem, crafting seamless single-page applications with <span class="text-slate-800 dark:text-slate-200 font-semibold">React &amp; Node.js</span>. My versatility extends to <span class="text-slate-800 dark:text-slate-200 font-semibold">WordPress</span>, where I leverage Elementor to build stunning, manageable websites. I blend technical precision with artistic vision to deliver exceptional user experiences.
+                        </p>
+</div>
+<div class="group relative p-8 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-icons-outlined text-green-500 text-3xl">sports_esports</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-green-500 transition-colors">Interests</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Life isn't just about code. When I step away from the keyboard, I immerse myself in gaming, exploring new tech gadgets, and traveling. These hobbies keep my mind fresh and often spark creative solutions for my development projects. I believe a balanced life is key to sustained innovation.
+                        </p>
+</div>
+</div>
+</section>
+<section class="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" id="skills">
+<div class="flex flex-col items-center text-center mb-16">
+<div class="inline-block px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 mb-4">
+<span class="text-secondary font-semibold text-xs tracking-widest uppercase">My Expertise</span>
+</div>
+<h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">
+            Technical <span class="bg-clip-text text-transparent bg-gradient-to-r from-secondary to-primary">Skills</span>
+</h2>
+<div class="w-24 h-1.5 bg-gradient-to-r from-secondary to-primary rounded-full mt-4"></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-6 p-8 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-outlined text-2xl">code</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">Frontend Developer</h3>
+</div>
+<div class="space-y-6">
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fab fa-html5 text-orange-500"></i> HTML5</span>
+<span class="text-primary text-sm font-bold">95%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full w-[95%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fab fa-css3-alt text-blue-500"></i> CSS3</span>
+<span class="text-primary text-sm font-bold">90%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full w-[90%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fab fa-js text-yellow-400"></i> JavaScript</span>
+<span class="text-primary text-sm font-bold">85%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full w-[85%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fab fa-react text-cyan-400"></i> React JS</span>
+<span class="text-primary text-sm font-bold">90%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full w-[90%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fab fa-css3 text-cyan-500"></i> Tailwind CSS</span>
+<span class="text-primary text-sm font-bold">92%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full w-[92%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-6 p-8 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-icons-outlined text-2xl">dns</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">Backend Developer</h3>
+</div>
+<div class="space-y-6">
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fab fa-node text-green-500"></i> Node JS</span>
+<span class="text-secondary text-sm font-bold">80%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-pink-500 rounded-full w-[80%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fas fa-server text-gray-500"></i> Express JS</span>
+<span class="text-secondary text-sm font-bold">75%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-pink-500 rounded-full w-[75%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fas fa-database text-green-600"></i> MongoDB</span>
+<span class="text-secondary text-sm font-bold">85%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-pink-500 rounded-full w-[85%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fas fa-fire text-yellow-500"></i> Firebase</span>
+<span class="text-secondary text-sm font-bold">70%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-pink-500 rounded-full w-[70%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2"><i class="fab fa-wordpress text-blue-700"></i> WordPress</span>
+<span class="text-secondary text-sm font-bold">85%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-pink-500 rounded-full w-[85%] group-hover:scale-x-105 origin-left transition-transform duration-500"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-12 p-8 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl">
+<div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-slate-500/10 flex items-center justify-center text-slate-500 dark:text-slate-300">
+<span class="material-icons-outlined text-2xl">build</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">Tools &amp; Technologies</h3>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Tools I use to supercharge my workflow</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+<div class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-surface-dark border border-transparent hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+<i class="fab fa-git-alt text-4xl text-orange-600 group-hover:scale-110 transition-transform"></i>
+<span class="text-slate-700 dark:text-slate-300 font-medium">Git</span>
+</div>
+<div class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-surface-dark border border-transparent hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+<i class="fab fa-github text-4xl text-slate-800 dark:text-white group-hover:scale-110 transition-transform"></i>
+<span class="text-slate-700 dark:text-slate-300 font-medium">GitHub</span>
+</div>
+<div class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-surface-dark border border-transparent hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+<i class="fas fa-code text-4xl text-blue-500 group-hover:scale-110 transition-transform"></i>
+<span class="text-slate-700 dark:text-slate-300 font-medium">VS Code</span>
+</div>
+<div class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-surface-dark border border-transparent hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+<i class="fab fa-figma text-4xl text-pink-500 group-hover:scale-110 transition-transform"></i>
+<span class="text-slate-700 dark:text-slate-300 font-medium">Figma</span>
+</div>
+<div class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-surface-dark border border-transparent hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+<i class="fas fa-paper-plane text-4xl text-orange-500 group-hover:scale-110 transition-transform"></i>
+<span class="text-slate-700 dark:text-slate-300 font-medium">Postman</span>
+</div>
+<div class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-surface-dark border border-transparent hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+<i class="fab fa-npm text-4xl text-red-600 group-hover:scale-110 transition-transform"></i>
+<span class="text-slate-700 dark:text-slate-300 font-medium">NPM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<script>
+        // Simple check to set dark mode by default if system prefers or specific logic
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</body></html>
