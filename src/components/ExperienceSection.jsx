@@ -1,54 +1,19 @@
 import { motion } from 'framer-motion';
-import { useSpring, animated, useTrail } from '@react-spring/web';
+import { useTrail, animated } from '@react-spring/web';
 import { useState } from 'react';
+import { EXPERIENCE } from '../constants';
 import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
 import {
   fadeInUp,
-  fadeInLeft,
-  fadeInRight,
   staggerContainer,
   staggerItem,
-  cardHover,
-  scaleIn
+  cardHover
 } from '../utils/animations';
 
 const ExperienceSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   
-  const experienceData = [
-    {
-      position: "Jr. Programmer",
-      company: "Genuine Technology & Research Ltd.",
-      duration: "Jan 2024 - Present",
-      type: "Full-time",
-      location: "On-site",
-      description: "Developing and maintaining database systems using SQL and modern database technologies. Collaborating with cross-functional teams to deliver high-quality data solutions and optimize database performance.",
-      responsibilities: [
-        "Designed and optimized 20+ database schemas for improved performance",
-        "Improved query performance by 50% through advanced SQL optimization techniques",
-        "Collaborated with development teams to implement efficient data access patterns",
-        "Mentored junior developers in SQL best practices and database design"
-      ],
-      technologies: ["SQL Server", "MySQL", "PostgreSQL", "T-SQL", "Database Design", "Performance Tuning"],
-      icon: "work"
-    },
-    {
-      position: "Web Developer Intern",
-      company: "Genuine Technology & Research Ltd.",
-      duration: "Sep 2024 - Dec 2024",
-      type: "Internship",
-      location: "On-site",
-      description: "Gained hands-on experience in full-stack web development, working on client projects and learning industry best practices in both frontend and backend technologies.",
-      responsibilities: [
-        "Developed 5+ client websites using HTML, CSS, and JavaScript",
-        "Assisted in ASP.NET application development and maintenance",
-        "Participated in code reviews and team meetings",
-        "Learned version control with Git and project management tools"
-      ],
-      technologies: ["HTML", "CSS", "JavaScript", "ASP.NET", "PHP", "Git"],
-      icon: "business_center"
-    }
-  ];
+  const experienceData = EXPERIENCE;
 
   // GSAP scroll reveal
   const sectionRef = useScrollReveal({
@@ -172,7 +137,7 @@ const ExperienceSection = () => {
                     {/* Header */}
                     <div className="flex items-start gap-4 mb-6">
                       <motion.div 
-                        className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 flex-shrink-0"
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center text-orange-500 flex-shrink-0 border border-orange-500/20"
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.5 }}
                       >
@@ -186,7 +151,7 @@ const ExperienceSection = () => {
                           className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-orange-500 transition-colors"
                           whileHover={{ x: 5 }}
                         >
-                          {experienceData[index].position}
+                          {experienceData[index].title}
                         </motion.h3>
                         
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
@@ -198,23 +163,27 @@ const ExperienceSection = () => {
                           </motion.span>
                           <span className="hidden sm:inline text-slate-400">•</span>
                           <span className="text-slate-600 dark:text-slate-400">
-                            {experienceData[index].duration}
+                            {experienceData[index].period}
                           </span>
                         </div>
                         
                         <div className="flex gap-2 mb-4">
-                          <motion.span 
-                            className="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-500 text-xs font-semibold"
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            {experienceData[index].type}
-                          </motion.span>
-                          <motion.span 
-                            className="inline-block px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold"
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            {experienceData[index].location}
-                          </motion.span>
+                          {experienceData[index].type && (
+                            <motion.span 
+                              className="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-500 text-xs font-semibold"
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              {experienceData[index].type}
+                            </motion.span>
+                          )}
+                          {experienceData[index].location && (
+                            <motion.span 
+                              className="inline-block px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold"
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              {experienceData[index].location}
+                            </motion.span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -228,34 +197,36 @@ const ExperienceSection = () => {
                     </motion.p>
 
                     {/* Responsibilities */}
-                    <div className="mb-6">
-                      <motion.h4 
-                        className="text-slate-900 dark:text-white font-semibold mb-3"
-                        variants={staggerItem}
-                      >
-                        Key Responsibilities:
-                      </motion.h4>
-                      <motion.ul 
-                        className="space-y-2"
-                        variants={staggerContainer}
-                      >
-                        {experienceData[index].responsibilities.map((responsibility, idx) => (
-                          <motion.li 
-                            key={idx}
-                            className="flex items-start gap-2 text-slate-600 dark:text-slate-400 text-sm"
-                            variants={staggerItem}
-                            custom={idx}
-                            whileHover={{ x: 5 }}
-                          >
-                            <motion.span 
-                              className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2 flex-shrink-0"
-                              whileHover={{ scale: 1.5 }}
-                            />
-                            {responsibility}
-                          </motion.li>
-                        ))}
-                      </motion.ul>
-                    </div>
+                    {experienceData[index].responsibilities && (
+                      <div className="mb-6">
+                        <motion.h4 
+                          className="text-slate-900 dark:text-white font-semibold mb-3"
+                          variants={staggerItem}
+                        >
+                          Key Responsibilities:
+                        </motion.h4>
+                        <motion.ul 
+                          className="space-y-2"
+                          variants={staggerContainer}
+                        >
+                          {experienceData[index].responsibilities.map((responsibility, idx) => (
+                            <motion.li 
+                              key={idx}
+                              className="flex items-start gap-2 text-slate-600 dark:text-slate-400 text-sm"
+                              variants={staggerItem}
+                              custom={idx}
+                              whileHover={{ x: 5 }}
+                            >
+                              <motion.span 
+                                className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2 flex-shrink-0"
+                                whileHover={{ scale: 1.5 }}
+                              />
+                              {responsibility}
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                      </div>
+                    )}
 
                     {/* Technologies */}
                     <div>

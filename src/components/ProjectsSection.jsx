@@ -1,227 +1,287 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTrail, animated } from '@react-spring/web';
+import { PROJECTS } from '../constants';
+import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
+import {
+  fadeInUp,
+  staggerContainer,
+  staggerItem,
+  cardHover,
+  buttonHover
+} from '../utils/animations';
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
-  if (!isOpen) return null;
+  if (!isOpen || !project) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-surface-dark rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-8">
-          {/* Header */}
-          <div className="flex justify-between items-start mb-6">
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{project.name}</h3>
-            <button 
-              onClick={onClose}
-              className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
-            >
-              <span className="material-icons-outlined">close</span>
-            </button>
-          </div>
-
-          {/* Project Image */}
-          <div className="mb-6">
-            <img 
-              src={project.image} 
-              alt={project.name}
-              className="w-full h-64 object-cover rounded-2xl"
-            />
-          </div>
-
-          {/* Technology Stack */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Technology Stack</h4>
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech, index) => (
-                <span key={index} className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                  {tech}
-                </span>
-              ))}
+    <AnimatePresence>
+      <motion.div 
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      >
+        <motion.div 
+          className="bg-white dark:bg-surface-dark rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.8, opacity: 0 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-8">
+            {/* Header */}
+            <div className="flex justify-between items-start mb-6">
+              <motion.h3 
+                className="text-2xl font-bold text-slate-900 dark:text-white"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                {project.title}
+              </motion.h3>
+              <motion.button 
+                onClick={onClose}
+                className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <span className="material-icons-outlined">close</span>
+              </motion.button>
             </div>
-          </div>
 
-          {/* Description */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Project Description</h4>
-            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{project.fullDescription}</p>
-          </div>
+            {/* Project Image */}
+            <motion.div 
+              className="mb-6"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <img 
+                src={project.image} 
+                alt={project.title}
+                className="w-full h-64 object-cover rounded-2xl"
+              />
+            </motion.div>
 
-          {/* Links */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Project Links</h4>
-            <div className="flex gap-4">
-              <a 
-                href={project.liveLink} 
+            {/* Technology Stack */}
+            <motion.div 
+              className="mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Technology Stack</h4>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech, index) => (
+                  <motion.span 
+                    key={index} 
+                    className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 + index * 0.05 }}
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Description */}
+            <motion.div 
+              className="mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Project Description</h4>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{project.description}</p>
+            </motion.div>
+
+            {/* Links */}
+            <motion.div 
+              className="flex gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <motion.a 
+                href={project.liveUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <span className="material-icons-outlined text-sm">launch</span>
                 Live Demo
-              </a>
-              <a 
-                href={project.githubLink} 
+              </motion.a>
+              <motion.a 
+                href={project.githubUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <i className="fab fa-github"></i>
                 GitHub
-              </a>
-            </div>
+              </motion.a>
+            </motion.div>
           </div>
-
-          {/* Challenges */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Challenges Faced</h4>
-            <ul className="space-y-2">
-              {project.challenges.map((challenge, index) => (
-                <li key={index} className="flex items-start gap-2 text-slate-600 dark:text-slate-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0"></span>
-                  {challenge}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Future Improvements */}
-          <div>
-            <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Future Improvements</h4>
-            <ul className="space-y-2">
-              {project.improvements.map((improvement, index) => (
-                <li key={index} className="flex items-start gap-2 text-slate-600 dark:text-slate-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></span>
-                  {improvement}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
-const ProjectCard = ({ project, onViewMore }) => {
+const ProjectCard = ({ project, onViewMore, index }) => {
   return (
-    <div className="group relative bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+    <motion.div 
+      className="group relative bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 overflow-hidden"
+      variants={cardHover}
+      initial="rest"
+      whileHover="hover"
+      whileTap={{ scale: 0.98 }}
+    >
+      <motion.div 
+        className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+        initial={{ scaleX: 0 }}
+        whileHover={{ scaleX: 1 }}
+        transition={{ duration: 0.3 }}
+      />
       
       {/* Project Image */}
       <div className="relative overflow-hidden">
-        <img 
+        <motion.img 
           src={project.image} 
-          alt={project.name}
-          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+          alt={project.title}
+          className="w-full h-48 object-cover transition-transform duration-500"
+          whileHover={{ scale: 1.1 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+        />
+        
+        {/* Featured Badge */}
+        {project.featured && (
+          <motion.div 
+            className="absolute top-4 right-4 px-3 py-1 rounded-full bg-primary text-white text-xs font-semibold"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            Featured
+          </motion.div>
+        )}
       </div>
 
       {/* Content */}
       <div className="p-6">
-        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
-          {project.name}
-        </h3>
+        <motion.h3 
+          className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors"
+          whileHover={{ x: 5 }}
+        >
+          {project.title}
+        </motion.h3>
         
-        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
-          {project.description}
-        </p>
+        <motion.p 
+          className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4"
+          variants={staggerItem}
+        >
+          {project.shortDescription}
+        </motion.p>
 
         {/* Technologies */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.technologies.slice(0, 3).map((tech, index) => (
-            <span key={index} className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium">
+        <motion.div 
+          className="flex flex-wrap gap-2 mb-6"
+          variants={staggerContainer}
+        >
+          {project.technologies.slice(0, 3).map((tech, techIndex) => (
+            <motion.span 
+              key={techIndex} 
+              className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium"
+              variants={staggerItem}
+              custom={techIndex}
+              whileHover={{ scale: 1.1, y: -2 }}
+            >
               {tech}
-            </span>
+            </motion.span>
           ))}
           {project.technologies.length > 3 && (
-            <span className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium">
+            <motion.span 
+              className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium"
+              whileHover={{ scale: 1.1, y: -2 }}
+            >
               +{project.technologies.length - 3} more
-            </span>
+            </motion.span>
           )}
-        </div>
+        </motion.div>
 
-        {/* View More Button */}
-        <button 
-          onClick={() => onViewMore(project)}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all duration-300 font-semibold"
-        >
-          <span className="material-icons-outlined text-sm">visibility</span>
-          View Details
-        </button>
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+          <motion.button 
+            onClick={() => onViewMore(project)}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all duration-300 font-semibold"
+            variants={buttonHover}
+            initial="rest"
+            whileHover="hover"
+            whileTap="tap"
+          >
+            <span className="material-icons-outlined text-sm">visibility</span>
+            View Details
+          </motion.button>
+          
+          <motion.a 
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-all duration-300"
+            whileHover={{ scale: 1.1, rotate: 15 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <span className="material-icons-outlined text-sm">launch</span>
+          </motion.a>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const projects = [
-    {
-      name: "E-Commerce Platform",
-      description: "A full-stack e-commerce platform with user authentication, product management, and payment integration.",
-      fullDescription: "A comprehensive e-commerce platform built with the MERN stack. Features include user authentication, product catalog, shopping cart, order management, payment processing with Stripe, admin dashboard, and responsive design. The platform supports multiple user roles and provides a seamless shopping experience across all devices.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop",
-      technologies: ["React.js", "Node.js", "Express.js", "MongoDB", "Stripe", "JWT", "Tailwind CSS"],
-      liveLink: "https://ecommerce-demo.com",
-      githubLink: "https://github.com/username/ecommerce-platform",
-      challenges: [
-        "Implementing secure payment processing with Stripe API",
-        "Managing complex state for shopping cart and user sessions",
-        "Optimizing database queries for large product catalogs",
-        "Ensuring responsive design across all device sizes"
-      ],
-      improvements: [
-        "Add real-time inventory management",
-        "Implement advanced search and filtering options",
-        "Add product recommendation system",
-        "Integrate with multiple payment gateways"
-      ]
-    },
-    {
-      name: "Task Management App",
-      description: "A collaborative task management application with real-time updates and team collaboration features.",
-      fullDescription: "A modern task management application designed for team collaboration. Built with React.js and Firebase, it features real-time synchronization, drag-and-drop task organization, team member management, project timelines, and notification system. The app supports multiple project workspaces and provides detailed analytics for project tracking.",
-      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=500&h=300&fit=crop",
-      technologies: ["React.js", "Firebase", "Material-UI", "Redux", "Chart.js"],
-      liveLink: "https://taskmanager-demo.com",
-      githubLink: "https://github.com/username/task-manager",
-      challenges: [
-        "Implementing real-time data synchronization across multiple users",
-        "Creating intuitive drag-and-drop functionality",
-        "Managing complex user permissions and roles",
-        "Optimizing performance for large datasets"
-      ],
-      improvements: [
-        "Add calendar integration",
-        "Implement time tracking features",
-        "Add mobile app version",
-        "Integrate with third-party tools like Slack"
-      ]
-    },
-    {
-      name: "Weather Dashboard",
-      description: "A responsive weather dashboard with location-based forecasts and interactive maps.",
-      fullDescription: "A comprehensive weather dashboard that provides current weather conditions, 7-day forecasts, and interactive weather maps. Built with React.js and integrated with multiple weather APIs, it features location-based weather data, weather alerts, historical weather data, and customizable dashboard widgets. The application includes geolocation support and saves user preferences.",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=500&h=300&fit=crop",
-      technologies: ["React.js", "OpenWeather API", "Mapbox", "Chart.js", "Geolocation API"],
-      liveLink: "https://weather-dashboard-demo.com",
-      githubLink: "https://github.com/username/weather-dashboard",
-      challenges: [
-        "Integrating multiple weather APIs for comprehensive data",
-        "Implementing accurate geolocation services",
-        "Creating responsive charts and visualizations",
-        "Handling API rate limits and error states"
-      ],
-      improvements: [
-        "Add weather notifications and alerts",
-        "Implement weather-based activity suggestions",
-        "Add historical weather data analysis",
-        "Create weather comparison between multiple locations"
-      ]
+  // GSAP scroll reveal
+  const sectionRef = useScrollReveal({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    scrollTrigger: {
+      onEnter: () => setIsVisible(true),
+      start: "top 80%"
     }
-  ];
+  });
+
+  const projectsRef = useStaggerAnimation('.project-card', {
+    from: { opacity: 0, y: 60, scale: 0.9 },
+    to: { opacity: 1, y: 0, scale: 1 },
+    scrollTrigger: { start: "top 85%" }
+  });
+
+  // Trail animation for projects
+  const trail = useTrail(PROJECTS.length, {
+    from: { opacity: 0, transform: 'translateY(60px) scale(0.9)' },
+    to: { 
+      opacity: isVisible ? 1 : 0, 
+      transform: isVisible ? 'translateY(0px) scale(1)' : 'translateY(60px) scale(0.9)' 
+    },
+    config: { tension: 280, friction: 60 },
+  });
 
   const handleViewMore = (project) => {
     setSelectedProject(project);
@@ -235,29 +295,96 @@ const ProjectsSection = () => {
 
   return (
     <>
-      <section className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" id="projects">
+      <motion.section 
+        ref={sectionRef}
+        className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
+        id="projects"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={staggerContainer}
+      >
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 mb-4">
-            <span className="text-purple-500 font-semibold text-xs tracking-widest uppercase">My Work</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">
-            Featured <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">Projects</span>
-          </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4"></div>
-        </div>
+        <motion.div 
+          className="flex flex-col items-center text-center mb-16"
+          variants={fadeInUp}
+        >
+          <motion.div 
+            className="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 mb-4"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="text-purple-500 font-semibold text-xs tracking-widest uppercase">
+              My Work
+            </span>
+          </motion.div>
+          
+          <motion.h2 
+            className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white"
+            variants={staggerItem}
+          >
+            Featured <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
+              Projects
+            </span>
+          </motion.h2>
+          
+          <motion.div 
+            className="w-24 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4"
+            initial={{ width: 0 }}
+            whileInView={{ width: 96 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          />
+          
+          <motion.p 
+            className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mt-6"
+            variants={staggerItem}
+          >
+            Here are some of my recent projects that showcase my skills and experience
+          </motion.p>
+        </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard 
-              key={index} 
-              project={project} 
-              onViewMore={handleViewMore}
-            />
+        <motion.div 
+          ref={projectsRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={staggerContainer}
+        >
+          {trail.map((style, index) => (
+            <animated.div key={PROJECTS[index].id} style={style}>
+              <div className="project-card">
+                <ProjectCard 
+                  project={PROJECTS[index]} 
+                  onViewMore={handleViewMore}
+                  index={index}
+                />
+              </div>
+            </animated.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+
+        {/* Floating Elements */}
+        <motion.div 
+          className="absolute top-20 right-10 text-purple-400/20 text-5xl font-bold select-none pointer-events-none"
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 10, -10, 0]
+          }}
+          transition={{ duration: 4, repeat: Infinity }}
+        >
+          💻
+        </motion.div>
+        
+        <motion.div 
+          className="absolute bottom-20 left-10 text-pink-400/20 text-4xl font-bold select-none pointer-events-none"
+          animate={{ 
+            y: [0, 25, 0],
+            x: [0, 15, 0]
+          }}
+          transition={{ duration: 3.5, repeat: Infinity }}
+        >
+          🚀
+        </motion.div>
+      </motion.section>
 
       {/* Project Modal */}
       <ProjectModal 
