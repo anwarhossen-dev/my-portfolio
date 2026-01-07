@@ -206,8 +206,18 @@ export const EDUCATION = [
   {
     degree: "Higher Secondary Certificate (HSC)",
     institution: "Govt. Hazi Muhammad Mohsin College, Chattogram",
-    year: "2018 - 2020",
+    Board:"BOU",
+    year: "2019 - 2021",
     grade: "GPA: 3.82/5.00",
+    description: "Commerce background with focus on Accounting, and Finance & Banking. Achieved excellent results in all subjects.",
+    icon: "menu_book"
+  }
+  {
+    degree: "Secondary School Certificate (SSC)",
+    institution: "Sanowara Islam Boys' High School, Chattogram",
+    Board:"BOU",
+    year: "2017 - 2018",
+    grade: "GPA: 2.65/5.00",
     description: "Commerce background with focus on Accounting, and Finance & Banking. Achieved excellent results in all subjects.",
     icon: "menu_book"
   }
