@@ -132,16 +132,16 @@ export const PROJECTS = [
     githubUrl: 'https://github.com/anwarhossen-dev/influencer-website',
     featured: false
   },
-  // {
-  //   id: 8,
-  //   title: 'Emergency-Hotline',
-  //   description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
-  //   image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
-  //   technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
-  //   liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
-  //   githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
-  //   featured: false
-  // },
+  {
+    id: 8,
+    title: 'game hub',
+    description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
+    image: 'https://i.ibb.co.com/qFL2btyP/Game2-png.jpg',
+    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
+    liveUrl: 'https://gamehub-assignment.web.app',
+    githubUrl: 'https://github.com/anwarhossen-dev/Gamehub-assignment_9',
+    featured: false
+  },
   // {
   //   id: 9,
   //   title: 'Emergency-Hotline',
