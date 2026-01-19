@@ -84,7 +84,7 @@ export const PROJECTS = [
     description: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through an elegant and modern design aesthetic. Built with React.js and styled using Tailwind CSS, this project demonstrates advanced frontend development skills with a focus on user experience and visual appeal. The website features smooth animations, interactive galleries, responsive grid layouts, optimized image loading, and seamless navigation across all devices. Powered by Vite for lightning-fast development and build processes, the site includes dynamic content management, contact forms, social media integration, and SEO optimization. This project highlights proficiency in modern CSS frameworks, component-based architecture, performance optimization, mobile-first design principles, and contemporary web development workflows that deliver exceptional user experiences.',
     image: 'https://i.ibb.co.com/Z18112hy/71-P4fmg-Nmj-L.jpg',
     technologies: ['React', 'Tailwind CSS', 'Vite'],
-    liveUrl: 'https://stirring-frangipane-d150ce.netlify.app/',
+    liveUrl: 'https://tubular-sundae-69af35.netlify.app',
     githubUrl: 'https://github.com/anwarhossen-dev/ARTIFY-client',
     featured: false
   },

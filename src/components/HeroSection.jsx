@@ -31,13 +31,13 @@ const HeroSection = () => {
           <span className="text-cyan-400 font-mono text-xl">&lt;/&gt;</span>
           <span className="font-semibold">MERN Stack Developer</span>
           <span className="text-gray-400">||</span>
-          <span className="font-semibold">WordPress Developer</span>
+          <span className="font-semibold">Frontend Developer</span>
         </div>
         
         <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-2xl">
           I am a passionate and dedicated developer with expertise in building scalable web applications. 
           With a strong foundation in <span className="text-cyan-600 dark:text-cyan-400 font-semibold">MongoDB, Express, React,</span> and <span className="text-cyan-600 dark:text-cyan-400 font-semibold">Node.js</span>, 
-          I transform ideas into seamless digital experiences. I am also a WordPress Elementor Developer.
+          I transform ideas into seamless digital experiences. I also specialize in creating dynamic and user-friendly websites using <span className="text-cyan-600 dark:text-cyan-400 font-semibold">React.js</span>.
         </p>
         
         <div className="flex flex-col sm:flex-row items-start gap-4 pt-4">
