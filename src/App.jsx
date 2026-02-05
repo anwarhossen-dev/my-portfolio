@@ -10,6 +10,7 @@ import ExperienceSection from './components/ExperienceSection.jsx';
 import ProjectsSection from './components/ProjectsSection.jsx';
 import ContactSection from './components/ContactSection.jsx';
 import Footer from './components/Footer.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 import { useScrollSpy } from './hooks/useScrollSpy.js';
 import { getThemePreference, setThemePreference } from './utils';
 
@@ -58,6 +59,9 @@ function App() {
         </main>
         
         <Footer />
+        
+        {/* Scroll to Top Button */}
+        <ScrollToTop />
       </div>
     </ErrorBoundary>
   );

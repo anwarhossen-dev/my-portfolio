@@ -12,8 +12,8 @@ export const NAV_LINKS = [
 // Personal Information
 export const PERSONAL_INFO = {
   name: 'MD. Anwar Hossen',
-  title: 'MERN Stack Developer',
-  subtitle: 'WordPress Developer',
+  title: 'Full Stack Developer',
+  subtitle: 'ASP.NET & MERN Stack Developer',
   experience: '2+ Years',
   email: 'anwarhossendeveloper21@gmail.com',
   phone: '+8801777498421',
@@ -37,18 +37,26 @@ export const SKILLS = {
     { name: 'JavaScript', level: 85, icon: 'fab fa-js-square' },
     { name: 'HTML5', level: 95, icon: 'fab fa-html5' },
     { name: 'CSS3', level: 90, icon: 'fab fa-css3-alt' },
+    { name: 'Bootstrap 5', level: 88, icon: 'fab fa-bootstrap' },
     { name: 'Tailwind CSS', level: 85, icon: 'fas fa-palette' }
   ],
   backend: [
+    { name: 'ASP.NET Core', level: 85, icon: 'fas fa-code' },
+    { name: 'C#', level: 80, icon: 'fas fa-hashtag' },
     { name: 'Node.js', level: 80, icon: 'fab fa-node-js' },
-    { name: 'Express.js', level: 75, icon: 'fas fa-server' },
-    { name: 'MongoDB', level: 70, icon: 'fas fa-database' },
-    { name: 'MySQL', level: 65, icon: 'fas fa-database' }
+    { name: 'Express.js', level: 75, icon: 'fas fa-server' }
+  ],
+  database: [
+    { name: 'MS SQL Server', level: 85, icon: 'fas fa-database' },
+    { name: 'MongoDB', level: 70, icon: 'fas fa-leaf' },
+    { name: 'MySQL', level: 65, icon: 'fas fa-database' },
+    { name: 'Entity Framework', level: 80, icon: 'fas fa-layer-group' }
   ],
   tools: [
+    { name: 'Visual Studio', level: 90, icon: 'fas fa-code' },
+    { name: 'VS Code', level: 95, icon: 'fas fa-code' },
     { name: 'Git', level: 85, icon: 'fab fa-git-alt' },
-    { name: 'VS Code', level: 90, icon: 'fas fa-code' },
-    { name: 'WordPress', level: 80, icon: 'fab fa-wordpress' },
+    { name: 'Azure', level: 75, icon: 'fab fa-microsoft' },
     { name: 'Figma', level: 70, icon: 'fab fa-figma' }
   ]
 };
@@ -247,14 +255,15 @@ export const EXPERIENCE = [
     period: "Jan 2024 - Present",
     type: "Full-time",
     location: "On-site",
-    description: "Developing and maintaining database systems using SQL and modern database technologies. Collaborating with cross-functional teams to deliver high-quality data solutions and optimize database performance.",
+    description: "Developing and maintaining web applications using ASP.NET Core and MS SQL Server. Working with modern .NET technologies to build scalable enterprise applications and optimize database performance.",
     responsibilities: [
-      "Designed and optimized 20+ database schemas for improved performance",
-      "Improved query performance by 50% through advanced SQL optimization techniques",
-      "Collaborated with development teams to implement efficient data access patterns",
-      "Mentored junior developers in SQL best practices and database design"
+      "Developed 15+ ASP.NET Core web applications with clean architecture",
+      "Designed and optimized MS SQL Server databases for improved performance",
+      "Implemented RESTful APIs using ASP.NET Core Web API",
+      "Improved application performance by 40% through code optimization and database tuning",
+      "Collaborated with cross-functional teams using Agile methodologies"
     ],
-    technologies: ["SQL Server", "MySQL", "PostgreSQL", "T-SQL", "Database Design", "Performance Tuning"],
+    technologies: ["ASP.NET Core", "C#", "MS SQL Server", "Entity Framework", "Azure", "REST APIs"],
     icon: "work_outline"
   },
   {
@@ -263,14 +272,15 @@ export const EXPERIENCE = [
     period: "Sep 2024 - Dec 2024",
     type: "Internship",
     location: "On-site",
-    description: "Gained hands-on experience in full-stack web development, working on client projects and learning industry best practices in both frontend and backend technologies.",
+    description: "Gained hands-on experience in full-stack web development with focus on .NET technologies. Worked on client projects and learned industry best practices in ASP.NET development.",
     responsibilities: [
-      "Developed 5+ client websites using HTML, CSS, and JavaScript",
-      "Assisted in ASP.NET application development and maintenance",
-      "Participated in code reviews and team meetings",
-      "Learned version control with Git and project management tools"
+      "Developed 5+ client websites using ASP.NET Core MVC",
+      "Created and maintained MS SQL Server databases",
+      "Implemented user authentication and authorization systems",
+      "Participated in code reviews and learned .NET best practices",
+      "Learned version control with Git and Azure DevOps"
     ],
-    technologies: ["HTML", "CSS", "JavaScript", "ASP.NET", "PHP", "Git"],
+    technologies: ["ASP.NET Core", "C#", "MS SQL Server", "HTML", "CSS", "JavaScript", "Git"],
     icon: "code"
   }
 ];

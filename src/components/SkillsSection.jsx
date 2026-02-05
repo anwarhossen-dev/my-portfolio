@@ -3,6 +3,7 @@ import { useSpring, animated, useTrail } from '@react-spring/web';
 import { useState, useEffect } from 'react';
 import { SKILLS } from '../constants';
 import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
+import MarqueeText from './MarqueeText';
 import {
   fadeInUp,
   staggerContainer,
@@ -178,6 +179,13 @@ const SkillsSection = () => {
       delay: 200
     },
     {
+      title: "Database",
+      skills: SKILLS.database,
+      icon: "fas fa-database",
+      color: "from-orange-500 to-red-500",
+      delay: 300
+    },
+    {
       title: "Tools & Others",
       skills: SKILLS.tools,
       icon: "fas fa-tools",
@@ -237,7 +245,7 @@ const SkillsSection = () => {
 
       {/* Skills Grid */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
         variants={staggerContainer}
       >
         {skillCategories.map((category, index) => (
@@ -250,6 +258,130 @@ const SkillsSection = () => {
             <SkillCategory {...category} />
           </motion.div>
         ))}
+      </motion.div>
+
+      {/* Skills Marquee Section */}
+      <motion.div 
+        className="mt-20 space-y-8"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="text-center mb-12">
+          <motion.h3 
+            className="text-2xl font-bold text-slate-900 dark:text-white mb-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            Technologies I Work With
+          </motion.h3>
+          <motion.p 
+            className="text-slate-600 dark:text-slate-400"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            Constantly learning and adapting to new technologies
+          </motion.p>
+        </div>
+
+        {/* Frontend Technologies Marquee */}
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <MarqueeText speed={30} className="py-4" direction="left">
+            {SKILLS.frontend.map((skill, index) => (
+              <motion.div
+                key={`frontend-${index}`}
+                className="flex items-center gap-3 mx-8 px-6 py-3 bg-white dark:bg-slate-800 rounded-full shadow-lg border border-slate-200 dark:border-slate-700"
+                whileHover={{ scale: 1.1, y: -5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <i className={`${skill.icon} text-2xl text-cyan-500`} />
+                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                  {skill.name}
+                </span>
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
+              </motion.div>
+            ))}
+          </MarqueeText>
+        </motion.div>
+
+        {/* Backend Technologies Marquee */}
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <MarqueeText speed={35} className="py-4" direction="right">
+            {SKILLS.backend.map((skill, index) => (
+              <motion.div
+                key={`backend-${index}`}
+                className="flex items-center gap-3 mx-8 px-6 py-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-full shadow-lg border border-green-200 dark:border-green-700"
+                whileHover={{ scale: 1.1, y: -5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <i className={`${skill.icon} text-2xl text-green-500`} />
+                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                  {skill.name}
+                </span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              </motion.div>
+            ))}
+          </MarqueeText>
+        </motion.div>
+
+        {/* Database Technologies Marquee */}
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <MarqueeText speed={38} className="py-4" direction="right">
+            {SKILLS.database.map((skill, index) => (
+              <motion.div
+                key={`database-${index}`}
+                className="flex items-center gap-3 mx-8 px-6 py-3 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-full shadow-lg border border-orange-200 dark:border-orange-700"
+                whileHover={{ scale: 1.1, y: -5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <i className={`${skill.icon} text-2xl text-orange-500`} />
+                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                  {skill.name}
+                </span>
+                <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+              </motion.div>
+            ))}
+          </MarqueeText>
+        </motion.div>
+
+        {/* Tools & Others Marquee */}
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <MarqueeText speed={40} className="py-4" direction="left">
+            {SKILLS.tools.map((skill, index) => (
+              <motion.div
+                key={`tools-${index}`}
+                className="flex items-center gap-3 mx-8 px-6 py-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-full shadow-lg border border-purple-200 dark:border-purple-700"
+                whileHover={{ scale: 1.1, y: -5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <i className={`${skill.icon} text-2xl text-purple-500`} />
+                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                  {skill.name}
+                </span>
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
+              </motion.div>
+            ))}
+          </MarqueeText>
+        </motion.div>
       </motion.div>
 
       {/* Floating Elements */}

@@ -3,21 +3,68 @@
  */
 
 /**
- * Smooth scroll to element with offset
+ * Enhanced smooth scroll to element with offset and custom easing
  * @param {string} elementId - The ID of the element to scroll to
  * @param {number} offset - Offset from the top (default: 80px for header)
+ * @param {number} duration - Animation duration in milliseconds (default: 1000)
  */
-export const scrollToElement = (elementId, offset = 80) => {
+export const scrollToElement = (elementId, offset = 80, duration = 1000) => {
   const element = document.getElementById(elementId);
   if (element) {
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - offset;
+    const startPosition = window.pageYOffset;
+    const distance = offsetPosition - startPosition;
+    let startTime = null;
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
+    // Easing function for smooth animation
+    const easeInOutCubic = (t) => {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    };
+
+    const animation = (currentTime) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+      
+      window.scrollTo(0, startPosition + distance * ease);
+      
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
   }
+};
+
+/**
+ * Smooth scroll to top of page
+ * @param {number} duration - Animation duration in milliseconds (default: 800)
+ */
+export const scrollToTop = (duration = 800) => {
+  const startPosition = window.pageYOffset;
+  let startTime = null;
+
+  const easeInOutQuad = (t) => {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  };
+
+  const animation = (currentTime) => {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+    const ease = easeInOutQuad(progress);
+    
+    window.scrollTo(0, startPosition * (1 - ease));
+    
+    if (timeElapsed < duration) {
+      requestAnimationFrame(animation);
+    }
+  };
+
+  requestAnimationFrame(animation);
 };
 
 /**
