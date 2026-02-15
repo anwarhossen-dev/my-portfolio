@@ -1,5 +1,6 @@
 import { PERSONAL_INFO } from '../constants';
 import { scrollToElement } from '../utils';
+import { Typewriter } from 'react-simple-typewriter';
 
 const HeroSection = () => {
   const handleContactClick = (e) => {
@@ -23,15 +24,31 @@ const HeroSection = () => {
         <h1 className="text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
           <span className="block text-gray-900 dark:text-white mb-2">MD. Anwar</span>
           <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-            Hossen
+            <Typewriter
+              words={["Hossen"]}
+              loop={0}
+              cursor
+              cursorStyle="|"
+              typeSpeed={80}
+              deleteSpeed={50}
+              delaySpeed={1500}
+            />
           </span>
         </h1>
         
-        <div className="flex items-center gap-3 text-lg font-medium text-gray-600 dark:text-gray-300">
+        <div className="flex items-center gap-3 text-lg font-medium text-gray-600 dark:text-gray-300" aria-live="polite">
           <span className="text-cyan-400 font-mono text-xl">&lt;/&gt;</span>
-          <span className="font-semibold">MERN Stack Developer</span>
-          <span className="text-gray-400">||</span>
-          <span className="font-semibold">Frontend Developer</span>
+          <span className="bg-gradient-to-r from-cyan-400 via-black to-blue-700 to-purple-800 bg-clip-text text-transparent">
+            <Typewriter
+              words={["MERN Stack Developer", "Frontend Developer"]}
+              loop={0}
+              cursor
+              cursorStyle="|"
+              typeSpeed={80}
+              deleteSpeed={50}
+              delaySpeed={1500}
+            />
+          </span>
         </div>
         
         <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-2xl">
@@ -85,7 +102,7 @@ const HeroSection = () => {
           <div className="w-full h-full rounded-full bg-gradient-to-br from-orange-200 to-orange-300 overflow-hidden relative z-10 border-4 border-white dark:border-gray-800">
             <img 
               alt={`Portrait of ${PERSONAL_INFO.name}`}
-              className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700" 
+              className="w-full h-full object-cover object-[35%_35%] hover:scale-105 transition-transform duration-700" 
               src={PERSONAL_INFO.profileImage}
               loading="eager"
               onError={(e) => {
