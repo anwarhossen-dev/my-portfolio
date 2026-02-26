@@ -150,16 +150,16 @@ export const PROJECTS = [
     githubUrl: 'https://github.com/anwarhossen-dev/Gamehub-assignment_9',
     featured: false
   },
-  // {
-  //   id: 9,
-  //   title: 'Emergency-Hotline',
-  //   description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
-  //   image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
-  //   technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
-  //   liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
-  //   githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
-  //   featured: false
-  // },
+  {
+    id: 9,
+    title: 'Admission-info',
+    description: 'This project focuses on organizing and managing admission-related information in a structured and efficient way. It includes student personal details, academic background, document verification status, and admission progress tracking. The objective of this project is to ensure accuracy, transparency, and easy access to admission data while reducing manual errors and processing time. Through this project, I aim to demonstrate my understanding of data organization, responsibility, and basic system management skills relevant to academic and administrative environments.',
+    image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
+    technologies: [ 'JavaScript', 'CSS3', 'HTML5','Bootstap-5', 'Local Storage'],
+    liveUrl: 'https://anwarhossen-dev.github.io/Admission-info/',
+    githubUrl: 'https://github.com/anwarhossen-dev/Admission-info',
+    featured: false
+  },
   // {
   //   id: 10,
   //   title: 'Emergency-Hotline',
