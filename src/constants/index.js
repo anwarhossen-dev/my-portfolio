@@ -154,7 +154,7 @@ export const PROJECTS = [
     id: 9,
     title: 'Admission-info',
     description: 'This project focuses on organizing and managing admission-related information in a structured and efficient way. It includes student personal details, academic background, document verification status, and admission progress tracking. The objective of this project is to ensure accuracy, transparency, and easy access to admission data while reducing manual errors and processing time. Through this project, I aim to demonstrate my understanding of data organization, responsibility, and basic system management skills relevant to academic and administrative environments.',
-    image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
+    image: 'https://i.ibb.co/5gtFGXHh/admission.png',
     technologies: [ 'JavaScript', 'CSS3', 'HTML5','Bootstap-5', 'Local Storage'],
     liveUrl: 'https://anwarhossen-dev.github.io/Admission-info/',
     githubUrl: 'https://github.com/anwarhossen-dev/Admission-info',
