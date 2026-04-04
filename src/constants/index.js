@@ -70,8 +70,8 @@ export const PROJECTS = [
     description: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences. This sophisticated web application features a modern, responsive design with advanced functionality including user authentication, secure payment processing, real-time order tracking, and an intuitive admin dashboard. The platform showcases dynamic product catalogs, shopping cart management, user reviews and ratings, and seamless checkout processes. Built with React.js for the frontend, Node.js and Express.js for the backend API, and MongoDB for robust data management, this project demonstrates proficiency in full-stack development, database design, API integration, and modern web development best practices.',
     image: 'https://i.ibb.co.com/h1VpLnWn/Biryani-2.jpg',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
-    liveUrl: 'https://localchefbazaar-612c0.web.app/',
-    githubUrl: 'https://github.com/anwarhossen-dev/project1',
+    liveUrl: 'https://local-chef-bazaar-pied.vercel.app/',
+    githubUrl: 'https://github.com/anwarhossen-dev/LocalChefBazaar',
     featured: true
   },
   {
@@ -160,16 +160,16 @@ export const PROJECTS = [
     githubUrl: 'https://github.com/anwarhossen-dev/Admission-info',
     featured: false
   },
-  // {
-  //   id: 10,
-  //   title: 'Emergency-Hotline',
-  //   description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
-  //   image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
-  //   technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
-  //   liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
-  //   githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
-  //   featured: false
-  // },
+  {
+    id: 10,
+    title: 'Emergency-Hotline',
+    description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
+    image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
+    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
+    liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
+    githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
+    featured: false
+  },
   // {
   //   id: 11,
   //   title: 'Emergency-Hotline',
