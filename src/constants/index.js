@@ -66,9 +66,11 @@ export const PROJECTS = [
   {
     id: 1,
     title: 'Local Chef Bazaar',
-    shortDescription: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences. This sophisticated web application features modern, responsive design with advanced functionality including user authentication, secure payment processing, real-time order tracking, and intuitive admin dashboard for seamless food ordering experience.',
-    description: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences. This sophisticated web application features a modern, responsive design with advanced functionality including user authentication, secure payment processing, real-time order tracking, and an intuitive admin dashboard. The platform showcases dynamic product catalogs, shopping cart management, user reviews and ratings, and seamless checkout processes. Built with React.js for the frontend, Node.js and Express.js for the backend API, and MongoDB for robust data management, this project demonstrates proficiency in full-stack development, database design, API integration, and modern web development best practices.',
+    category: 'MERN Stack',
+    shortDescription: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences.',
+    description: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences. This sophisticated web application features a modern, responsive design with advanced functionality including user authentication, secure payment processing, real-time order tracking, and an intuitive admin dashboard.',
     image: 'https://i.ibb.co.com/h1VpLnWn/Biryani-2.jpg',
+    videoUrl: 'https://cdn.pixabay.com/video/2021/04/12/70878-537443187_tiny.mp4',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
     liveUrl: 'https://local-chef-bazaar-pied.vercel.app/',
     githubUrl: 'https://github.com/anwarhossen-dev/LocalChefBazaar',
@@ -77,8 +79,9 @@ export const PROJECTS = [
   {
     id: 2,
     title: 'HERO.IO Management App',
-    shortDescription: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication. This sophisticated platform features comprehensive project management tools including task assignment, progress tracking, deadline management, team collaboration spaces, and interactive dashboards with data visualization for enhanced team productivity and project success.',
-    description: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication. This sophisticated platform features comprehensive project management tools including task assignment, progress tracking, deadline management, team collaboration spaces, and interactive dashboards with data visualization. Built with React.js for a dynamic user interface, Socket.io for real-time communication, Node.js for robust backend services, and PostgreSQL for reliable data storage. The application includes advanced features such as file sharing, comment systems, notification management, user role permissions, and detailed analytics. This project showcases expertise in real-time web applications, database optimization, user experience design, and scalable architecture development.',
+    category: 'Full Stack',
+    shortDescription: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication.',
+    description: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication. This sophisticated platform features comprehensive project management tools including task assignment, progress tracking, deadline management, team collaboration spaces, and interactive dashboards with data visualization.',
     image: 'https://i.ibb.co.com/6c3DC3HJ/heroio.png',
     technologies: ['React', 'Socket.io', 'Node.js', 'PostgreSQL'],
     liveUrl: 'https://taupe-moxie-6c1b13.netlify.app/',
@@ -88,8 +91,9 @@ export const PROJECTS = [
   {
     id: 3,
     title: 'ARTIFY Website',
-    shortDescription: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through elegant and modern design aesthetic. Built with React.js and styled using Tailwind CSS, this project demonstrates advanced frontend development skills with focus on user experience and visual appeal. Features smooth animations, interactive galleries, responsive grid layouts, and optimized performance.',
-    description: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through an elegant and modern design aesthetic. Built with React.js and styled using Tailwind CSS, this project demonstrates advanced frontend development skills with a focus on user experience and visual appeal. The website features smooth animations, interactive galleries, responsive grid layouts, optimized image loading, and seamless navigation across all devices. Powered by Vite for lightning-fast development and build processes, the site includes dynamic content management, contact forms, social media integration, and SEO optimization. This project highlights proficiency in modern CSS frameworks, component-based architecture, performance optimization, mobile-first design principles, and contemporary web development workflows that deliver exceptional user experiences.',
+    category: 'Frontend',
+    shortDescription: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through elegant and modern design aesthetic.',
+    description: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through an elegant and modern design aesthetic. Built with React.js and styled using Tailwind CSS, this project demonstrates advanced frontend development skills with a focus on user experience and visual appeal.',
     image: 'https://i.ibb.co.com/Z18112hy/71-P4fmg-Nmj-L.jpg',
     technologies: ['React', 'Tailwind CSS', 'Vite'],
     liveUrl: 'https://tubular-sundae-69af35.netlify.app',
@@ -99,97 +103,39 @@ export const PROJECTS = [
   {
     id: 4,
     title: 'Emergency-Hotline',
-    shortDescription: 'Emergency-Hotline is a comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking. This life-saving application features one-click emergency calling, automatic GPS location sharing, offline functionality for critical situations, and accessibility-compliant design following WCAG 2.1 AA standards for universal access.',
-    description: 'Emergency-Hotline is a comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support. This life-saving application features one-click emergency calling, automatic GPS location sharing, offline functionality for critical situations, and accessibility-compliant design following WCAG 2.1 AA standards. Built with React.js, JavaScript, CSS3, and HTML5, the platform integrates Geolocation API for precise location services and Local Storage for user preferences. The application includes emergency contact management, hospital locators, medical information storage, and cultural sensitivity features. This project demonstrates expertise in crisis-oriented UX design, accessibility implementation, progressive web app development, and creating applications that serve critical real-world needs while maintaining exceptional performance and user experience standards.',
+    category: 'JavaScript',
+    shortDescription: 'Emergency-Hotline is a comprehensive emergency response platform providing quick access to emergency services with real-time location tracking.',
+    description: 'Emergency-Hotline is a comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
     image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
-    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
+    technologies: ['React', 'JavaScript', 'Geolocation API'],
     liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
-    githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
+    githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline',
     featured: false
   },
   {
     id: 5,
     title: 'Green-Earth',
-    shortDescription: 'Green-Earth is an innovative environmental awareness and sustainability platform dedicated to promoting eco-friendly practices and environmental conservation. This comprehensive web application features interactive environmental data visualization, carbon footprint calculators, sustainable living guides, and community engagement tools for environmental activism. Built with modern web technologies to inspire positive environmental change.',
-    description: 'Green-Earth is an innovative environmental awareness and sustainability platform dedicated to promoting eco-friendly practices and environmental conservation. This comprehensive web application features interactive environmental data visualization, carbon footprint calculators, sustainable living guides, and community engagement tools for environmental activism. Built with React.js for dynamic user interactions, JavaScript for complex calculations, CSS3 for beautiful green-themed styling, and HTML5 for semantic structure. The platform includes features such as environmental news aggregation, eco-friendly product recommendations, recycling guides, energy-saving tips, and community forums for environmental discussions. This project showcases expertise in data visualization, environmental API integration, responsive design principles, and creating meaningful applications that contribute to environmental awareness and positive social impact through technology.',
+    category: 'Frontend',
+    shortDescription: 'Green-Earth is an innovative environmental awareness platform dedicated to promoting eco-friendly practices and sustainability.',
+    description: 'Green-Earth is an innovative environmental awareness and sustainability platform dedicated to promoting eco-friendly practices and environmental conservation. This comprehensive web application features interactive environmental data visualization and carbon footprint calculators.',
     image: 'https://i.ibb.co.com/rGXZMmbW/Green.png',
-    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Environmental APIs', 'Data Visualization'],
+    technologies: ['React', 'JavaScript', 'Data Visualization'],
     liveUrl: 'https://anwarhossen-dev.github.io/B12A06-Green-Earth',
     githubUrl: 'https://github.com/anwarhossen-dev/B12A06-Green-Earth',
     featured: false
   },
   {
     id: 6,
-    title: 'Flowers-website',
-    shortDescription: 'Flowers-website is a beautifully crafted, fully responsive e-commerce platform specializing in floral arrangements and botanical products. This elegant web application features stunning visual galleries, detailed product catalogs, seasonal flower collections, and intuitive shopping experience designed specifically for the floral industry with advanced customization tools and delivery scheduling.',
-    description: 'Flowers-website is a beautifully crafted, fully responsive e-commerce platform specializing in floral arrangements and botanical products. This elegant web application features stunning visual galleries, detailed product catalogs, seasonal flower collections, and an intuitive shopping experience designed specifically for the floral industry. Built with React.js for dynamic component rendering, JavaScript for interactive features, CSS3 for beautiful floral-themed animations and styling, and HTML5 for semantic markup. The website includes advanced features such as flower care guides, arrangement customization tools, delivery scheduling, seasonal promotions, and customer testimonials. This project demonstrates expertise in e-commerce development, visual design principles, responsive web design, user experience optimization, and creating industry-specific solutions that combine aesthetic appeal with functional excellence in the digital marketplace.',
-    image: 'https://i.ibb.co.com/BHQX5D5Z/flower.png',
-    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'E-commerce APIs', 'Payment Integration'],
-    liveUrl: 'https://anwarhossen-dev.github.io/B12A02-Responsive-Flowers-website',
-    githubUrl: 'https://github.com/anwarhossen-dev/B12A02-Responsive-Flowers-website',
-    featured: false
-  },
-  {
-    id: 7,
-    title: 'influencer-website',
-    shortDescription: 'Influencer-website is a sophisticated digital marketing and personal branding platform designed for content creators, social media influencers, and digital entrepreneurs. This comprehensive web application features dynamic portfolio showcases, social media integration, audience analytics, content management systems, and brand collaboration tools for building successful online presence.',
-    description: 'Influencer-website is a sophisticated digital marketing and personal branding platform designed for content creators, social media influencers, and digital entrepreneurs. This comprehensive web application features dynamic portfolio showcases, social media integration, audience analytics, content management systems, and brand collaboration tools. Built with React.js for interactive user interfaces, JavaScript for complex functionality, CSS3 for modern styling and animations, and HTML5 for structured content presentation. The platform includes features such as media galleries, engagement tracking, sponsorship management, content scheduling tools, and audience demographics analysis. This project showcases expertise in social media API integration, data analytics implementation, responsive design for multiple devices, and creating platforms that empower digital creators to build and manage their online presence effectively while connecting with their audience and potential brand partners.',
-    image: 'https://i.ibb.co.com/gM4vCnd2/photo.png',
-    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Social Media APIs', 'Analytics Integration'],
-    liveUrl: 'https://anwarhossen-dev.github.io/influencer-website',
-    githubUrl: 'https://github.com/anwarhossen-dev/influencer-website',
-    featured: false
-  },
-  {
-    id: 8,
-    title: 'game hub',
-    description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
-    image: 'https://i.ibb.co.com/qFL2btyP/Game2-png.jpg',
-    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
-    liveUrl: 'https://gamehub-assignment.web.app',
-    githubUrl: 'https://github.com/anwarhossen-dev/Gamehub-assignment_9',
-    featured: false
-  },
-  {
-    id: 9,
     title: 'Admission-info',
-    description: 'This project focuses on organizing and managing admission-related information in a structured and efficient way. It includes student personal details, academic background, document verification status, and admission progress tracking. The objective of this project is to ensure accuracy, transparency, and easy access to admission data while reducing manual errors and processing time. Through this project, I aim to demonstrate my understanding of data organization, responsibility, and basic system management skills relevant to academic and administrative environments.',
+    category: 'ASP.NET',
+    shortDescription: 'A structured system for organizing and managing student admission-related information efficiently.',
+    description: 'This project focuses on organizing and managing admission-related information in a structured and efficient way. It includes student personal details, academic background, document verification status, and admission progress tracking.',
     image: 'https://i.ibb.co/5gtFGXHh/admission.png',
-    technologies: [ 'JavaScript', 'CSS3', 'HTML5','Bootstap-5', 'Local Storage'],
+    technologies: ['JavaScript', 'Bootstrap 5', 'Local Storage'],
     liveUrl: 'https://anwarhossen-dev.github.io/Admission-info/',
     githubUrl: 'https://github.com/anwarhossen-dev/Admission-info',
     featured: false
-  },
-  {
-    id: 10,
-    title: 'Emergency-Hotline',
-    description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
-    image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
-    technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
-    liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
-    githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
-    featured: false
-  },
-  // {
-  //   id: 11,
-  //   title: 'Emergency-Hotline',
-  //   description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
-  //   image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
-  //   technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
-  //   liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
-  //   githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
-  //   featured: false
-  // },
-  // {
-  //   id: 12,
-  //   title: 'Emergency-Hotline',
-  //   description: 'A comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
-  //   image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
-  //   technologies: ['React', 'JavaScript', 'CSS3', 'HTML5', 'Geolocation API', 'Local Storage'],
-  //   liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
-  //   githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline?tab=readme-ov-file',
-  //   featured: false
-  // }
+  }
 ];
 
 // Education Data

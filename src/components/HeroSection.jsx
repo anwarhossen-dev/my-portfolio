@@ -1,8 +1,43 @@
+import { useEffect, useRef } from 'react';
 import { PERSONAL_INFO } from '../constants';
 import { scrollToElement } from '../utils';
 import { Typewriter } from 'react-simple-typewriter';
+import { motion } from 'framer-motion';
+import { gsap } from 'gsap';
+import GithubStatus from './GithubStatus';
 
-const HeroSection = () => {
+export const HeroSection = () => {
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+  const badgeRef = useRef(null);
+
+  useEffect(() => {
+    // GSAP Parallax Effect
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e;
+      const xPos = (clientX / window.innerWidth - 0.5) * 30;
+      const yPos = (clientY / window.innerHeight - 0.5) * 30;
+
+      gsap.to(imageRef.current, {
+        rotationY: xPos,
+        rotationX: -yPos,
+        duration: 1,
+        ease: "power2.out"
+      });
+
+      gsap.to(".floating-shape", {
+        x: xPos * 1.5,
+        y: yPos * 1.5,
+        stagger: 0.1,
+        duration: 1.5,
+        ease: "power2.out"
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   const handleContactClick = (e) => {
     e.preventDefault();
     scrollToElement('contact', 100);
@@ -13,127 +48,160 @@ const HeroSection = () => {
     scrollToElement('about', 100);
   };
 
+  const nameParts = PERSONAL_INFO.name.split(' ');
+  const firstName = nameParts[0];
+
   return (
-    <section className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center px-8 lg:px-16 py-12 pt-24 gap-12 max-w-7xl mx-auto w-full bg-gray-50 dark:bg-background-dark">
-      {/* Text Content */}
-      <div className="flex-1 w-full text-left space-y-6 order-2 lg:order-1">
-        <div className="inline-block px-4 py-2 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 text-sm font-medium">
-          Hello, I'm
+    <section ref={containerRef} className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 lg:px-16 py-20 gap-12 max-w-7xl mx-auto w-full overflow-hidden">
+      {/* Background Decorative Auras */}
+      <div className="absolute top-1/4 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
+      
+      {/* 1. Content Section (Left) */}
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="flex-1 w-full text-left space-y-8 order-2 lg:order-1 relative z-10 lg:pt-10"
+      >
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800/50 text-primary border border-slate-200 dark:border-slate-700 shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            <span className="text-[10px] font-black uppercase tracking-widest">Available for Projects</span>
+          </div>
+          <GithubStatus username="anwarhossen-dev" />
         </div>
 
-        <h1 className="text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
-          <span className="block text-gray-900 dark:text-white mb-2">MD. Anwar</span>
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-            <Typewriter
-              words={["Hossen"]}
-              loop={0}
-              cursor
-              cursorStyle="|"
-              typeSpeed={80}
-              deleteSpeed={50}
-              delaySpeed={500}
-            />
-          </span>
-        </h1>
+        <div className="space-y-4">
+          <h1 className="text-5xl lg:text-7xl font-black tracking-tight leading-[1.1]">
+            <span className="block text-slate-900 dark:text-white">
+              Hi, I'm <span className="text-primary">{firstName}</span>
+            </span>
+            <span className="block bg-gradient-to-r from-primary via-blue-500 to-secondary bg-clip-text text-transparent italic">
+              <Typewriter
+                words={[nameParts.slice(1).join(' ')]}
+                loop={1}
+                cursor
+                cursorStyle="_"
+                typeSpeed={80}
+              />
+            </span>
+          </h1>
 
-        <div className="flex items-center gap-3 text-lg font-medium text-gray-600 dark:text-gray-300" aria-live="polite">
-          <span className="text-cyan-400 font-mono text-xl">&lt;/&gt;</span>
-          <span className="bg-gradient-to-r from-cyan-400 via-black to-blue-700 to-purple-800 bg-clip-text text-transparent">
+          <div className="flex items-center gap-4 text-xl lg:text-2xl font-bold text-slate-600 dark:text-slate-400">
+            <div className="h-[2px] w-12 bg-primary/30" />
+            <span className="text-primary font-mono">&lt;</span>
             <Typewriter
-              words={["MERN Stack Developer", "Frontend Developer"]}
+              words={["Full Stack Architect", "MERN Expert", "ASP.NET Core Dev"]}
               loop={0}
               cursor
-              cursorStyle="|"
-              typeSpeed={80}
-              deleteSpeed={50}
-              delaySpeed={500}
+              typeSpeed={50}
+              deleteSpeed={30}
+              delaySpeed={1500}
             />
-          </span>
+            <span className="text-primary font-mono">/&gt;</span>
+          </div>
         </div>
 
-        <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-2xl">
-          I am a passionate and dedicated developer with expertise in building scalable web applications.
-          With a strong foundation in <span className="text-cyan-600 dark:text-cyan-400 font-semibold">MongoDB, Express, React,</span> and <span className="text-cyan-600 dark:text-cyan-400 font-semibold">Node.js</span>,
-          I transform ideas into seamless digital experiences. I also specialize in creating dynamic and user-friendly websites using <span className="text-cyan-600 dark:text-cyan-400 font-semibold">React.js</span>.
+        <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-xl">
+          Crafting <span className="text-slate-900 dark:text-white font-black underline decoration-primary/30">high-performance</span> digital experiences. Specialized in building scalable applications from vision to reality.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-start gap-4 pt-4">
-          <a
-            href="/resume.pdf"
-            download={`${PERSONAL_INFO.name.replace(/\s+/g, '_')}_Resume.pdf`}
-            className="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400 font-semibold transition-all duration-300"
-            aria-label="Download resume"
-          >
-            <span className="material-icons-outlined text-sm" aria-hidden="true">download</span>
-            Download Resume
-          </a>
-          <button
+        <div className="flex flex-wrap items-center gap-5 pt-4">
+          <motion.button
             onClick={handleContactClick}
-            className="flex items-center gap-2 px-6 py-3 rounded-full bg-cyan-400 text-white hover:bg-cyan-500 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
-            aria-label="Contact me"
+            whileHover={{ scale: 1.05, y: -5 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black shadow-2xl transition-all"
           >
-            <span className="material-icons-outlined text-sm" aria-hidden="true">send</span>
-            Contact Me
-          </button>
+            <span>Start a Project</span>
+            <span className="material-icons-outlined text-sm">rocket_launch</span>
+          </motion.button>
+          
+          <motion.a
+            href="/resume.pdf"
+            download
+            whileHover={{ scale: 1.05, y: -5 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-3 px-8 py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+          >
+            <span className="material-icons-outlined text-xl">description</span>
+            <span>Get Resume</span>
+          </motion.a>
         </div>
+      </motion.div>
 
-        <div className="flex items-center gap-2 pt-8 text-gray-400 text-sm">
-          <span>Scroll Down</span>
-          <button
-            onClick={handleScrollDown}
-            className="flex flex-col items-center gap-1 p-2 hover:text-cyan-400 transition-colors cursor-pointer"
-            aria-label="Scroll to about section"
-          >
-            <div className="w-6 h-10 border-2 border-current rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-current rounded-full mt-2 animate-bounce"></div>
+      {/* 2. Profile Section (Right) */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="flex-1 w-full flex justify-center items-center relative order-1 lg:order-2"
+      >
+        <div className="relative w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] perspective-1000">
+          {/* Animated Background Shapes */}
+          <motion.div 
+            animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 border-[2px] border-dashed border-primary/30 rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] pointer-events-none floating-shape"
+          />
+          
+          {/* Image Container with 3D Interaction */}
+          <div ref={imageRef} className="relative z-10 w-full h-full p-8 sm:p-12">
+            <div className="relative w-full h-full rounded-[3rem] overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border-2 border-white/20 dark:border-slate-800">
+              <img
+                alt={PERSONAL_INFO.name}
+                className="w-full h-full object-cover object-top grayscale-[10%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                src={PERSONAL_INFO.profileImage}
+                onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Profile'; }}
+              />
+              {/* Glossy Reflection Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+              
+              {/* Smart Badge on Image */}
+              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 z-20 hidden sm:block">
+                <div className="flex items-center justify-between text-white">
+                  <div>
+                    <p className="font-black text-lg">{PERSONAL_INFO.experience}</p>
+                    <p className="text-[8px] font-bold uppercase tracking-widest opacity-70">Experience</p>
+                  </div>
+                  <div className="h-8 w-[1px] bg-white/20" />
+                  <div>
+                    <p className="font-black text-lg">15+</p>
+                    <p className="text-[8px] font-bold uppercase tracking-widest opacity-70">Projects</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Profile Image */}
-      <div className="flex-1 w-full flex justify-center items-center relative order-1 lg:order-2">
-        {/* Animated Rings */}
-        <div className="absolute inset-0 m-auto w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] rounded-full border-2 border-cyan-200 dark:border-cyan-800 animate-spin" style={{ animationDuration: '20s' }} aria-hidden="true"></div>
-        <div className="absolute inset-0 m-auto w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] rounded-full border-2 border-dashed border-purple-200 dark:border-purple-800 animate-spin" style={{ animationDuration: '25s', animationDirection: 'reverse' }} aria-hidden="true"></div>
-
-        {/* Profile Image Container */}
-        <div className="relative w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] rounded-full p-2 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 shadow-2xl">
-          <div className="w-full h-full rounded-full bg-gradient-to-br from-orange-200 to-orange-300 overflow-hidden relative z-10 border-4 border-white dark:border-gray-800">
-            <img
-              alt={`Portrait of ${PERSONAL_INFO.name}`}
-              className="w-full h-full object-cover object-[35%_35%] hover:scale-105 transition-transform duration-700"
-              src={PERSONAL_INFO.profileImage}
-              loading="eager"
-              onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/400x400/6366f1/ffffff?text=MD.+Anwar+Hossen';
-              }}
-            />
           </div>
 
-          {/* Experience Badge */}
-          <div className="absolute bottom-4 -right-4 sm:bottom-8 sm:-right-6 bg-white dark:bg-gray-800 p-3 pr-5 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 flex items-center gap-3 z-20">
-            <div className="flex -space-x-2">
-              <div className="w-8 h-8 rounded-full bg-cyan-400 flex items-center justify-center border-2 border-white dark:border-gray-800">
-                <i className="fab fa-react text-white text-xs" aria-hidden="true"></i>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center border-2 border-white dark:border-gray-800">
-                <i className="fab fa-node-js text-white text-xs" aria-hidden="true"></i>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center border-2 border-white dark:border-gray-800">
-                <i className="fab fa-js-square text-white text-xs" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div className="text-left">
-              <p className="text-sm font-bold text-gray-900 dark:text-white">{PERSONAL_INFO.experience}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Experience</p>
-            </div>
-          </div>
-
-          {/* Decorative Elements */}
-          <div className="absolute -bottom-8 right-16 text-purple-400 text-2xl font-bold opacity-60 select-none animate-pulse" aria-hidden="true">++</div>
-          <div className="absolute bottom-16 -left-8 text-cyan-400 text-xl font-bold opacity-60 select-none animate-pulse" aria-hidden="true">**</div>
+          {/* Floating Orbiting Icons */}
+          <motion.div 
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-4 -right-4 w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700 z-30"
+          >
+            <i className="fab fa-react text-primary text-3xl"></i>
+          </motion.div>
+          <motion.div 
+            animate={{ y: [0, 20, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute top-1/2 -left-8 w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700 z-30"
+          >
+            <i className="fab fa-node-js text-[#339933] text-2xl"></i>
+          </motion.div>
         </div>
+      </motion.div>
+
+      {/* Bottom Discover */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 opacity-40 hover:opacity-100 transition-opacity">
+        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Scroll Down</span>
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }} className="w-6 h-10 rounded-full border-2 border-slate-400 flex justify-center p-1">
+          <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+        </motion.div>
       </div>
     </section>
   );

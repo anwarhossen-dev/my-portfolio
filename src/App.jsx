@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Header from './components/Header.jsx';
-import HeroSection from './components/HeroSection.jsx';
+import { HeroSection } from './components/HeroSection.jsx';
 import AboutSection from './components/AboutSection.jsx';
 import SkillsSection from './components/SkillsSection.jsx';
 import EducationSection from './components/EducationSection.jsx';

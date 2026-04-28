@@ -1,15 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTrail, animated } from '@react-spring/web';
 import { PROJECTS } from '../constants';
-import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
-import {
-  fadeInUp,
-  staggerContainer,
-  staggerItem,
-  cardHover,
-  buttonHover
-} from '../utils/animations';
+import { useScrollReveal } from '../hooks/useAnimations';
+import { fadeInUp, staggerContainer } from '../utils/animations';
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
   if (!isOpen || !project) return null;
@@ -17,33 +10,36 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/70 backdrop-blur-md z-[100] flex items-center justify-center p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div 
-          className="bg-white dark:bg-surface-dark rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
+          className="bg-white dark:bg-slate-900 rounded-[2.5rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/20 dark:border-slate-800"
+          initial={{ scale: 0.9, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.9, opacity: 0, y: 20 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-8">
+          <div className="relative p-6 md:p-10">
             {/* Header */}
-            <div className="flex justify-between items-start mb-6">
-              <motion.h3 
-                className="text-2xl font-bold text-slate-900 dark:text-white"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-              >
-                {project.title}
-              </motion.h3>
+            <div className="flex justify-between items-start mb-8">
+              <div className="space-y-1">
+                <motion.h3 
+                  className="text-3xl font-extrabold text-slate-900 dark:text-white leading-tight"
+                >
+                  {project.title}
+                </motion.h3>
+                <div className="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                  <span className="w-8 h-[2px] bg-primary"></span>
+                  {project.category}
+                </div>
+              </div>
               <motion.button 
                 onClick={onClose}
-                className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+                className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-primary transition-all border border-slate-200 dark:border-slate-700 shadow-sm"
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -51,85 +47,59 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               </motion.button>
             </div>
 
-            {/* Project Image */}
+            {/* Project Preview */}
             <motion.div 
-              className="mb-6"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              className="relative aspect-video mb-8 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <img 
-                src={project.image} 
-                alt={project.title}
-                className="w-full h-64 object-cover rounded-2xl"
-              />
+              {project.videoUrl ? (
+                <video src={project.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+              ) : (
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+              )}
             </motion.div>
 
-            {/* Technology Stack */}
-            <motion.div 
-              className="mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Technology Stack</h4>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, index) => (
-                  <motion.span 
-                    key={index} 
-                    className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium"
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 + index * 0.05 }}
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    {tech}
-                  </motion.span>
-                ))}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-6">
+                <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                  <span className="material-icons-outlined text-primary">description</span>
+                  Project Summary
+                </h4>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+                  {project.description}
+                </p>
+                
+                <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                  <span className="material-icons-outlined text-primary">terminal</span>
+                  Stack
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech, index) => (
+                    <span key={index} className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-bold border border-slate-200 dark:border-slate-700">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </motion.div>
 
-            {/* Description */}
-            <motion.div 
-              className="mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Project Description</h4>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{project.description}</p>
-            </motion.div>
-
-            {/* Links */}
-            <motion.div 
-              className="flex gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <motion.a 
-                href={project.liveUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="material-icons-outlined text-sm">launch</span>
-                Live Demo
-              </motion.a>
-              <motion.a 
-                href={project.githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <i className="fab fa-github"></i>
-                GitHub
-              </motion.a>
-            </motion.div>
+              <div className="space-y-6">
+                <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-4">
+                  <h5 className="text-xs font-bold uppercase tracking-widest text-slate-400">Links</h5>
+                  <div className="flex flex-col gap-3">
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/30 hover:brightness-110 transition-all">
+                      <span className="material-icons-outlined text-sm">launch</span>
+                      Live Site
+                    </a>
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
+                      <i className="fab fa-github"></i>
+                      Codebase
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </motion.div>
@@ -137,115 +107,78 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   );
 };
 
-const ProjectCard = ({ project, onViewMore, index }) => {
+const ProjectCard = ({ project, onViewMore }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+  const videoRef = useRef(null);
+
+  // 3D Tilt Effect
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - left) / width;
+    const y = (e.clientY - top) / height;
+    const moveX = (x - 0.5) * 20;
+    const moveY = (y - 0.5) * -20;
+    cardRef.current.style.transform = `perspective(1000px) rotateX(${moveY}deg) rotateY(${moveX}deg)`;
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (cardRef.current) cardRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    if (videoRef.current) videoRef.current.pause();
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (videoRef.current) videoRef.current.play().catch(() => {});
+  };
+
   return (
     <motion.div 
-      className="group relative bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 overflow-hidden"
-      variants={cardHover}
-      initial="rest"
-      whileHover="hover"
-      whileTap={{ scale: 0.98 }}
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4 }}
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="group relative bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden transition-all duration-200 ease-out"
     >
-      <motion.div 
-        className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-        initial={{ scaleX: 0 }}
-        whileHover={{ scaleX: 1 }}
-        transition={{ duration: 0.3 }}
-      />
-      
-      {/* Project Image */}
-      <div className="relative overflow-hidden">
+      <div className="relative h-64 overflow-hidden">
         <motion.img 
           src={project.image} 
           alt={project.title}
-          className="w-full h-48 object-cover transition-transform duration-500"
-          whileHover={{ scale: 1.1 }}
+          animate={{ scale: isHovered ? 1.1 : 1, opacity: isHovered && project.videoUrl ? 0 : 1 }}
+          className="w-full h-full object-cover transition-opacity duration-500"
         />
-        <motion.div 
-          className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-        />
-        
-        {/* Featured Badge */}
-        {project.featured && (
-          <motion.div 
-            className="absolute top-4 right-4 px-3 py-1 rounded-full bg-primary text-white text-xs font-semibold"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            Featured
+        {project.videoUrl && (
+          <motion.div className="absolute inset-0 z-10" initial={{ opacity: 0 }} animate={{ opacity: isHovered ? 1 : 0 }}>
+            <video ref={videoRef} src={project.videoUrl} loop muted playsInline className="w-full h-full object-cover" />
           </motion.div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-20" />
+        <div className="absolute top-4 left-4 z-30 px-3 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest">
+          {project.category}
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="p-6">
-        <motion.h3 
-          className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors"
-          whileHover={{ x: 5 }}
-        >
+      <div className="p-8 space-y-4">
+        <h3 className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-primary transition-colors">
           {project.title}
-        </motion.h3>
-        
-        <motion.p 
-          className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4"
-          variants={staggerItem}
-        >
+        </h3>
+        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">
           {project.shortDescription}
-        </motion.p>
-
-        {/* Technologies */}
-        <motion.div 
-          className="flex flex-wrap gap-2 mb-6"
-          variants={staggerContainer}
-        >
-          {project.technologies.slice(0, 3).map((tech, techIndex) => (
-            <motion.span 
-              key={techIndex} 
-              className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium"
-              variants={staggerItem}
-              custom={techIndex}
-              whileHover={{ scale: 1.1, y: -2 }}
-            >
-              {tech}
-            </motion.span>
-          ))}
-          {project.technologies.length > 3 && (
-            <motion.span 
-              className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium"
-              whileHover={{ scale: 1.1, y: -2 }}
-            >
-              +{project.technologies.length - 3} more
-            </motion.span>
-          )}
-        </motion.div>
-
-        {/* Action Buttons */}
-        <div className="flex gap-2">
-          <motion.button 
-            onClick={() => onViewMore(project)}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all duration-300 font-semibold"
-            variants={buttonHover}
-            initial="rest"
-            whileHover="hover"
-            whileTap="tap"
-          >
-            <span className="material-icons-outlined text-sm">visibility</span>
-            View Details
-          </motion.button>
-          
-          <motion.a 
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-all duration-300"
-            whileHover={{ scale: 1.1, rotate: 15 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <span className="material-icons-outlined text-sm">launch</span>
-          </motion.a>
+        </p>
+        <div className="flex items-center gap-4 pt-4">
+          <button onClick={() => onViewMore(project)} className="flex-1 px-6 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all shadow-lg">
+            Details
+          </button>
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-all">
+            <span className="material-icons-outlined">launch</span>
+          </a>
         </div>
       </div>
     </motion.div>
@@ -254,145 +187,59 @@ const ProjectCard = ({ project, onViewMore, index }) => {
 
 const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [filter, setFilter] = useState('All');
 
-  // GSAP scroll reveal
-  const sectionRef = useScrollReveal({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    scrollTrigger: {
-      onEnter: () => setIsVisible(true),
-      start: "top 80%"
-    }
-  });
+  const categories = useMemo(() => {
+    const cats = ['All', ...new Set(PROJECTS.map(p => p.category))];
+    return cats;
+  }, []);
 
-  const projectsRef = useStaggerAnimation('.project-card', {
-    from: { opacity: 0, y: 60, scale: 0.9 },
-    to: { opacity: 1, y: 0, scale: 1 },
-    scrollTrigger: { start: "top 85%" }
-  });
+  const filteredProjects = useMemo(() => {
+    if (filter === 'All') return PROJECTS;
+    return PROJECTS.filter(p => p.category === filter);
+  }, [filter]);
 
-  // Trail animation for projects
-  const trail = useTrail(PROJECTS.length, {
-    from: { opacity: 0, transform: 'translateY(60px) scale(0.9)' },
-    to: { 
-      opacity: isVisible ? 1 : 0, 
-      transform: isVisible ? 'translateY(0px) scale(1)' : 'translateY(60px) scale(0.9)' 
-    },
-    config: { tension: 280, friction: 60 },
-  });
-
-  const handleViewMore = (project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedProject(null);
-  };
+  const sectionRef = useScrollReveal();
 
   return (
-    <>
-      <motion.section 
-        ref={sectionRef}
-        className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
-        id="projects"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={staggerContainer}
-      >
-        {/* Section Header */}
-        <motion.div 
-          className="flex flex-col items-center text-center mb-16"
-          variants={fadeInUp}
-        >
-          <motion.div 
-            className="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 mb-4"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="text-purple-500 font-semibold text-xs tracking-widest uppercase">
-              My Work
-            </span>
-          </motion.div>
-          
-          <motion.h2 
-            className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white"
-            variants={staggerItem}
-          >
-            Featured <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-              Projects
-            </span>
-          </motion.h2>
-          
-          <motion.div 
-            className="w-24 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4"
-            initial={{ width: 0 }}
-            whileInView={{ width: 96 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          />
-          
-          <motion.p 
-            className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mt-6"
-            variants={staggerItem}
-          >
-            Here are some of my recent projects that showcase my skills and experience
-          </motion.p>
-        </motion.div>
+    <section ref={sectionRef} className="px-6 lg:px-16 py-32 max-w-7xl mx-auto w-full relative" id="projects">
+      <motion.div className="flex flex-col items-center text-center mb-16" variants={fadeInUp}>
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 mb-6">
+          <span className="text-[10px] font-bold uppercase tracking-widest">Portfolio</span>
+        </div>
+        <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-10">
+          Smart <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-500 to-secondary italic">Work Gallery</span>
+        </h2>
 
-        {/* Projects Grid */}
-        <motion.div 
-          ref={projectsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={staggerContainer}
-        >
-          {trail.map((style, index) => (
-            <animated.div key={PROJECTS[index].id} style={style}>
-              <div className="project-card">
-                <ProjectCard 
-                  project={PROJECTS[index]} 
-                  onViewMore={handleViewMore}
-                  index={index}
-                />
-              </div>
-            </animated.div>
+        {/* Smart Filter Bar */}
+        <div className="flex flex-wrap justify-center gap-3 p-2 bg-slate-100 dark:bg-slate-800/50 rounded-[2rem] border border-slate-200 dark:border-slate-700 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={`relative px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
+                filter === cat ? 'text-white' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              {filter === cat && (
+                <motion.div layoutId="filter-pill" className="absolute inset-0 bg-primary rounded-full shadow-lg shadow-primary/30" transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }} />
+              )}
+              <span className="relative z-10">{cat}</span>
+            </button>
           ))}
-        </motion.div>
+        </div>
+      </motion.div>
 
-        {/* Floating Elements */}
-        <motion.div 
-          className="absolute top-20 right-10 text-purple-400/20 text-5xl font-bold select-none pointer-events-none"
-          animate={{ 
-            y: [0, -20, 0],
-            rotate: [0, 10, -10, 0]
-          }}
-          transition={{ duration: 4, repeat: Infinity }}
-        >
-          💻
-        </motion.div>
-        
-        <motion.div 
-          className="absolute bottom-20 left-10 text-pink-400/20 text-4xl font-bold select-none pointer-events-none"
-          animate={{ 
-            y: [0, 25, 0],
-            x: [0, 15, 0]
-          }}
-          transition={{ duration: 3.5, repeat: Infinity }}
-        >
-          🚀
-        </motion.div>
-      </motion.section>
+      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        <AnimatePresence mode="popLayout">
+          {filteredProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} onViewMore={setSelectedProject} />
+          ))}
+        </AnimatePresence>
+      </motion.div>
 
-      {/* Project Modal */}
-      <ProjectModal 
-        project={selectedProject}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
-    </>
+      <ProjectModal project={selectedProject} isOpen={!!selectedProject} onClose={() => setSelectedProject(null)} />
+    </section>
   );
 };
 

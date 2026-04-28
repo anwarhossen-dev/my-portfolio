@@ -1,74 +1,138 @@
-const Sidebar = ({ activeSection }) => {
-  const socialLinks = [
-    {
-      name: 'GitHub',
-      icon: 'fab fa-github',
-      url: 'https://github.com/anwarhossen',
-      hoverColor: 'hover:bg-[#333]'
-    },
-    {
-      name: 'LinkedIn',
-      icon: 'fab fa-linkedin-in',
-      url: 'https://linkedin.com/in/anwarhossen',
-      hoverColor: 'hover:bg-[#0077b5]'
-    },
-    {
-      name: 'Facebook',
-      icon: 'fab fa-facebook-f',
-      url: 'https://facebook.com/anwarhossen',
-      hoverColor: 'hover:bg-[#1877f2]'
-    },
-    {
-      name: 'WhatsApp',
-      icon: 'fab fa-whatsapp',
-      url: 'https://wa.me/8801234567890',
-      hoverColor: 'hover:bg-[#25D366]'
-    },
-    {
-      name: 'Email',
-      icon: 'material-icons-outlined',
-      iconText: 'email',
-      url: 'mailto:anwar.hossen@example.com',
-      hoverColor: 'hover:bg-secondary'
-    }
+import { useRef, useEffect } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { gsap } from 'gsap';
+import { SOCIAL_LINKS } from '../constants';
+
+const MagneticSocialLink = ({ href, icon, iconText, name, color }) => {
+  const linkRef = useRef(null);
+
+  useEffect(() => {
+    const link = linkRef.current;
+    if (!link) return;
+
+    const handleMouseMove = (e) => {
+      const rect = link.getBoundingClientRect();
+      const x = e.clientX - (rect.left + rect.width / 2);
+      const y = e.clientY - (rect.top + rect.height / 2);
+
+      gsap.to(link, {
+        x: x * 0.4,
+        y: y * 0.4,
+        duration: 0.5,
+        ease: "power2.out"
+      });
+    };
+
+    const handleMouseLeave = () => {
+      gsap.to(link, {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: "elastic.out(1, 0.3)"
+      });
+    };
+
+    link.addEventListener('mousemove', handleMouseMove);
+    link.addEventListener('mouseleave', handleMouseLeave);
+    return () => {
+      link.removeEventListener('mousemove', handleMouseMove);
+      link.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
+
+  return (
+    <motion.div className="relative group flex items-center justify-end">
+      <div className="absolute right-full mr-4 px-3 py-1.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none shadow-xl whitespace-nowrap z-50 uppercase tracking-tighter">
+        {name}
+        <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45" />
+      </div>
+
+      <a
+        ref={linkRef}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`
+          relative w-11 h-11 flex items-center justify-center rounded-xl
+          bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800
+          text-slate-500 dark:text-slate-400 hover:text-white transition-colors duration-300
+          shadow-lg shadow-black/5 z-10
+          ${color}
+        `}
+        aria-label={name}
+      >
+        {icon.includes('material') ? (
+          <span className="material-icons-outlined text-lg">{iconText}</span>
+        ) : (
+          <i className={`${icon} text-lg`}></i>
+        )}
+      </a>
+    </motion.div>
+  );
+};
+
+const Sidebar = () => {
+  const { scrollYProgress } = useScroll();
+  const pathLength = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const socialData = [
+    { name: 'GitHub', icon: 'fab fa-github', href: SOCIAL_LINKS.github, color: 'hover:bg-[#333]' },
+    { name: 'LinkedIn', icon: 'fab fa-linkedin-in', href: SOCIAL_LINKS.linkedin, color: 'hover:bg-[#0077b5]' },
+    { name: 'WhatsApp', icon: 'fab fa-whatsapp', href: SOCIAL_LINKS.whatsapp, color: 'hover:bg-[#25D366]' },
+    { name: 'Email', icon: 'material-icons-outlined', iconText: 'mail', href: SOCIAL_LINKS.email, color: 'hover:bg-primary' }
   ];
 
   return (
-    <aside className="hidden md:flex flex-col justify-between items-center w-24 bg-surface-light/80 dark:bg-surface-dark/50 border-r border-slate-200 dark:border-slate-800 backdrop-blur-sm py-8 fixed h-full z-50">
-      {/* Logo */}
-      <div className="relative group cursor-pointer">
-        <div className="w-12 h-12 rounded-full border-2 border-slate-300 dark:border-slate-700 flex items-center justify-center text-xs font-bold text-primary transition-all group-hover:border-primary group-hover:scale-110">
+    <motion.aside 
+      initial={{ x: 100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.8 }}
+      className="hidden lg:flex fixed right-8 top-32 z-50 flex-col items-center gap-6"
+    >
+      {/* Smart Circular Scroll Indicator */}
+      <div className="relative w-16 h-16 flex items-center justify-center">
+        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+          <circle
+            cx="50"
+            cy="50"
+            r="45"
+            fill="none"
+            className="stroke-slate-200 dark:stroke-slate-800"
+            strokeWidth="4"
+          />
+          <motion.circle
+            cx="50"
+            cy="50"
+            r="45"
+            fill="none"
+            className="stroke-primary"
+            strokeWidth="4"
+            strokeLinecap="round"
+            style={{ pathLength }}
+          />
+        </svg>
+        <div className="relative z-10 w-10 h-10 rounded-xl bg-slate-900 dark:bg-white flex items-center justify-center text-white dark:text-slate-900 font-black text-xs shadow-lg">
           AH
         </div>
       </div>
 
-      {/* Social Links */}
-      <div className="flex flex-col gap-6 items-center">
-        {socialLinks.map((social, index) => (
-          <a 
-            key={index}
-            className={`w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-white transition-all duration-300 transform hover:scale-110 ${social.hoverColor}`}
-            href={social.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={social.name}
-          >
-            {social.icon === 'material-icons-outlined' ? (
-              <span className="material-icons-outlined text-lg">{social.iconText}</span>
-            ) : (
-              <i className={`${social.icon} text-xl`}></i>
-            )}
-          </a>
+      {/* Social Dock */}
+      <div className="flex flex-col items-center gap-3 p-2.5 bg-white/30 dark:bg-slate-900/30 backdrop-blur-2xl rounded-3xl border border-white/20 dark:border-slate-800/50 shadow-2xl">
+        {socialData.map((social, index) => (
+          <MagneticSocialLink key={index} {...social} />
         ))}
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="flex flex-col items-center gap-2">
-        <div className="w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center animate-bounce cursor-pointer hover:border-primary hover:text-primary transition-colors">
-          <span className="material-icons-outlined text-sm">arrow_downward</span>
-        </div>
+      {/* Side Label */}
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent opacity-50" />
+        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] rotate-90 origin-center whitespace-nowrap">Connect</span>
       </div>
-    </aside>
+    </motion.aside>
   );
 };
 
