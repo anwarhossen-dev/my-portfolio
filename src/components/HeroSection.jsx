@@ -56,9 +56,9 @@ export const HeroSection = () => {
       {/* Background Decorative Auras */}
       <div className="absolute top-1/4 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
-      
+
       {/* 1. Content Section (Left) */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -120,7 +120,7 @@ export const HeroSection = () => {
             <span>Start a Project</span>
             <span className="material-icons-outlined text-sm">rocket_launch</span>
           </motion.button>
-          
+
           <motion.a
             href="/resume.pdf"
             download
@@ -135,7 +135,7 @@ export const HeroSection = () => {
       </motion.div>
 
       {/* 2. Profile Section (Right) */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -143,24 +143,24 @@ export const HeroSection = () => {
       >
         <div className="relative w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] perspective-1000">
           {/* Animated Background Shapes */}
-          <motion.div 
+          <motion.div
             animate={{ rotate: 360, scale: [1, 1.1, 1] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className="absolute inset-0 border-[2px] border-dashed border-primary/30 rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] pointer-events-none floating-shape"
           />
-          
+
           {/* Image Container with 3D Interaction */}
           <div ref={imageRef} className="relative z-10 w-full h-full p-8 sm:p-12">
             <div className="relative w-full h-full rounded-[3rem] overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border-2 border-white/20 dark:border-slate-800">
               <img
                 alt={PERSONAL_INFO.name}
-                className="w-full h-full object-cover object-top grayscale-[10%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                className="w-full h-full object-cover object-[center_35%] grayscale-[10%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                 src={PERSONAL_INFO.profileImage}
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Profile'; }}
               />
               {/* Glossy Reflection Overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-              
+
               {/* Smart Badge on Image */}
               <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 z-20 hidden sm:block">
                 <div className="flex items-center justify-between text-white">
@@ -179,14 +179,14 @@ export const HeroSection = () => {
           </div>
 
           {/* Floating Orbiting Icons */}
-          <motion.div 
+          <motion.div
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className="absolute -top-4 -right-4 w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700 z-30"
           >
             <i className="fab fa-react text-primary text-3xl"></i>
           </motion.div>
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 20, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             className="absolute top-1/2 -left-8 w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700 z-30"
