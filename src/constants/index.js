@@ -2,6 +2,7 @@
 export const NAV_LINKS = [
   { name: 'Home', href: '#', icon: 'home' },
   { name: 'About', href: '#about', icon: 'person' },
+  { name: 'Services', href: '#services', icon: 'category' },
   { name: 'Skills', href: '#skills', icon: 'bolt' },
   { name: 'Education', href: '#education', icon: 'school' },
   { name: 'Experience', href: '#experience', icon: 'work_outline' },
@@ -56,8 +57,18 @@ export const SKILLS = {
     { name: 'Visual Studio', level: 90, icon: 'fas fa-code' },
     { name: 'VS Code', level: 95, icon: 'fas fa-code' },
     { name: 'Git', level: 85, icon: 'fab fa-git-alt' },
-    { name: 'Azure', level: 75, icon: 'fab fa-microsoft' },
-    { name: 'Figma', level: 70, icon: 'fab fa-figma' }
+    { name: 'GitHub Actions', level: 85, icon: 'fab fa-github' },
+    { name: 'Azure DevOps', level: 80, icon: 'fab fa-microsoft' },
+    { name: 'Docker', level: 75, icon: 'fab fa-docker' }
+  ],
+  ai: [
+    { name: 'Gemini CLI', level: 98, icon: 'fas fa-terminal' },
+    { name: 'Claude 3.5 Sonnet', level: 96, icon: 'fas fa-brain' },
+    { name: 'ChatGPT / GPT-4', level: 95, icon: 'fas fa-robot' },
+    { name: 'GitHub Copilot', level: 90, icon: 'fas fa-brain' },
+    { name: 'Anthropic API', level: 88, icon: 'fas fa-microchip' },
+    { name: 'OpenAI API', level: 85, icon: 'fas fa-microchip' },
+    { name: 'LangChain', level: 75, icon: 'fas fa-link' }
   ]
 };
 
@@ -70,7 +81,7 @@ export const PROJECTS = [
     shortDescription: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences.',
     description: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences. This sophisticated web application features a modern, responsive design with advanced functionality including user authentication, secure payment processing, real-time order tracking, and an intuitive admin dashboard.',
     image: 'https://i.ibb.co.com/h1VpLnWn/Biryani-2.jpg',
-    videoUrl: 'https://cdn.pixabay.com/video/2021/04/12/70878-537443187_tiny.mp4',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-chef-preparing-a-salad-in-the-kitchen-4623-large.mp4',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
     liveUrl: 'https://local-chef-bazaar-pied.vercel.app/',
     githubUrl: 'https://github.com/anwarhossen-dev/LocalChefBazaar',
@@ -83,6 +94,7 @@ export const PROJECTS = [
     shortDescription: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication.',
     description: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication. This sophisticated platform features comprehensive project management tools including task assignment, progress tracking, deadline management, team collaboration spaces, and interactive dashboards with data visualization.',
     image: 'https://i.ibb.co.com/6c3DC3HJ/heroio.png',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-at-his-computer-34533-large.mp4',
     technologies: ['React', 'Socket.io', 'Node.js', 'PostgreSQL'],
     liveUrl: 'https://taupe-moxie-6c1b13.netlify.app/',
     githubUrl: 'https://github.com/anwarhossen-dev/B-12-A08-Hero-Apps',
@@ -95,6 +107,7 @@ export const PROJECTS = [
     shortDescription: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through elegant and modern design aesthetic.',
     description: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through an elegant and modern design aesthetic. Built with React.js and styled using Tailwind CSS, this project demonstrates advanced frontend development skills with a focus on user experience and visual appeal.',
     image: 'https://i.ibb.co.com/Z18112hy/71-P4fmg-Nmj-L.jpg',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-graphic-designer-working-on-a-digital-tablet-4621-large.mp4',
     technologies: ['React', 'Tailwind CSS', 'Vite'],
     liveUrl: 'https://tubular-sundae-69af35.netlify.app',
     githubUrl: 'https://github.com/anwarhossen-dev/ARTIFY-client',
@@ -107,6 +120,7 @@ export const PROJECTS = [
     shortDescription: 'Emergency-Hotline is a comprehensive emergency response platform providing quick access to emergency services with real-time location tracking.',
     description: 'Emergency-Hotline is a comprehensive emergency response platform providing quick access to emergency services, medical assistance, and crisis support with real-time location tracking and multi-language support.',
     image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=250&fit=crop',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-flashing-light-of-an-ambulance-car-in-the-night-42407-large.mp4',
     technologies: ['React', 'JavaScript', 'Geolocation API'],
     liveUrl: 'https://anwarhossen-dev.github.io/B12-A5-Emergency-Hotline',
     githubUrl: 'https://github.com/anwarhossen-dev/B12-A5-Emergency-Hotline',
@@ -119,6 +133,7 @@ export const PROJECTS = [
     shortDescription: 'Green-Earth is an innovative environmental awareness platform dedicated to promoting eco-friendly practices and sustainability.',
     description: 'Green-Earth is an innovative environmental awareness and sustainability platform dedicated to promoting eco-friendly practices and environmental conservation. This comprehensive web application features interactive environmental data visualization and carbon footprint calculators.',
     image: 'https://i.ibb.co.com/rGXZMmbW/Green.png',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-wind-turbines-on-a-sunny-day-43340-large.mp4',
     technologies: ['React', 'JavaScript', 'Data Visualization'],
     liveUrl: 'https://anwarhossen-dev.github.io/B12A06-Green-Earth',
     githubUrl: 'https://github.com/anwarhossen-dev/B12A06-Green-Earth',
@@ -228,5 +243,71 @@ export const EXPERIENCE = [
     ],
     technologies: ["ASP.NET Core", "C#", "MS SQL Server", "HTML", "CSS", "JavaScript", "Git"],
     icon: "code"
+  }
+];
+
+// Services Data
+export const SERVICES = [
+  {
+    title: "Full Stack Development",
+    description: "Building robust and scalable web applications from scratch using modern tech stacks like MERN and ASP.NET Core. I handle everything from database design to frontend polish.",
+    icon: "layers",
+    color: "from-blue-500 to-cyan-500",
+    features: ["Custom Web Apps", "E-commerce Solutions", "API Integration"]
+  },
+  {
+    title: "AI Integration",
+    description: "Transforming traditional workflows with AI power. I specialize in integrating LLMs, building AI-driven chatbots, and automating engineering tasks.",
+    icon: "psychology",
+    color: "from-purple-500 to-indigo-500",
+    features: ["Chatbot Development", "AI Automation", "Prompt Engineering"]
+  },
+  {
+    title: "DevOps & Cloud",
+    description: "Ensuring high availability and performance through modern DevOps practices. From CI/CD pipelines to cloud deployment on Azure and Vercel.",
+    icon: "cloud_done",
+    color: "from-orange-500 to-red-500",
+    features: ["CI/CD Pipelines", "Docker Containerization", "Cloud Hosting"]
+  }
+];
+
+// Testimonials Data
+export const TESTIMONIALS = [
+  {
+    name: "Alex Johnson",
+    role: "CEO at TechFlow",
+    content: "Anwar is an exceptional developer who truly understands the balance between aesthetics and functionality. His AI integration work saved our team hundreds of hours.",
+    image: "https://i.pravatar.cc/150?u=alex",
+    rating: 5
+  },
+  {
+    name: "Sarah Miller",
+    role: "Project Manager",
+    content: "Working with MD. Anwar Hossen was a breeze. He delivered our complex ASP.NET project ahead of schedule and with impeccable code quality.",
+    image: "https://i.pravatar.cc/150?u=sarah",
+    rating: 5
+  },
+  {
+    name: "David Chen",
+    role: "Startup Founder",
+    content: "The MERN stack application Anwar built for us is fast, responsive, and secure. His attention to detail in the UI/UX is what sets him apart.",
+    image: "https://i.pravatar.cc/150?u=david",
+    rating: 5
+  }
+];
+
+// FAQ Data
+export const FAQS = [
+  {
+    question: "What is your primary tech stack?",
+    answer: "I specialize in the MERN stack (MongoDB, Express, React, Node.js) and ASP.NET Core for enterprise-level applications."
+  },
+  {
+    question: "Are you available for freelance projects?",
+    answer: "Yes! I'm always open to discussing new projects and collaborations. Feel free to reach out via the contact section."
+  },
+  {
+    question: "Do you offer post-launch support?",
+    answer: "Absolutely. I provide ongoing maintenance, bug fixes, and updates to ensure your application continues to run smoothly."
   }
 ];

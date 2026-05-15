@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useSpring, animated, useTrail } from '@react-spring/web';
 import { useState, useEffect } from 'react';
+import Terminal from './Terminal.jsx';
 import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
 import {
   fadeInUp,
@@ -246,6 +247,17 @@ const AboutSection = () => {
             - Cory House
           </motion.p>
         </motion.div>
+      </motion.div>
+
+      {/* Interactive Coding Terminal */}
+      <motion.div
+        variants={fadeInUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="mt-12"
+      >
+        <Terminal />
       </motion.div>
 
       {/* Floating Elements */}

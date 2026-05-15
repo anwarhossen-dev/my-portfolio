@@ -1,0 +1,32 @@
+{
+  "name": "MD. Anwar Hossen - Portfolio",
+  "short_name": "Anwar Portfolio",
+  "description": "Professional Full Stack .NET & MERN Developer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#06b6d4",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["portfolio", "resume", "developer"],
+  "screenshots": [
+    {
+      "src": "/screen.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}

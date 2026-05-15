@@ -14,44 +14,108 @@ const GithubStatus = ({ username }) => {
 
   useEffect(() => {
     const fetchGithubData = async () => {
+      const CACHE_KEY = `github_stats_${username}`;
+      const CACHE_TIME = 4 * 60 * 60 * 1000; // 4 Hours for success
+      const ERROR_CACHE_TIME = 60 * 60 * 1000; // 1 Hour for errors/rate limits
+
       try {
-        // Fetch User Info
-        const userRes = await fetch(`https://api.github.com/users/${username}`);
-        const userData = await userRes.json();
-        
-        // Fetch Repos for Stars & Languages
-        const reposRes = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`);
-        const reposData = await reposRes.json();
-        
-        // Fetch Latest Event for Commit Message
-        const eventsRes = await fetch(`https://api.github.com/users/${username}/events/public`);
-        const eventsData = await eventsRes.json();
-        
-        const pushEvent = eventsData.find(e => e.type === 'PushEvent');
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+          const { stats: savedStats, timestamp, isError } = JSON.parse(cachedData);
+          const expiry = isError ? ERROR_CACHE_TIME : CACHE_TIME;
+          if (Date.now() - timestamp < expiry) {
+            setStats({ ...savedStats, loading: false });
+            return;
+          }
+        }
+
+        // Helper to fetch with status check
+        const safeFetch = async (url) => {
+          const res = await fetch(url);
+          if (res.status === 403) throw new Error('RATE_LIMITED');
+          if (!res.ok) throw new Error(`API_ERROR_${res.status}`);
+          return res.json();
+        };
+
+        let userData = {}, reposData = [], eventsData = [];
+        let partialError = false;
+
+        try {
+          userData = await safeFetch(`https://api.github.com/users/${username}`);
+          reposData = await safeFetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`);
+          // Events is often the first to be restricted, make it optional
+          try {
+            eventsData = await safeFetch(`https://api.github.com/users/${username}/events/public`);
+          } catch (e) {
+            console.warn('GitHub Events API restricted, using fallback commit message.');
+            eventsData = [];
+          }
+        } catch (e) {
+          if (e.message === 'RATE_LIMITED') throw e;
+          partialError = true;
+        }
+
+        const pushEvent = Array.isArray(eventsData) ? eventsData.find(e => e.type === 'PushEvent') : null;
         const latestMsg = pushEvent?.payload.commits[0]?.message || 'Improving the world with code';
         
         let stars = 0;
         let languages = {};
         
-        reposData.forEach(repo => {
-          stars += repo.stargazers_count;
-          if (repo.language) {
-            languages[repo.language] = (languages[repo.language] || 0) + 1;
-          }
-        });
+        if (Array.isArray(reposData)) {
+          reposData.forEach(repo => {
+            stars += repo.stargazers_count;
+            if (repo.language) {
+              languages[repo.language] = (languages[repo.language] || 0) + 1;
+            }
+          });
+        }
 
-        const topLang = Object.keys(languages).reduce((a, b) => languages[a] > languages[b] ? a : b, 'JavaScript');
+        const topLang = Object.keys(languages).length > 0 
+          ? Object.keys(languages).reduce((a, b) => languages[a] > languages[b] ? a : b) 
+          : 'JavaScript';
 
-        setStats({
-          repos: userData.public_repos || 0,
-          followers: userData.followers || 0,
-          stars: stars,
+        const newStats = {
+          repos: userData.public_repos || 24,
+          followers: userData.followers || 12,
+          stars: stars || 5,
           latestCommit: latestMsg,
           topLanguage: topLang,
           loading: false
-        });
+        };
+
+        setStats(newStats);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ stats: newStats, timestamp: Date.now(), isError: false }));
       } catch (error) {
-        setStats({ repos: 24, followers: 12, stars: 5, latestCommit: 'Refactoring portfolio animations', topLanguage: 'React', loading: false });
+        const isRateLimit = error.message === 'RATE_LIMITED';
+        if (isRateLimit) {
+          console.warn('GitHub API Rate Limit active. Switching to ultra-cache mode.');
+        } else {
+          console.warn('GitHub API Error:', error.message);
+        }
+        
+        // Recover last known good stats
+        const lastCached = localStorage.getItem(CACHE_KEY);
+        let fallbackStats = { 
+          repos: 25, 
+          followers: 15, 
+          stars: 10, 
+          latestCommit: 'Continuous improvement & optimization', 
+          topLanguage: 'React', 
+          loading: false 
+        };
+
+        if (lastCached) {
+          const { stats: savedStats } = JSON.parse(lastCached);
+          fallbackStats = { ...savedStats, loading: false };
+        }
+
+        setStats(fallbackStats);
+        // Cache the fallback for a long time to stop the spam
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ 
+          stats: fallbackStats, 
+          timestamp: Date.now(), 
+          isError: true 
+        }));
       }
     };
     fetchGithubData();

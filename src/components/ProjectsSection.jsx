@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PROJECTS } from '../constants';
 import { useScrollReveal } from '../hooks/useAnimations';
@@ -106,31 +106,31 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
     </AnimatePresence>
   );
 };
-
-const ProjectCard = ({ project, onViewMore }) => {
+const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
   const videoRef = useRef(null);
 
   // 3D Tilt Effect
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
+    if (!ref.current) return;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
     const x = (e.clientX - left) / width;
     const y = (e.clientY - top) / height;
     const moveX = (x - 0.5) * 20;
     const moveY = (y - 0.5) * -20;
-    cardRef.current.style.transform = `perspective(1000px) rotateX(${moveY}deg) rotateY(${moveX}deg)`;
+    ref.current.style.transform = `perspective(1000px) rotateX(${moveY}deg) rotateY(${moveX}deg)`;
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    if (cardRef.current) cardRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    onLeave();
+    if (ref.current) ref.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
     if (videoRef.current) videoRef.current.pause();
   };
 
   const handleMouseEnter = () => {
     setIsHovered(true);
+    if (project.videoUrl) onHover(project.videoUrl);
     if (videoRef.current) videoRef.current.play().catch(() => {});
   };
 
@@ -141,7 +141,7 @@ const ProjectCard = ({ project, onViewMore }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4 }}
-      ref={cardRef}
+      ref={ref}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -183,11 +183,12 @@ const ProjectCard = ({ project, onViewMore }) => {
       </div>
     </motion.div>
   );
-};
+});
 
 const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [filter, setFilter] = useState('All');
+  const [ambientVideo, setAmbientVideo] = useState(null);
 
   const categories = useMemo(() => {
     const cats = ['All', ...new Set(PROJECTS.map(p => p.category))];
@@ -203,7 +204,33 @@ const ProjectsSection = () => {
 
   return (
     <section ref={sectionRef} className="px-6 lg:px-16 py-32 max-w-7xl mx-auto w-full relative" id="projects">
-      <motion.div className="flex flex-col items-center text-center mb-16" variants={fadeInUp}>
+      {/* Smart Ambient Video Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <AnimatePresence>
+          {ambientVideo && (
+            <motion.div
+              key={ambientVideo}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.15 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="absolute inset-0"
+            >
+              <video 
+                src={ambientVideo} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-cover scale-110 blur-[100px]"
+              />
+              <div className="absolute inset-0 bg-gray-50/50 dark:bg-background-dark/50" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <motion.div className="flex flex-col items-center text-center mb-16 relative z-10" variants={fadeInUp}>
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 mb-6">
           <span className="text-[10px] font-bold uppercase tracking-widest">Portfolio</span>
         </div>
@@ -230,10 +257,16 @@ const ProjectsSection = () => {
         </div>
       </motion.div>
 
-      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 relative z-10">
         <AnimatePresence mode="popLayout">
           {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} onViewMore={setSelectedProject} />
+            <ProjectCard 
+              key={project.id} 
+              project={project} 
+              onViewMore={setSelectedProject} 
+              onHover={(video) => setAmbientVideo(video)}
+              onLeave={() => setAmbientVideo(null)}
+            />
           ))}
         </AnimatePresence>
       </motion.div>
