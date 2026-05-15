@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '../utils/animations';
+import { MdSync, MdCode, MdConstruction, MdBiotech, MdRocketLaunch, MdCloudDone, MdSettings, MdCheck, MdTerminal } from 'react-icons/md';
 
 const DevOpsSection = () => {
   const [isRunning, setIsRunning] = useState(false);
@@ -9,11 +10,11 @@ const DevOpsSection = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const pipelineStages = [
-    { title: 'Code', icon: 'code', gradient: 'from-blue-600 to-cyan-500' },
-    { title: 'Build', icon: 'construction', gradient: 'from-indigo-600 to-blue-500' },
-    { title: 'Test', icon: 'biotech', gradient: 'from-purple-600 to-indigo-500' },
-    { title: 'Release', icon: 'rocket_launch', gradient: 'from-pink-600 to-purple-500' },
-    { title: 'Deploy', icon: 'cloud_done', gradient: 'from-emerald-600 to-teal-500' }
+    { title: 'Code', icon: <MdCode />, gradient: 'from-blue-600 to-cyan-500' },
+    { title: 'Build', icon: <MdConstruction />, gradient: 'from-indigo-600 to-blue-500' },
+    { title: 'Test', icon: <MdBiotech />, gradient: 'from-purple-600 to-indigo-500' },
+    { title: 'Release', icon: <MdRocketLaunch />, gradient: 'from-pink-600 to-purple-500' },
+    { title: 'Deploy', icon: <MdCloudDone />, gradient: 'from-emerald-600 to-teal-500' }
   ];
 
   const triggerPipeline = () => {
@@ -72,7 +73,7 @@ const DevOpsSection = () => {
       >
         <div className="flex flex-col items-center text-center mb-20">
           <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 mb-6">
-            <span className="material-icons text-xs animate-spin">sync</span>
+            <MdSync className="text-xs animate-spin" />
             <span className="text-[10px] font-bold uppercase tracking-widest">Futuristic DevOps CI/CD</span>
           </motion.div>
           
@@ -89,11 +90,6 @@ const DevOpsSection = () => {
               isRunning ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-2xl'
             }`}
           >
-            {/* <span className="relative z-10">{isRunning ? 'Pipeline Active' : 'Run Smart Pipeline'}</span>
-            <span className={`material-icons relative z-10 text-sm ${isRunning ? 'animate-spin' : 'group-hover:rotate-12 transition-transform'}`}>
-              {isRunning ? 'settings' : 'rocket_launch'}
-            </span> */}
-
             <div
   className={`relative z-10 w-10 h-10 rounded-full
   flex items-center justify-center
@@ -103,16 +99,16 @@ const DevOpsSection = () => {
       : 'bg-cyan-500 text-white'
   }`}
 >
-  <span
-    className={`material-icons text-[20px]
+  <div
+    className={`text-[20px]
     ${
       isRunning
         ? 'animate-spin'
         : 'group-hover:rotate-12 transition-transform duration-300'
     }`}
   >
-    {isRunning ? 'settings' : 'rocket_launch'}
-  </span>
+    {isRunning ? <MdSettings /> : <MdRocketLaunch />}
+  </div>
 </div>
             {/* Success Animation Overlay */}
             <AnimatePresence>
@@ -195,8 +191,8 @@ const DevOpsSection = () => {
                         }
                       `}
                     >
-                      <span className={`material-icons text-3xl mb-1 ${isCompleted ? 'scale-110' : ''}`}>
-                        {isCompleted ? 'check' : stage.icon}
+                      <span className={`text-3xl mb-1 ${isCompleted ? 'scale-110' : ''}`}>
+                        {isCompleted ? <MdCheck /> : stage.icon}
                       </span>
                       <span className="text-[10px] font-black uppercase tracking-widest">{stage.title}</span>
                     </motion.div>
@@ -247,7 +243,7 @@ const DevOpsSection = () => {
               <div className="space-y-8">
                 <div className="flex items-center gap-5">
                   <div className="w-14 h-14 rounded-3xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 shadow-inner">
-                    <span className="material-icons text-cyan-400 text-3xl animate-pulse">terminal</span>
+                    <MdTerminal className="text-cyan-400 text-3xl animate-pulse" />
                   </div>
                   <div>
                     <h4 className="text-white font-black text-3xl tracking-tight">AI Deployment <span className="text-cyan-400 italic">Control</span></h4>

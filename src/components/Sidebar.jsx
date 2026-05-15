@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { gsap } from 'gsap';
 import { SOCIAL_LINKS } from '../constants';
+import { FaGithub, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 
 const MagneticSocialLink = ({ href, icon, iconText, name, color }) => {
   const linkRef = useRef(null);
@@ -61,11 +63,7 @@ const MagneticSocialLink = ({ href, icon, iconText, name, color }) => {
         `}
         aria-label={name}
       >
-        {icon.includes('material') ? (
-          <span className="material-icons-outlined text-lg">{iconText}</span>
-        ) : (
-          <i className={`${icon} text-lg`}></i>
-        )}
+        <span className="text-lg">{icon}</span>
       </a>
     </motion.div>
   );
@@ -80,10 +78,10 @@ const Sidebar = () => {
   });
 
   const socialData = [
-    { name: 'GitHub', icon: 'fab fa-github', href: SOCIAL_LINKS.github, color: 'hover:bg-[#333]' },
-    { name: 'LinkedIn', icon: 'fab fa-linkedin-in', href: SOCIAL_LINKS.linkedin, color: 'hover:bg-[#0077b5]' },
-    { name: 'WhatsApp', icon: 'fab fa-whatsapp', href: SOCIAL_LINKS.whatsapp, color: 'hover:bg-[#25D366]' },
-    { name: 'Email', icon: 'material-icons-outlined', iconText: 'mail', href: SOCIAL_LINKS.email, color: 'hover:bg-primary' }
+    { name: 'GitHub', icon: <FaGithub />, href: SOCIAL_LINKS.github, color: 'hover:bg-[#333]' },
+    { name: 'LinkedIn', icon: <FaLinkedinIn />, href: SOCIAL_LINKS.linkedin, color: 'hover:bg-[#0077b5]' },
+    { name: 'WhatsApp', icon: <FaWhatsapp />, href: SOCIAL_LINKS.whatsapp, color: 'hover:bg-[#25D366]' },
+    { name: 'Email', icon: <MdEmail />, href: SOCIAL_LINKS.email, color: 'hover:bg-primary' }
   ];
 
   return (

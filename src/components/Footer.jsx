@@ -9,6 +9,8 @@ import {
   staggerItem,
   scaleIn
 } from '../utils/animations';
+import { FaGithub, FaLinkedinIn, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
+import { MdEmail, MdPhone, MdLocationOn, MdKeyboardArrowUp } from 'react-icons/md';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -34,32 +36,31 @@ const Footer = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      icon: 'fab fa-github',
+      icon: <FaGithub />,
       url: SOCIAL_LINKS.github,
       color: 'hover:bg-gray-800'
     },
     {
       name: 'LinkedIn',
-      icon: 'fab fa-linkedin-in',
+      icon: <FaLinkedinIn />,
       url: SOCIAL_LINKS.linkedin,
       color: 'hover:bg-blue-600'
     },
     {
       name: 'Facebook',
-      icon: 'fab fa-facebook-f',
+      icon: <FaFacebookF />,
       url: SOCIAL_LINKS.facebook,
       color: 'hover:bg-blue-700'
     },
     {
       name: 'WhatsApp',
-      icon: 'fab fa-whatsapp',
+      icon: <FaWhatsapp />,
       url: SOCIAL_LINKS.whatsapp,
       color: 'hover:bg-green-500'
     },
     {
       name: 'Email',
-      icon: 'material-icons-outlined',
-      iconText: 'email',
+      icon: <MdEmail />,
       url: SOCIAL_LINKS.email,
       color: 'hover:bg-red-500'
     }
@@ -68,7 +69,6 @@ const Footer = () => {
   const quickLinks = [
     { name: 'Home', href: '#' },
     { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Contact', href: '#contact' }
@@ -147,11 +147,7 @@ const Footer = () => {
                       whileHover={{ scale: 1.2, y: -5 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      {social.icon === 'material-icons-outlined' ? (
-                        <span className="material-icons-outlined text-sm">{social.iconText}</span>
-                      ) : (
-                        <i className={`${social.icon} text-sm`}></i>
-                      )}
+                      <span className="text-sm">{social.icon}</span>
                     </motion.a>
                   ))}
                 </motion.div>
@@ -198,12 +194,7 @@ const Footer = () => {
                     variants={staggerItem}
                     whileHover={{ x: 5 }}
                   >
-                    <motion.span 
-                      className="material-icons-outlined text-cyan-400"
-                      whileHover={{ scale: 1.2 }}
-                    >
-                      email
-                    </motion.span>
+                    <MdEmail className="text-cyan-400 text-lg" />
                     <span className="text-sm">{PERSONAL_INFO.email}</span>
                   </motion.div>
                   
@@ -212,12 +203,7 @@ const Footer = () => {
                     variants={staggerItem}
                     whileHover={{ x: 5 }}
                   >
-                    <motion.span 
-                      className="material-icons-outlined text-cyan-400"
-                      whileHover={{ scale: 1.2 }}
-                    >
-                      phone
-                    </motion.span>
+                    <MdPhone className="text-cyan-400 text-lg" />
                     <span className="text-sm">{PERSONAL_INFO.phone}</span>
                   </motion.div>
                   
@@ -226,12 +212,7 @@ const Footer = () => {
                     variants={staggerItem}
                     whileHover={{ x: 5 }}
                   >
-                    <motion.span 
-                      className="material-icons-outlined text-cyan-400"
-                      whileHover={{ scale: 1.2 }}
-                    >
-                      location_on
-                    </motion.span>
+                    <MdLocationOn className="text-cyan-400 text-lg" />
                     <span className="text-sm">{PERSONAL_INFO.location}</span>
                   </motion.div>
                 </motion.div>
@@ -261,13 +242,11 @@ const Footer = () => {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.span 
-                  className="material-icons-outlined text-sm"
+                <MdKeyboardArrowUp 
+                  className="text-lg"
                   animate={{ y: [0, -2, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                >
-                  keyboard_arrow_up
-                </motion.span>
+                />
                 Back to Top
               </motion.button>
             </div>

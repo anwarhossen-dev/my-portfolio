@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants';
+import { FaGithub, FaLinkedinIn, FaFacebookF, FaWhatsapp, FaPaperPlane } from 'react-icons/fa';
+import { MdEmail, MdPhone, MdChat, MdHourglassEmpty } from 'react-icons/md';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -46,59 +48,108 @@ const ContactSection = () => {
       return;
     }
 
-    // For Netlify Forms to work with AJAX, we send the POST via fetch
+    // --- CLEAN & RELIABLE DELIVERY SYSTEM ---
     try {
-      // EmailJS এর মাধ্যমে আসল ইমেইল পাঠানো (লোকাল এবং প্রোডাকশন উভয় জায়গায় কাজ করবে)
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_name: "Anwar",
-      };
+      let sentSuccessfully = false;
+      let usedService = '';
 
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      // Get keys from environment variables (No hardcoded placeholders)
+      const web3Key = import.meta.env.VITE_WEB3FORMS_KEY;
+      const emailjsService = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const emailjsTemplate = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const emailjsPublic = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
 
-      if (serviceId && templateId) {
-        await emailjs.send(
-          serviceId,
-          templateId,
-          templateParams
-        );
+      // Helper to check if a key is actually a real value
+      const isReal = (val) => val && !val.includes('your') && !val.includes('placeholder') && val.length > 5;
+
+      // 1. Try Web3Forms (Only if a REAL key is provided in .env)
+      if (isReal(web3Key)) {
+        try {
+          const web3Response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+              access_key: web3Key,
+              name: formData.name,
+              email: formData.email,
+              subject: formData.subject,
+              message: formData.message,
+              from_name: "Portfolio Visitor"
+            }),
+          });
+          const web3Data = await web3Response.json();
+          if (web3Data.success) {
+            sentSuccessfully = true;
+            usedService = 'Web3Forms';
+          }
+        } catch (err) { console.warn("Web3Forms background send failed"); }
       }
 
-      // Netlify Forms এর জন্য রিকোয়েস্ট (শুধুমাত্র লাইভ সাইটে কাজ করবে)
-      if (import.meta.env.PROD) {
-        await fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({ "form-name": "contact", ...formData }).toString(),
-        });
+      // 2. Try EmailJS (Only if REAL keys are provided in .env)
+      if (!sentSuccessfully && isReal(emailjsService)) {
+        try {
+          await emailjs.send(emailjsService, emailjsTemplate, {
+            from_name: formData.name,
+            from_email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+            to_name: "Anwar Hossen",
+            reply_to: formData.email
+          }, emailjsPublic);
+          sentSuccessfully = true;
+          usedService = 'EmailJS';
+        } catch (err) { console.warn("EmailJS background send failed"); }
       }
 
-      // Note: In development we handle it as success for simulation
-      showNotification(`✅ Message sent successfully! I will get back to you soon.`, 'success');
+      // 3. Try Formspree (Only if a REAL ID is provided in .env)
+      if (!sentSuccessfully && isReal(formspreeId)) {
+        try {
+          const formspreeResponse = await fetch(`https://formspree.io/f/${formspreeId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              subject: formData.subject,
+              message: formData.message
+            }),
+          });
+          if (formspreeResponse.ok) {
+            sentSuccessfully = true;
+            usedService = 'Formspree';
+          }
+        } catch (err) { console.warn("Formspree background send failed"); }
+      }
 
-      // Save to localStorage as backup
-      const emailData = {
-        to: 'anwarhossendeveloper21@gmail.com',
-        from: formData.email,
-        name: formData.name,
-        subject: formData.subject,
-        message: formData.message,
-        timestamp: new Date().toISOString(),
-        status: 'sent_via_ajax'
-      };
+      // --- Results & Final Fallback ---
+      if (sentSuccessfully) {
+        showNotification(`✅ Success! Your message has been sent via ${usedService}.`, 'success');
+        
+        // Save to history
+        const emailHistory = JSON.parse(localStorage.getItem('sentEmails') || '[]');
+        emailHistory.push({ ...formData, timestamp: new Date().toISOString(), service: usedService });
+        localStorage.setItem('sentEmails', JSON.stringify(emailHistory));
+        
+        resetForm();
+      } else {
+        // ULTIMATE FALLBACK: Mailto (Guaranteed to work everywhere without keys or CORS)
+        console.info("Automatic sending skipped (No keys configured). Using reliable fallback.");
+        
+        const emailContent = `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
+        navigator.clipboard.writeText(emailContent);
+        
+        const mailtoSubject = encodeURIComponent(`Portfolio Contact: ${formData.subject}`);
+        const mailtoBody = encodeURIComponent(emailContent);
+        window.location.href = `mailto:anwarhossendeveloper21@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+        
+        showNotification('✅ Opening your email app to send the message...', 'info');
+        resetForm();
+      }
 
-      const emailHistory = JSON.parse(localStorage.getItem('sentEmails') || '[]');
-      emailHistory.push({ ...emailData, id: Date.now() });
-      localStorage.setItem('sentEmails', JSON.stringify(emailHistory));
-
-      resetForm();
     } catch (error) {
-      console.error('Form submission error:', error);
-      showNotification('Submission encountered a problem. Please try again.', 'error');
+      console.error('Submission error:', error);
+      showNotification('Something went wrong. Please try WhatsApp.', 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -121,21 +172,21 @@ const ContactSection = () => {
 
   const contactInfo = [
     {
-      icon: 'email',
+      icon: <MdEmail />,
       label: 'Email Address',
       value: PERSONAL_INFO.email,
       link: `mailto:${PERSONAL_INFO.email}`,
       color: 'text-blue-500'
     },
     {
-      icon: 'phone',
+      icon: <MdPhone />,
       label: 'Phone Number',
       value: PERSONAL_INFO.phone,
       link: `tel:${PERSONAL_INFO.phone}`,
       color: 'text-green-500'
     },
     {
-      icon: 'chat',
+      icon: <MdChat />,
       label: 'WhatsApp',
       value: PERSONAL_INFO.phone,
       link: SOCIAL_LINKS.whatsapp,
@@ -146,19 +197,19 @@ const ContactSection = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      icon: 'fab fa-github',
+      icon: <FaGithub />,
       url: SOCIAL_LINKS.github,
       color: 'hover:bg-gray-800'
     },
     {
       name: 'LinkedIn',
-      icon: 'fab fa-linkedin-in',
+      icon: <FaLinkedinIn />,
       url: SOCIAL_LINKS.linkedin,
       color: 'hover:bg-blue-600'
     },
     {
       name: 'Facebook',
-      icon: 'fab fa-facebook-f',
+      icon: <FaFacebookF />,
       url: SOCIAL_LINKS.facebook,
       color: 'hover:bg-blue-700'
     }
@@ -237,7 +288,7 @@ const ContactSection = () => {
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span className="material-icons-outlined text-xl">{info.icon}</span>
+                  <span className="text-xl">{info.icon}</span>
                 </motion.div>
                 <div>
                   <p className="text-slate-500 dark:text-slate-400 text-sm">{info.label}</p>
@@ -266,7 +317,7 @@ const ContactSection = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <i className={`${social.icon} text-lg`}></i>
+                  <span className="text-lg">{social.icon}</span>
                 </motion.a>
               ))}
             </div>
@@ -382,9 +433,9 @@ const ContactSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.8 }}
             >
-              <span className="material-icons-outlined text-sm">
-                {isSubmitting ? 'hourglass_empty' : 'send'}
-              </span>
+              <div className="text-sm">
+                {isSubmitting ? <MdHourglassEmpty className="animate-spin" /> : <FaPaperPlane />}
+              </div>
               {isSubmitting ? 'Sending Direct...' : 'Send Message'}
             </motion.button>
             
