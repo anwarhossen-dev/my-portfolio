@@ -6,7 +6,9 @@ export const NAV_LINKS = [
   { name: 'Skills', href: '#skills', icon: 'bolt' },
   { name: 'Education', href: '#education', icon: 'school' },
   { name: 'Experience', href: '#experience', icon: 'work_outline' },
+  { name: 'Certificates', href: '#certificates', icon: 'verified_user' },
   { name: 'Projects', href: '#projects', icon: 'folder_open' },
+  // { name: 'Testimonials', href: '#testimonials', icon: 'chat_bubble_outline' },
   { name: 'Contact', href: '#contact', icon: 'mail_outline' }
 ];
 
@@ -146,6 +148,7 @@ export const PROJECTS = [
     shortDescription: 'A structured system for organizing and managing student admission-related information efficiently.',
     description: 'This project focuses on organizing and managing admission-related information in a structured and efficient way. It includes student personal details, academic background, document verification status, and admission progress tracking.',
     image: 'https://i.ibb.co/5gtFGXHh/admission.png',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-hand-of-a-man-typing-on-a-computer-keyboard-40482-large.mp4',
     technologies: ['JavaScript', 'Bootstrap 5', 'Local Storage'],
     liveUrl: 'https://anwarhossen-dev.github.io/Admission-info/',
     githubUrl: 'https://github.com/anwarhossen-dev/Admission-info',
@@ -253,21 +256,42 @@ export const SERVICES = [
     description: "Building robust and scalable web applications from scratch using modern tech stacks like MERN and ASP.NET Core. I handle everything from database design to frontend polish.",
     icon: "layers",
     color: "from-blue-500 to-cyan-500",
-    features: ["Custom Web Apps", "E-commerce Solutions", "API Integration"]
+    features: ["Custom Web Apps", "E-commerce Solutions", "API Integration"],
+    badge: "Enterprise Grade",
+    metrics: [
+      { label: "Projects Delivered", value: "15+" },
+      { label: "Performance Boost", value: "40%" }
+    ],
+    ctaText: "Inquire Development",
+    ctaHref: "#contact"
   },
   {
     title: "AI Integration",
     description: "Transforming traditional workflows with AI power. I specialize in integrating LLMs, building AI-driven chatbots, and automating engineering tasks.",
     icon: "psychology",
     color: "from-purple-500 to-indigo-500",
-    features: ["Chatbot Development", "AI Automation", "Prompt Engineering"]
+    features: ["Chatbot Development", "AI Automation", "Prompt Engineering"],
+    badge: "Next Gen",
+    metrics: [
+      { label: "Agents Configured", value: "10+" },
+      { label: "Workflows Automated", value: "85%" }
+    ],
+    ctaText: "Consult AI Solutions",
+    ctaHref: "#contact"
   },
   {
     title: "DevOps & Cloud",
     description: "Ensuring high availability and performance through modern DevOps practices. From CI/CD pipelines to cloud deployment on Azure and Vercel.",
     icon: "cloud_done",
     color: "from-orange-500 to-red-500",
-    features: ["CI/CD Pipelines", "Docker Containerization", "Cloud Hosting"]
+    features: ["CI/CD Pipelines", "Docker Containerization", "Cloud Hosting"],
+    badge: "Cloud Certified",
+    metrics: [
+      { label: "Average Uptime", value: "99.9%" },
+      { label: "Deployment Speed", value: "3x Faster" }
+    ],
+    ctaText: "Optimize Pipeline",
+    ctaHref: "#contact"
   }
 ];
 
@@ -293,6 +317,37 @@ export const TESTIMONIALS = [
     content: "The MERN stack application Anwar built for us is fast, responsive, and secure. His attention to detail in the UI/UX is what sets him apart.",
     image: "https://i.pravatar.cc/150?u=david",
     rating: 5
+  }
+];
+
+// Certificates & Awards Data
+export const CERTIFICATES = [
+  {
+    title: 'MERN Stack Web Development Specialization',
+    issuer: 'Programming Hero',
+    date: '2024',
+    icon: 'fas fa-graduation-cap',
+    color: 'from-blue-500 to-cyan-500',
+    credentialUrl: '/certificates/mern.pdf',
+    description: 'Comprehensive specialization covering React, Node.js, Express, MongoDB, Firebase Authentication, and advanced state management.'
+  },
+  {
+    title: 'ASP.NET Core & C# Clean Architecture',
+    issuer: 'Udemy / Microsoft Learning',
+    date: '2024',
+    icon: 'fas fa-award',
+    color: 'from-purple-500 to-indigo-500',
+    credentialUrl: '/certificates/aspnet.pdf',
+    description: 'Deep dive into ASP.NET Core MVC, Web API, Entity Framework Core, SQL Server, Repository Pattern, and Clean Architecture.'
+  },
+  {
+    title: 'DevOps & Git Automation Engineer',
+    issuer: 'Coursera / Google Cloud',
+    date: '2025',
+    icon: 'fas fa-certificate',
+    color: 'from-orange-500 to-red-500',
+    credentialUrl: '/certificates/devops.pdf',
+    description: 'Hands-on experience building automated workflows using GitHub Actions, Docker containers, Azure DevOps, and cloud deployments.'
   }
 ];
 

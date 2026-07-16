@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { SKILLS } from '../constants';
 import { fadeInUp, staggerContainer } from '../utils/animations';
+import { GlassCard } from './GlassCard';
 
 const AIPowerSection = () => {
   return (
@@ -19,7 +20,7 @@ const AIPowerSection = () => {
       >
         <div className="flex flex-col items-center text-center mb-20">
           <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 text-purple-600 border border-purple-500/20 mb-6">
-            <span className="material-icons text-xs">auto_awesome</span>
+            <span className="material-icons-outlined text-xs">auto_awesome</span>
             <span className="text-[10px] font-bold uppercase tracking-widest">Intelligent Ecosystem</span>
           </motion.div>
           
@@ -37,34 +38,15 @@ const AIPowerSection = () => {
             <motion.div
               key={index}
               variants={fadeInUp}
-              whileHover={{ y: -10 }}
-              className="group p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500"
             >
-              <div className="flex items-start justify-between mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-500">
-                  <i className={`${tool.icon} text-2xl`}></i>
-                </div>
-                <div className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-black uppercase text-slate-400">
-                  Mastery: {tool.level}%
-                </div>
-              </div>
-
-              <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
-                {tool.name}
-              </h3>
-              
-              <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-4">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${tool.level}%` }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="h-full bg-gradient-to-r from-primary to-purple-600"
-                />
-              </div>
-
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                Integrating {tool.name} into the development lifecycle for code optimization and architectural design.
-              </p>
+              <GlassCard
+                index={index}
+                icon={tool.icon}
+                color="from-purple-500 to-indigo-500"
+                title={tool.name}
+                description={`Integrating ${tool.name} into the development lifecycle for code optimization and architectural design.`}
+                progress={tool.level}
+              />
             </motion.div>
           ))}
         </div>
@@ -86,10 +68,10 @@ const AIPowerSection = () => {
             
             <div className="flex gap-4">
               <div className="w-20 h-20 rounded-full border-2 border-primary/30 flex items-center justify-center animate-pulse">
-                <span className="material-icons text-primary text-3xl">auto_awesome</span>
+                <span className="material-icons-outlined text-primary text-3xl">auto_awesome</span>
               </div>
               <div className="w-20 h-20 rounded-full border-2 border-purple-500/30 flex items-center justify-center animate-pulse [animation-delay:0.5s]">
-                <span className="material-icons text-purple-500 text-3xl">hub</span>
+                <span className="material-icons-outlined text-purple-500 text-3xl">hub</span>
               </div>
             </div>
           </div>

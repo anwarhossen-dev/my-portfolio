@@ -143,11 +143,11 @@ const Chatbot = () => {
               onClick={() => setShowGreeting(false)}
               className="absolute -top-2 -right-2 w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-[10px] shadow-lg"
             >
-              <span className="material-icons text-[12px]">close</span>
+              <span className="material-icons-outlined text-[12px]">close</span>
             </button>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-600">
-                <span className="material-icons text-sm">auto_awesome</span>
+                <span className="material-icons-outlined text-sm">auto_awesome</span>
               </div>
               <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
                 Claude 3.5 is online. How can I help?
@@ -180,7 +180,7 @@ const Chatbot = () => {
             <div className="bg-gradient-to-r from-purple-700 to-indigo-800 p-5 text-white flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center border border-white/30">
-                  <span className="material-icons text-white">psychology</span>
+                  <span className="material-icons-outlined text-white">psychology</span>
                 </div>
                 <div>
                   <h3 className="font-black text-xs uppercase tracking-widest">Claude 3.5 Sonnet</h3>
@@ -194,7 +194,7 @@ const Chatbot = () => {
                 onClick={() => setIsOpen(false)}
                 className="hover:bg-white/10 p-2 rounded-xl transition-colors"
               >
-                <span className="material-icons">close</span>
+                <span className="material-icons-outlined">close</span>
               </button>
             </div>
 
@@ -229,7 +229,7 @@ const Chatbot = () => {
               {isAnalyzing && (
                 <div className="flex justify-start">
                   <div className="text-[10px] font-mono text-purple-600 flex items-center gap-2 bg-purple-500/5 px-3 py-1 rounded-full border border-purple-500/10">
-                    <span className="animate-spin material-icons text-[12px]">auto_awesome</span>
+                    <span className="animate-spin material-icons-outlined text-[12px]">auto_awesome</span>
                     <span>Claude is thinking...</span>
                   </div>
                 </div>
@@ -275,7 +275,7 @@ const Chatbot = () => {
                   onClick={() => handleSend(inputValue)}
                   className="absolute right-2 p-2 text-purple-600 hover:bg-purple-500/10 rounded-xl transition-all"
                 >
-                  <span className="material-icons">send</span>
+                  <span className="material-icons-outlined">send</span>
                 </button>
               </div>
             </div>
@@ -307,7 +307,7 @@ const Chatbot = () => {
                 initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
                 animate={{ opacity: 1, rotate: 0, scale: 1 }}
                 exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                className="material-icons text-white text-3xl absolute"
+                className="material-icons-outlined text-white text-3xl absolute"
               >
                 close
               </motion.span>
@@ -317,7 +317,7 @@ const Chatbot = () => {
                 initial={{ opacity: 0, y: 10, scale: 0.5 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.5 }}
-                className="material-icons text-white text-3xl absolute"
+                className="material-icons-outlined text-white text-3xl absolute"
               >
                 waving_hand
               </motion.span>
@@ -327,7 +327,7 @@ const Chatbot = () => {
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
-                className="material-icons text-white text-3xl absolute"
+                className="material-icons-outlined text-white text-3xl absolute"
               >
                 psychology
               </motion.span>
@@ -337,7 +337,7 @@ const Chatbot = () => {
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
-                className="material-icons text-white text-3xl absolute"
+                className="material-icons-outlined text-white text-3xl absolute"
               >
                 auto_awesome
               </motion.span>

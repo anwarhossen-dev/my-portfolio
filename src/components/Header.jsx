@@ -76,7 +76,7 @@ const Header = ({ activeSection = '' }) => {
             scale: isScrolled ? 0.98 : 1
           }}
           transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          className={`pointer-events-auto relative w-full group transition-all duration-500 ${isScrolled ? 'max-w-4xl' : 'max-w-7xl'}`}
+          className={`pointer-events-auto relative w-full group transition-all duration-500 ${isScrolled ? 'max-w-5xl' : 'max-w-7xl'}`}
         >
           {/* Smart Animated Gradient Border */}
           <div className={`absolute -inset-[1px] rounded-[2rem] bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 blur-[2px] transition-opacity duration-500 pointer-events-none ${isScrolled ? 'opacity-30' : ''}`} />
@@ -91,27 +91,29 @@ const Header = ({ activeSection = '' }) => {
             }
           `}>
             {/* Logo Section */}
-            <motion.a
-              href="#"
-              onClick={(e) => handleNavClick('#', e)}
-              className="flex items-center gap-2 group/logo"
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-secondary p-[2px]">
-                <div className="flex items-center justify-center w-full h-full bg-white dark:bg-slate-950 rounded-[10px]">
-                  <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary">
-                    {PERSONAL_INFO.name.charAt(0)}
-                  </span>
+            <div className="flex-1 flex justify-start">
+              <motion.a
+                href="#"
+                onClick={(e) => handleNavClick('#', e)}
+                className="flex items-center gap-2 group/logo"
+                whileHover={{ scale: 1.05 }}
+              >
+                <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-secondary p-[2px]">
+                  <div className="flex items-center justify-center w-full h-full bg-white dark:bg-slate-950 rounded-[10px]">
+                    <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary">
+                      {PERSONAL_INFO.name.charAt(0)}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="hidden sm:flex flex-col leading-tight">
-                <span className="text-sm font-black text-slate-900 dark:text-white tracking-tight">{PERSONAL_INFO.name}</span>
-                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Creative</span>
-              </div>
-            </motion.a>
+                <div className="hidden sm:flex flex-col leading-tight text-left">
+                  <span className="text-sm font-black text-slate-900 dark:text-white tracking-tight">{PERSONAL_INFO.name}</span>
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Creative</span>
+                </div>
+              </motion.a>
+            </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center bg-slate-100/50 dark:bg-slate-800/50 rounded-2xl p-1 border border-slate-200/50 dark:border-slate-700/50">
+            <div className="hidden xl:flex items-center bg-slate-100/50 dark:bg-slate-800/50 rounded-2xl p-1 border border-slate-200/50 dark:border-slate-700/50">
               {NAV_LINKS.map((link) => {
                 const section = link.href.replace('#', '');
                 const isActive = (section === activeId) || (link.href === '#' && activeId === '');
@@ -120,7 +122,7 @@ const Header = ({ activeSection = '' }) => {
                     key={link.name}
                     href={link.href}
                     onClick={(e) => handleNavClick(link.href, e)}
-                    className={`relative px-5 py-2 text-xs font-black uppercase tracking-widest transition-colors duration-300 ${
+                    className={`relative px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors duration-300 ${
                       isActive ? 'text-primary' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
@@ -140,7 +142,7 @@ const Header = ({ activeSection = '' }) => {
             </div>
 
             {/* Actions Section */}
-            <div className="flex items-center gap-3">
+            <div className="flex-1 flex justify-end items-center gap-3">
               <motion.button
                 onClick={toggleTheme}
                 whileHover={{ scale: 1.1, rotate: 15 }}
@@ -181,7 +183,7 @@ const Header = ({ activeSection = '' }) => {
 
               <motion.button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="flex lg:hidden items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm"
+                className="flex xl:hidden items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm"
               >
                 <span className="material-icons-outlined text-xl">{isMobileMenuOpen ? 'close' : 'menu'}</span>
               </motion.button>
@@ -194,7 +196,7 @@ const Header = ({ activeSection = '' }) => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="absolute top-full left-0 right-0 mt-4 p-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-[2rem] border border-primary/20 dark:border-primary/20 shadow-2xl lg:hidden"
+                  className="absolute top-full left-0 right-0 mt-4 p-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-[2rem] border border-primary/20 dark:border-primary/20 shadow-2xl xl:hidden"
                 >
                   <div className="flex flex-col gap-2">
                     {NAV_LINKS.map((link) => (

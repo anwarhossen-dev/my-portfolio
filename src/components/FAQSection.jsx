@@ -17,7 +17,7 @@ const FAQItem = ({ faq, isOpen, toggle }) => {
         <span className="font-bold text-slate-900 dark:text-white text-lg">{faq.question}</span>
         <motion.span 
           animate={{ rotate: isOpen ? 180 : 0 }}
-          className="material-icons text-primary"
+          className="material-icons-outlined text-primary"
         >
           expand_more
         </motion.span>

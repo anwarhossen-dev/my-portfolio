@@ -53,6 +53,26 @@ const ContactSection = () => {
       let sentSuccessfully = false;
       let usedService = '';
 
+      // 0. Try Netlify Forms (Works automatically if hosted on Netlify, no API keys needed!)
+      if (import.meta.env.PROD) {
+        try {
+          const netlifyResponse = await fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ "form-name": "contact", ...formData }).toString(),
+          });
+          
+          // Netlify returns 200 OK for successful form submissions. 
+          // Other hosts (like GitHub Pages) will return 405 Method Not Allowed for POST.
+          if (netlifyResponse.ok) {
+            sentSuccessfully = true;
+            usedService = 'Netlify Forms';
+          }
+        } catch (err) { 
+          console.warn("Netlify Forms send failed:", err); 
+        }
+      }
+
       // Get keys from environment variables (No hardcoded placeholders)
       const web3Key = import.meta.env.VITE_WEB3FORMS_KEY;
       const emailjsService = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -64,7 +84,7 @@ const ContactSection = () => {
       const isReal = (val) => val && !val.includes('your') && !val.includes('placeholder') && val.length > 5;
 
       // 1. Try Web3Forms (Only if a REAL key is provided in .env)
-      if (isReal(web3Key)) {
+      if (!sentSuccessfully && isReal(web3Key)) {
         try {
           const web3Response = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
@@ -132,8 +152,19 @@ const ContactSection = () => {
         localStorage.setItem('sentEmails', JSON.stringify(emailHistory));
         
         resetForm();
+      } else if (import.meta.env.DEV) {
+        // LOCAL DEVELOPMENT SIMULATION: Show success message instead of opening mail app
+        console.info("Local development mode: Simulating successful email send.");
+        showNotification(`✅ [Local Test] Message sent successfully!`, 'success');
+        
+        // Save to local storage to simulate history
+        const emailHistory = JSON.parse(localStorage.getItem('sentEmails') || '[]');
+        emailHistory.push({ ...formData, timestamp: new Date().toISOString(), service: 'Local Simulation' });
+        localStorage.setItem('sentEmails', JSON.stringify(emailHistory));
+        
+        resetForm();
       } else {
-        // ULTIMATE FALLBACK: Mailto (Guaranteed to work everywhere without keys or CORS)
+        // ULTIMATE FALLBACK (PRODUCTION): Mailto 
         console.info("Automatic sending skipped (No keys configured). Using reliable fallback.");
         
         const emailContent = `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;

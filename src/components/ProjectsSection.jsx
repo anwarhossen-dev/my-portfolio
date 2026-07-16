@@ -108,6 +108,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
 };
 const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const videoRef = useRef(null);
 
   // 3D Tilt Effect
@@ -123,15 +124,21 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+    setIsVideoReady(false);
     onLeave();
     if (ref.current) ref.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-    if (videoRef.current) videoRef.current.pause();
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
   };
 
   const handleMouseEnter = () => {
     setIsHovered(true);
     if (project.videoUrl) onHover(project.videoUrl);
-    if (videoRef.current) videoRef.current.play().catch(() => {});
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
   };
 
   return (
@@ -151,12 +158,27 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
         <motion.img 
           src={project.image} 
           alt={project.title}
-          animate={{ scale: isHovered ? 1.1 : 1, opacity: isHovered && project.videoUrl ? 0 : 1 }}
-          className="w-full h-full object-cover transition-opacity duration-500"
+          animate={{ scale: isHovered ? 1.08 : 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-full object-cover"
         />
         {project.videoUrl && (
-          <motion.div className="absolute inset-0 z-10" initial={{ opacity: 0 }} animate={{ opacity: isHovered ? 1 : 0 }}>
-            <video ref={videoRef} src={project.videoUrl} loop muted playsInline className="w-full h-full object-cover" />
+          <motion.div 
+            className="absolute inset-0 z-10 pointer-events-none" 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: isHovered && isVideoReady ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <video 
+              ref={videoRef} 
+              src={project.videoUrl} 
+              loop 
+              muted 
+              playsInline 
+              preload="auto"
+              onPlay={() => setIsVideoReady(true)}
+              className="w-full h-full object-cover" 
+            />
           </motion.div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-20" />

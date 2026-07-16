@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { SERVICES } from '../constants';
-import { fadeInUp, staggerContainer, cardHover } from '../utils/animations';
+import { fadeInUp, staggerContainer } from '../utils/animations';
+import { GlassCard } from './GlassCard';
 
 const ServicesSection = () => {
   return (
@@ -46,34 +47,18 @@ const ServicesSection = () => {
             viewport={{ once: true }}
             custom={index}
           >
-            <motion.div
-              className="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500 h-full flex flex-col"
-              variants={cardHover}
-              whileHover="hover"
-            >
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center text-white shadow-lg mb-8 group-hover:scale-110 transition-transform duration-500`}>
-                <span className="material-icons-outlined text-3xl">{service.icon}</span>
-              </div>
-
-              <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-cyan-500 transition-colors">
-                {service.title}
-              </h3>
-
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-8 flex-grow">
-                {service.description}
-              </p>
-
-              <ul className="space-y-3">
-                {service.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-sm font-bold text-slate-700 dark:text-slate-300">
-                    <span className="w-5 h-5 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-500">
-                      <span className="material-icons text-[12px]">done</span>
-                    </span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+            <GlassCard
+              index={index}
+              badge={service.badge}
+              icon={service.icon}
+              color={service.color}
+              title={service.title}
+              description={service.description}
+              features={service.features}
+              metrics={service.metrics}
+              ctaText={service.ctaText}
+              ctaHref={service.ctaHref}
+            />
           </motion.div>
         ))}
       </div>

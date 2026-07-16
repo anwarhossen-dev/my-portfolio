@@ -105,20 +105,21 @@ const Footer = () => {
                 variants={fadeInUp}
               >
                 <motion.div 
-                  className="flex items-center gap-3 mb-6"
+                  className="flex items-center gap-2 group/logo cursor-pointer mb-6"
+                  onClick={scrollToTop}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <motion.div 
-                    className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-lg"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    AH
-                  </motion.div>
-                  <div>
-                    <h3 className="text-xl font-bold">{PERSONAL_INFO.name}</h3>
-                    <p className="text-slate-400 text-sm">{PERSONAL_INFO.title}</p>
+                  <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-secondary p-[2px]">
+                    <div className="flex items-center justify-center w-full h-full bg-slate-900 rounded-[10px]">
+                      <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary">
+                        {PERSONAL_INFO.name.charAt(0)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col leading-tight text-left">
+                    <h3 className="text-sm font-black text-white tracking-tight">{PERSONAL_INFO.name}</h3>
+                    <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Creative</p>
                   </div>
                 </motion.div>
                 

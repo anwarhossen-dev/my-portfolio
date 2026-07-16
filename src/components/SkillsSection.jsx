@@ -341,7 +341,7 @@ const SkillsSection = () => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <MarqueeText speed={38} className="py-4" direction="right">
+          <MarqueeText speed={38} className="py-4" direction="left">
             {SKILLS.database.map((skill, index) => (
               <motion.div
                 key={`database-${index}`}
@@ -365,7 +365,7 @@ const SkillsSection = () => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <MarqueeText speed={40} className="py-4" direction="left">
+          <MarqueeText speed={40} className="py-4" direction="right">
             {SKILLS.tools.map((skill, index) => (
               <motion.div
                 key={`tools-${index}`}

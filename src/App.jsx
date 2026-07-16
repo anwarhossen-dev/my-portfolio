@@ -10,6 +10,7 @@ import AIPowerSection from './components/AIPowerSection.jsx';
 import DevOpsSection from './components/DevOpsSection.jsx';
 import EducationSection from './components/EducationSection.jsx';
 import ExperienceSection from './components/ExperienceSection.jsx';
+import CertificatesSection from './components/CertificatesSection.jsx';
 import ProjectsSection from './components/ProjectsSection.jsx';
 import TestimonialsSection from './components/TestimonialsSection.jsx';
 import FAQSection from './components/FAQSection.jsx';
@@ -17,13 +18,12 @@ import ContactSection from './components/ContactSection.jsx';
 import Footer from './components/Footer.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import Chatbot from './components/Chatbot.jsx';
-import GithubStatus from './components/GithubStatus.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
 import { useScrollSpy } from './hooks/useScrollSpy.js';
 import { getThemePreference, setThemePreference } from './utils';
 
 function App() {
-  const sectionIds = ['', 'about', 'services', 'skills', 'ai', 'devops', 'education', 'experience', 'projects', 'contact'];
+  const sectionIds = ['', 'about', 'services', 'skills', 'devops', 'education', 'experience', 'certificates', 'projects', 'contact'];
   const activeSection = useScrollSpy(sectionIds, 120);
 
   useEffect(() => {
@@ -37,11 +37,6 @@ function App() {
       <div className="bg-gray-50 dark:bg-background-dark text-slate-800 dark:text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-300">
         {/* Header - Fixed at Top */}
         <Header activeSection={activeSection} />
-
-        {/* Live Github Status - Fixed below Header */}
-        <div className="fixed top-24 left-6 z-[60] hidden md:block">
-          <GithubStatus username="anwarhossen-dev" />
-        </div>
         
         {/* Hero Section - Full Screen */}
         <HeroSection />
@@ -60,9 +55,9 @@ function App() {
           <div id="skills" className="pt-20">
             <SkillsSection />
           </div>
-          <div id="ai" className="pt-20">
+          {/* <div id="ai" className="pt-20">
             <AIPowerSection />
-          </div>
+          </div> */}
           <div id="devops" className="pt-20">
             <DevOpsSection />
           </div>
@@ -72,10 +67,15 @@ function App() {
           <div id="experience" className="pt-20">
             <ExperienceSection />
           </div>
+          <div id="certificates" className="pt-20">
+            <CertificatesSection />
+          </div>
           <div id="projects" className="pt-20">
             <ProjectsSection />
           </div>
-          <TestimonialsSection />
+          {/* <div id="testimonials" className="pt-20">
+            <TestimonialsSection />
+          </div> */}
           <FAQSection />
           <div id="contact" className="pt-20">
             <ContactSection />
