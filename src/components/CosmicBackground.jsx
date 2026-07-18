@@ -142,12 +142,10 @@ const CosmicBackground = () => {
       mouseX += (targetMouseX - mouseX) * 0.05;
       mouseY += (targetMouseY - mouseY) * 0.05;
 
-      // 1. Draw Space Background (Deep, sophisticated dark mode)
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, palette.spaceBgTop); 
-      gradient.addColorStop(1, palette.spaceBgBot); 
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const isDark = document.documentElement.classList.contains('dark');
+
+      // 1. Clear the canvas to keep it transparent so the underlay is visible
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
@@ -161,9 +159,14 @@ const CosmicBackground = () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       };
 
-      // Soft Azure and Deep Violet nebulas
-      drawNebula(cx + Math.sin(time) * 150, cy + Math.cos(time * 0.6) * 150, 700, 14, 165, 233, 0.08); 
-      drawNebula(cx - Math.cos(time * 0.8) * 200, cy - Math.sin(time) * 150, 800, 109, 40, 217, 0.06); 
+      // Soft Azure and Deep Violet nebulas (adjusted for light/dark mode)
+      if (isDark) {
+        drawNebula(cx + Math.sin(time) * 150, cy + Math.cos(time * 0.6) * 150, 700, 14, 165, 233, 0.08); 
+        drawNebula(cx - Math.cos(time * 0.8) * 200, cy - Math.sin(time) * 150, 800, 109, 40, 217, 0.06); 
+      } else {
+        drawNebula(cx + Math.sin(time) * 150, cy + Math.cos(time * 0.6) * 150, 700, 14, 165, 233, 0.04); 
+        drawNebula(cx - Math.cos(time * 0.8) * 200, cy - Math.sin(time) * 150, 800, 109, 40, 217, 0.03); 
+      }
 
       // 2. Render 3D Stars
       stars.forEach(star => {
@@ -184,15 +187,23 @@ const CosmicBackground = () => {
           ctx.beginPath();
           ctx.arc(x2d, y2d, star.size * scale * 0.5, 0, Math.PI * 2);
           
+          // Determine color based on active theme
+          let starColor = star.color;
+          if (!isDark) {
+            if (starColor === '#ffffff' || starColor === '#e0f2fe') {
+              starColor = '#0284c7'; // Vibrant sky blue in light mode
+            }
+          }
+
           if (star.z < 250) {
             ctx.shadowBlur = 10;
-            ctx.shadowColor = star.color;
+            ctx.shadowColor = starColor;
           } else {
             ctx.shadowBlur = 0;
           }
 
           const opacity = Math.min(1, Math.max(0, 1 - (star.z / maxDepth)));
-          ctx.fillStyle = star.color;
+          ctx.fillStyle = starColor;
           ctx.globalAlpha = opacity;
           ctx.fill();
           ctx.globalAlpha = 1.0;
@@ -252,10 +263,10 @@ const CosmicBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#03030a]">
+    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#fafafa] dark:bg-[#03030a] transition-colors duration-500">
       <canvas 
         ref={canvasRef} 
-        className="block w-full h-full opacity-100 mix-blend-screen"
+        className="block w-full h-full opacity-100 relative z-[2]"
       />
       
       {/* 

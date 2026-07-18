@@ -142,6 +142,33 @@ const ContactSection = () => {
         } catch (err) { console.warn("Formspree background send failed"); }
       }
 
+      // 4. Try FormSubmit.co (Zero-config fallback: works everywhere, even on localhost!)
+      if (!sentSuccessfully) {
+        try {
+          const formsubmitResponse = await fetch("https://formsubmit.co/ajax/anwarhossendeveloper21@gmail.com", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              subject: formData.subject,
+              message: formData.message,
+              _subject: `New Portfolio Message: ${formData.subject}`
+            }),
+          });
+          
+          if (formsubmitResponse.ok) {
+            const formsubmitData = await formsubmitResponse.json();
+            if (formsubmitData.success === "true" || formsubmitData.success === true) {
+              sentSuccessfully = true;
+              usedService = 'FormSubmit';
+            }
+          }
+        } catch (err) {
+          console.warn("FormSubmit background send failed", err);
+        }
+      }
+
       // --- Results & Final Fallback ---
       if (sentSuccessfully) {
         showNotification(`✅ Success! Your message has been sent via ${usedService}.`, 'success');
