@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
+import SplashScreen from './components/SplashScreen.jsx';
+import CosmicBackground from './components/CosmicBackground.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Header from './components/Header.jsx';
 import { HeroSection } from './components/HeroSection.jsx';
@@ -23,6 +25,7 @@ import { useScrollSpy } from './hooks/useScrollSpy.js';
 import { getThemePreference, setThemePreference } from './utils';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const sectionIds = ['', 'about', 'services', 'skills', 'devops', 'education', 'experience', 'certificates', 'projects', 'contact'];
   const activeSection = useScrollSpy(sectionIds, 120);
 
@@ -34,7 +37,11 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="bg-gray-50 dark:bg-background-dark text-slate-800 dark:text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-300">
+      {isLoading && <SplashScreen finishLoading={() => setIsLoading(false)} />}
+      <div className="text-slate-800 dark:text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-300">
+        
+        <CosmicBackground />
+
         {/* Header - Fixed at Top */}
         <Header activeSection={activeSection} />
         
