@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
+import { PERSONAL_INFO } from '../constants';
 
 const SplashScreen = ({ finishLoading }) => {
   const [isMounted, setIsMounted] = useState(true);
@@ -12,8 +13,8 @@ const SplashScreen = ({ finishLoading }) => {
       setTimeout(() => {
         document.body.style.overflow = 'unset';
         finishLoading();
-      }, 1500); // Exiting duration (slow fade into the site)
-    }, 5500); // Full cinematic duration
+      }, 1500); 
+    }, 5500); 
 
     return () => {
       clearTimeout(timeout);
@@ -84,10 +85,10 @@ const SplashScreen = ({ finishLoading }) => {
               <motion.circle
                 cx="500"
                 cy="500"
-                r="180"
+                r="220"
                 stroke="url(#purpleGlow)"
                 strokeWidth="2"
-                strokeDasharray="400 200"
+                strokeDasharray="500 300"
                 strokeLinecap="round"
                 filter="url(#glow)"
                 initial={{ pathLength: 0, opacity: 0, rotate: -90 }}
@@ -110,50 +111,47 @@ const SplashScreen = ({ finishLoading }) => {
             </svg>
           </div>
 
-          {/* Floating Stardust Particles */}
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            {Array.from({ length: 40 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white rounded-full"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                }}
-                initial={{ opacity: 0, scale: 0, y: 0 }}
-                animate={{ 
-                  opacity: [0, Math.random() * 0.8 + 0.2, 0],
-                  scale: [0, Math.random() * 1.5 + 0.5, 0],
-                  y: -50 - Math.random() * 100
-                }}
-                transition={{
-                  duration: Math.random() * 3 + 3,
-                  repeat: Infinity,
-                  delay: Math.random() * 3,
-                  ease: "easeInOut"
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Cinematic Typography */}
-          <div className="relative z-20 flex flex-col items-center justify-center h-full w-full">
+          {/* Cinematic Typography & Personalized Avatar */}
+          <div className="relative z-20 flex flex-col items-center justify-center h-full w-full mt-10">
             
+            {/* The Smart Avatar Reveal */}
             <motion.div
-              className="relative overflow-hidden px-10 py-6"
+              initial={{ opacity: 0, scale: 0.5, y: 30, filter: "blur(20px)" }}
+              animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 1.5, delay: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="relative mb-8 group"
+            >
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-purple-500 to-transparent shadow-[0_0_40px_rgba(168,85,247,0.5)]">
+                <img 
+                  src={PERSONAL_INFO.profileImage} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover rounded-full filter grayscale-[30%] hover:grayscale-0 transition-all duration-700"
+                />
+              </div>
+              {/* Halo effect behind the avatar */}
+              <motion.div 
+                className="absolute inset-0 rounded-full border border-cyan-400/50 pointer-events-none"
+                animate={{ scale: [1, 1.3, 1], opacity: [0, 0.5, 0] }}
+                transition={{ duration: 3, repeat: Infinity, delay: 2.5 }}
+              />
+            </motion.div>
+            
+            {/* Name Reveal */}
+            <motion.div
+              className="relative overflow-hidden px-10 py-2"
               initial="hidden"
               animate="visible"
             >
               {/* Shimmer Light Sweep */}
               <motion.div 
-                className="absolute top-0 left-0 w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white to-transparent opacity-30 skew-x-[-30deg]"
+                className="absolute top-0 left-0 w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white to-transparent opacity-40 skew-x-[-30deg]"
                 initial={{ x: "-200%" }}
                 animate={{ x: "300%" }}
                 transition={{ duration: 2.5, delay: 2.5, ease: "easeInOut" }}
                 style={{ zIndex: 30 }}
               />
 
-              <h1 className="text-3xl md:text-5xl lg:text-7xl font-extrabold tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-white to-slate-400 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] font-display flex gap-x-6 md:gap-x-10">
+              <h1 className="text-2xl md:text-5xl lg:text-6xl font-extrabold tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-white to-slate-400 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] font-display flex flex-wrap justify-center gap-x-4 md:gap-x-8 text-center">
                 {name.split(" ").map((word, wordIndex) => (
                   <span key={wordIndex} className="flex">
                     {word.split("").map((char, charIndex) => (
@@ -163,8 +161,8 @@ const SplashScreen = ({ finishLoading }) => {
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         transition={{ 
                           duration: 1.2, 
-                          delay: 1.2 + (wordIndex * 0.3) + (charIndex * 0.08), 
-                          ease: [0.22, 1, 0.36, 1] // Apple-like ultra-smooth easing
+                          delay: 1.5 + (wordIndex * 0.3) + (charIndex * 0.08), 
+                          ease: [0.22, 1, 0.36, 1] 
                         }}
                       >
                         {char}
@@ -177,7 +175,7 @@ const SplashScreen = ({ finishLoading }) => {
 
             {/* Premium Divider */}
             <motion.div
-              className="relative w-full max-w-[200px] md:max-w-[400px] h-[1px]"
+              className="relative w-full max-w-[200px] md:max-w-[400px] h-[1px] mt-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 3, duration: 1 }}
@@ -202,9 +200,9 @@ const SplashScreen = ({ finishLoading }) => {
               initial={{ opacity: 0, y: 10, letterSpacing: "0.2em" }}
               animate={{ opacity: 1, y: 0, letterSpacing: "0.6em" }}
               transition={{ duration: 2, delay: 3.8, ease: "easeOut" }}
-              className="mt-8 text-xs md:text-sm text-indigo-200/80 uppercase font-medium"
+              className="mt-6 text-xs md:text-sm text-indigo-200/80 uppercase font-medium"
             >
-              Creative Developer
+              Full Stack Architect
             </motion.p>
 
           </div>
