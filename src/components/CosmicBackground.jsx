@@ -19,13 +19,24 @@ const CosmicBackground = () => {
     const numStars = 250; 
     const stars = [];
     const maxDepth = 1000;
+    
+    // Premium Color Palette
+    const palette = {
+      spaceBgTop: '#03030a',
+      spaceBgBot: '#0a0a1a',
+      starColors: ['#ffffff', '#e0f2fe', '#c084fc'],
+      vineColor: 'rgba(56, 189, 248, 0.3)', // Soft glowing cyan line
+      flowerColors: ['#38bdf8', '#a855f7', '#818cf8', '#e879f9'], // Bioluminescent orchids/lotus
+      petalColors: ['#38bdf8', '#c084fc', '#e0f2fe']
+    };
+
     for (let i = 0; i < numStars; i++) {
       stars.push({
         x: (Math.random() - 0.5) * 2000,
         y: (Math.random() - 0.5) * 2000,
         z: Math.random() * maxDepth,
         size: Math.random() * 1.5 + 0.5,
-        color: Math.random() > 0.8 ? '#a855f7' : (Math.random() > 0.5 ? '#06b6d4' : '#ffffff'),
+        color: palette.starColors[Math.floor(Math.random() * palette.starColors.length)],
         baseSpeed: Math.random() * 0.8 + 0.2
       });
     }
@@ -37,12 +48,12 @@ const CosmicBackground = () => {
       petals.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 4 + 3,
-        speedY: Math.random() * 1 + 0.5,
-        speedX: (Math.random() - 0.5) * 1.5,
+        size: Math.random() * 3 + 2,
+        speedY: Math.random() * 0.8 + 0.3,
+        speedX: (Math.random() - 0.5) * 1,
         rotation: Math.random() * 360,
-        rotationSpeed: (Math.random() - 0.5) * 5,
-        color: Math.random() > 0.5 ? '#ff4d4d' : '#ffb3b3' // Red/Pink for roses/hibiscus
+        rotationSpeed: (Math.random() - 0.5) * 2,
+        color: palette.petalColors[Math.floor(Math.random() * palette.petalColors.length)]
       });
     }
 
@@ -62,53 +73,65 @@ const CosmicBackground = () => {
 
     let time = 0;
 
-    // Helper: Draw stylized flower
+    // Helper: Draw elegant glowing lotus/crystal flower
     const drawFlower = (x, y, radius, color, rotation) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate((rotation * Math.PI) / 180);
       
-      // Petals
+      // Outer glow
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = color;
+      
       ctx.fillStyle = color;
-      ctx.globalAlpha = 0.8;
-      for (let i = 0; i < 5; i++) {
+      ctx.globalAlpha = 0.7;
+      
+      // Pointed, elegant petals
+      const numPetals = 6;
+      for (let i = 0; i < numPetals; i++) {
         ctx.beginPath();
-        ctx.ellipse(0, radius, radius * 0.8, radius * 1.5, 0, 0, Math.PI * 2);
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(radius * 0.5, radius * 0.5, radius * 0.5, radius * 1.5, 0, radius * 2);
+        ctx.bezierCurveTo(-radius * 0.5, radius * 1.5, -radius * 0.5, radius * 0.5, 0, 0);
         ctx.fill();
-        ctx.rotate((72 * Math.PI) / 180);
+        ctx.rotate(( (360 / numPetals) * Math.PI) / 180);
       }
-      // Center
-      ctx.fillStyle = '#fbbf24'; // Yellow center
-      ctx.globalAlpha = 1;
+      
+      // Glowing Center
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = '#ffffff';
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = 0.9;
       ctx.beginPath();
-      ctx.arc(0, 0, radius * 0.5, 0, Math.PI * 2);
+      ctx.arc(0, 0, radius * 0.3, 0, Math.PI * 2);
       ctx.fill();
       
       ctx.restore();
     };
 
-    // Helper: Draw floral branch
+    // Helper: Draw ethereal glowing branch
     const drawBranch = (startX, startY, isLeft) => {
       ctx.save();
-      ctx.strokeStyle = '#064e3b'; // Dark green
-      ctx.lineWidth = 4;
+      ctx.strokeStyle = palette.vineColor;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = palette.flowerColors[0];
+      ctx.lineWidth = 2;
       ctx.lineCap = 'round';
-      ctx.globalAlpha = 0.7;
-
+      
       const direction = isLeft ? 1 : -1;
       
-      // Main vine
+      // Main ethereal vine
       ctx.beginPath();
       ctx.moveTo(startX, startY);
-      ctx.quadraticCurveTo(startX + (direction * 150), startY + 200, startX + (direction * 50), startY + 400);
-      ctx.quadraticCurveTo(startX + (direction * 200), startY + 600, startX + (direction * 100), startY + 800);
+      ctx.quadraticCurveTo(startX + (direction * 100), startY + 200, startX + (direction * 40), startY + 400);
+      ctx.quadraticCurveTo(startX + (direction * 150), startY + 600, startX + (direction * 80), startY + 800);
       ctx.stroke();
 
       // Flowers on the vine
-      const timeOffset = Math.sin(time * 2) * 5; // gentle sway
-      drawFlower(startX + (direction * 100) + timeOffset, startY + 250, 15, '#e11d48', time * 20); // Rose red
-      drawFlower(startX + (direction * 120) + timeOffset, startY + 550, 12, '#f43f5e', -time * 15); // Pink
-      drawFlower(startX + (direction * 60) + timeOffset, startY + 750, 18, '#be123c', time * 10); // Deep rose
+      const timeOffset = Math.sin(time * 1.5) * 8; // gentle sway
+      drawFlower(startX + (direction * 80) + timeOffset, startY + 250, 10, palette.flowerColors[0], time * 10); 
+      drawFlower(startX + (direction * 90) + timeOffset, startY + 550, 8, palette.flowerColors[1], -time * 8); 
+      drawFlower(startX + (direction * 50) + timeOffset, startY + 750, 12, palette.flowerColors[2], time * 12); 
       
       ctx.restore();
     };
@@ -119,17 +142,17 @@ const CosmicBackground = () => {
       mouseX += (targetMouseX - mouseX) * 0.05;
       mouseY += (targetMouseY - mouseY) * 0.05;
 
-      // 1. Draw Space Background
+      // 1. Draw Space Background (Deep, sophisticated dark mode)
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, '#020008'); 
-      gradient.addColorStop(1, '#0f172a'); 
+      gradient.addColorStop(0, palette.spaceBgTop); 
+      gradient.addColorStop(1, palette.spaceBgBot); 
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
 
-      // Nebulas
+      // Premium subtle nebulas
       const drawNebula = (x, y, radius, r, g, b, alpha) => {
         const grd = ctx.createRadialGradient(x, y, 0, x, y, radius);
         grd.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha})`);
@@ -138,8 +161,9 @@ const CosmicBackground = () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       };
 
-      drawNebula(cx + Math.sin(time) * 200, cy + Math.cos(time * 0.8) * 150, 600, 34, 211, 238, 0.1); 
-      drawNebula(cx - Math.cos(time * 1.2) * 300, cy - Math.sin(time) * 200, 700, 168, 85, 247, 0.08); 
+      // Soft Azure and Deep Violet nebulas
+      drawNebula(cx + Math.sin(time) * 150, cy + Math.cos(time * 0.6) * 150, 700, 14, 165, 233, 0.08); 
+      drawNebula(cx - Math.cos(time * 0.8) * 200, cy - Math.sin(time) * 150, 800, 109, 40, 217, 0.06); 
 
       // 2. Render 3D Stars
       stars.forEach(star => {
@@ -159,6 +183,14 @@ const CosmicBackground = () => {
         if (x2d > 0 && x2d < canvas.width && y2d > 0 && y2d < canvas.height) {
           ctx.beginPath();
           ctx.arc(x2d, y2d, star.size * scale * 0.5, 0, Math.PI * 2);
+          
+          if (star.z < 250) {
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = star.color;
+          } else {
+            ctx.shadowBlur = 0;
+          }
+
           const opacity = Math.min(1, Math.max(0, 1 - (star.z / maxDepth)));
           ctx.fillStyle = star.color;
           ctx.globalAlpha = opacity;
@@ -167,19 +199,18 @@ const CosmicBackground = () => {
         }
       });
 
-      // 3. Render Side Floral Borders
-      // Adjust startY based on scroll parallax to make vines move slightly
-      const vineScrollOffset = -(scrollY * 0.2);
-      drawBranch(-50, -100 + vineScrollOffset, true); // Left branch
-      drawBranch(-20, 300 + vineScrollOffset, true); // Lower left branch
+      // 3. Render Ethereal Side Floral Borders
+      const vineScrollOffset = -(scrollY * 0.15); // Smoother, slower parallax for vines
+      drawBranch(-30, -50 + vineScrollOffset, true); // Left branch
+      drawBranch(-10, 400 + vineScrollOffset, true); // Lower left branch
       
-      drawBranch(canvas.width + 50, -50 + vineScrollOffset, false); // Right branch
-      drawBranch(canvas.width + 20, 400 + vineScrollOffset, false); // Lower right branch
+      drawBranch(canvas.width + 30, -20 + vineScrollOffset, false); // Right branch
+      drawBranch(canvas.width + 10, 500 + vineScrollOffset, false); // Lower right branch
 
-      // 4. Render Falling Petals
+      // 4. Render Glowing Petals
       petals.forEach(petal => {
         petal.y += petal.speedY;
-        petal.x += petal.speedX + Math.sin(time + petal.y * 0.01) * 0.5; // Drift effect
+        petal.x += petal.speedX + Math.sin(time + petal.y * 0.01) * 0.5; // Smooth drift
         petal.rotation += petal.rotationSpeed;
 
         if (petal.y > canvas.height + 20) {
@@ -190,13 +221,19 @@ const CosmicBackground = () => {
         if (petal.x < -20) petal.x = canvas.width + 20;
 
         ctx.save();
-        ctx.translate(petal.x, petal.y - (scrollY * 0.3)); // Slight parallax for petals
+        ctx.translate(petal.x, petal.y - (scrollY * 0.2));
         ctx.rotate((petal.rotation * Math.PI) / 180);
+        
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = petal.color;
         ctx.fillStyle = petal.color;
-        ctx.globalAlpha = 0.6;
+        ctx.globalAlpha = 0.5 + Math.sin(time * 2 + petal.x) * 0.2; // Pulsing opacity
         
         ctx.beginPath();
-        ctx.ellipse(0, 0, petal.size, petal.size * 1.5, 0, 0, Math.PI * 2);
+        // Pointed petal shape
+        ctx.moveTo(0, -petal.size);
+        ctx.quadraticCurveTo(petal.size, 0, 0, petal.size);
+        ctx.quadraticCurveTo(-petal.size, 0, 0, -petal.size);
         ctx.fill();
         ctx.restore();
       });
@@ -215,18 +252,17 @@ const CosmicBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#020008]">
+    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#03030a]">
       <canvas 
         ref={canvasRef} 
-        className="block w-full h-full opacity-100"
+        className="block w-full h-full opacity-100 mix-blend-screen"
       />
       
       {/* 
         Ultra Premium Glassmorphism Overlay:
-        This ensures that despite the complex background (Stars + Flowers), 
-        the portfolio text in the center remains 100% perfectly readable.
+        Perfect contrast balance. Text readability is fully preserved.
       */}
-      <div className="absolute inset-0 bg-white/60 dark:bg-[#020008]/70 backdrop-blur-sm z-[1] transition-colors duration-500" />
+      <div className="absolute inset-0 bg-white/70 dark:bg-[#03030a]/80 backdrop-blur-[4px] z-[1] transition-colors duration-500" />
     </div>
   );
 };
