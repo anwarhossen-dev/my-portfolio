@@ -9,12 +9,10 @@ import { gsap } from 'gsap';
 const Header = ({ activeSection = '' }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
   const { isDark, toggleTheme } = useTheme();
   const { scrollYProgress, scrollY } = useScroll();
   
   const isNavigating = useRef(false);
-  const lastScrollY = useRef(0);
   const connectBtnRef = useRef(null);
 
   useEffect(() => {
@@ -38,19 +36,13 @@ const Header = ({ activeSection = '' }) => {
   }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (isNavigating.current) return;
-    const diff = latest - lastScrollY.current;
-    if (latest > 150 && diff > 10) setIsVisible(false);
-    else if (diff < -10 || latest <= 50) setIsVisible(true);
     setIsScrolled(latest > 20);
-    lastScrollY.current = latest;
   });
 
   const handleNavClick = (href, e) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
     isNavigating.current = true;
-    setIsVisible(true);
     const targetId = href === '#' ? null : href.replace('#', '');
     if (!targetId) window.scrollTo({ top: 0, behavior: 'smooth' });
     else scrollToElement(targetId, 100);
@@ -71,8 +63,8 @@ const Header = ({ activeSection = '' }) => {
         <motion.nav 
           initial={{ y: -100, opacity: 0 }}
           animate={{ 
-            y: isVisible ? 0 : -120,
-            opacity: isVisible ? 1 : 0,
+            y: 0,
+            opacity: 1,
             scale: isScrolled ? 0.98 : 1
           }}
           transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
