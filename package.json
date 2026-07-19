@@ -45,10 +45,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/https://localchefbazaar-612c0.web.app"
+    "url": "https://github.com/anwarhossen-dev/my-portfolio.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/portfolio-react/issues"
+    "url": "https://github.com/anwarhossen-dev/my-portfolio/issues"
   },
-  "homepage": "https://yourusername.github.io/portfolio-react"
+  "homepage": "https://anwarhossen.vercel.app/"
 }

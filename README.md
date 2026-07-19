@@ -6,7 +6,7 @@ A modern, fully animated React.js portfolio website showcasing professional skil
 
 ## 🌟 Live Demo
 
-**🔗 Portfolio URL:** `http://localhost:5174/` (Development)
+**🔗 Portfolio URL:** [https://anwarhossen.vercel.app/](https://anwarhossen.vercel.app/)
 **📱 Responsive:** Works perfectly on all devices
 
 ---
@@ -299,7 +299,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ## 👨‍💻 Author
 
 **MD. Anwar Hossen**
-- **Portfolio:** [Live Demo](http://localhost:5174/)
+- **Portfolio:** [Live Demo](https://anwarhossen.vercel.app/)
 - **GitHub:** [@anwarhossen-dev](https://github.com/anwarhossen-dev)
 - **LinkedIn:** [anowar21](https://linkedin.com/in/anowar21)
 - **Email:** anwarhossendeveloper21@gmail.com
