@@ -74,7 +74,7 @@ const DevOpsSection = () => {
         <div className="flex flex-col items-center text-center mb-20">
           <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 mb-6">
             <MdSync className="text-xs animate-spin" />
-            <span className="text-[10px] font-bold uppercase tracking-widest">Futuristic DevOps CI/CD</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest">Futuristic Laravel CI/CD</span>
           </motion.div>
           
           <motion.h2 variants={fadeInUp} className="text-4xl md:text-7xl font-black text-slate-900 dark:text-white mb-8">

@@ -52,7 +52,7 @@ export const SKILLS = {
   database: [
     { name: 'MS SQL Server', level: 85, icon: 'fas fa-database' },
     { name: 'MongoDB', level: 70, icon: 'fas fa-leaf' },
-    { name: 'MySQL', level: 65, icon: 'fas fa-database' },
+    { name: 'Postgresql', level: 65, icon: 'fas fa-database' },
     { name: 'Entity Framework', level: 80, icon: 'fas fa-layer-group' }
   ],
   tools: [
@@ -60,7 +60,7 @@ export const SKILLS = {
     { name: 'VS Code', level: 95, icon: 'fas fa-code' },
     { name: 'Git', level: 85, icon: 'fab fa-git-alt' },
     { name: 'GitHub Actions', level: 85, icon: 'fab fa-github' },
-    { name: 'Azure DevOps', level: 80, icon: 'fab fa-microsoft' },
+    // { name: 'Azure DevOps', level: 80, icon: 'fab fa-microsoft' },
     { name: 'Docker', level: 75, icon: 'fab fa-docker' }
   ],
   ai: [
@@ -216,7 +216,7 @@ export const EXPERIENCE = [
   {
     title: "Jr. Programmer",
     company: "Genuine Technology & Research Ltd.",
-    period: "Jan 2024 - Present",
+    period: "Jan 2025 - Present",
     type: "Full-time",
     location: "On-site",
     description: "Developing and maintaining web applications using ASP.NET Core and MS SQL Server. Working with modern .NET technologies to build scalable enterprise applications and optimize database performance.",
@@ -277,7 +277,7 @@ export const SERVICES = [
       { label: "Workflows Automated", value: "85%" }
     ],
     ctaText: "Consult AI Solutions",
-    ctaHref: "#contact"
+    ctaHref: "contact"
   },
   {
     title: "DevOps & Cloud",
@@ -325,30 +325,31 @@ export const CERTIFICATES = [
   {
     title: 'MERN Stack Web Development Specialization',
     issuer: 'Programming Hero',
-    date: '2024',
+    date: '2025',
     icon: 'fas fa-graduation-cap',
     color: 'from-blue-500 to-cyan-500',
-    credentialUrl: '/certificates/mern.pdf',
+    credentialUrl: '/certificate_student.pdf',
     description: 'Comprehensive specialization covering React, Node.js, Express, MongoDB, Firebase Authentication, and advanced state management.'
   },
   {
-    title: 'ASP.NET Core & C# Clean Architecture',
-    issuer: 'Udemy / Microsoft Learning',
-    date: '2024',
+    title: 'ASP.NET Core & C# Web Development',
+    issuer: 'freeCodeCamp / Microsoft',
+    date: '13-April-2025',
     icon: 'fas fa-award',
     color: 'from-purple-500 to-indigo-500',
-    credentialUrl: '/certificates/aspnet.pdf',
+    credentialUrl: 'https://www.freecodecamp.org/certification/fcce202fee5-13de-4218-84e2-1b931dae5a35/foundational-c-sharp-with-microsoft',
     description: 'Deep dive into ASP.NET Core MVC, Web API, Entity Framework Core, SQL Server, Repository Pattern, and Clean Architecture.'
   },
   {
-    title: 'DevOps & Git Automation Engineer',
-    issuer: 'Coursera / Google Cloud',
-    date: '2025',
-    icon: 'fas fa-certificate',
-    color: 'from-orange-500 to-red-500',
-    credentialUrl: '/certificates/devops.pdf',
-    description: 'Hands-on experience building automated workflows using GitHub Actions, Docker containers, Azure DevOps, and cloud deployments.'
-  }
+  title: 'Laravel PHP Development',
+  issuer: 'Creative IT Institute',
+  date: '2024',
+  icon: 'fab fa-laravel',
+  color: 'from-red-500 to-orange-500',
+  credentialUrl: '/certificates/laravel.pdf',
+  description:
+    'Hands-on training in Laravel, PHP, MySQL, MVC, REST API, Authentication, CRUD operations, Eloquent ORM, Blade Template, and modern web application development.'
+}
 ];
 
 // FAQ Data
