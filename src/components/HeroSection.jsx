@@ -138,7 +138,7 @@ export const HeroSection = () => {
                 alt={PERSONAL_INFO.name}
                 className="w-full h-full object-cover object-[center_35%] grayscale-[10%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                 src={PERSONAL_INFO.profileImage}
-                onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Profile'; }}
+                onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; }}
               />
               {/* Glossy Reflection Overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />

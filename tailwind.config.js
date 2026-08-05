@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0ea5e9', // Sky blue/Cyan as used in components
+        primary: '#0284c7', // A darker, more accessible sky blue
         secondary: '#d946ef', // Fuschia/Pink for gradients
         'background-light': '#F8FAFC',
         'background-dark': '#0B1121',
@@ -38,11 +38,11 @@ export default {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
         },
-      },
-      backgroundImage: {
-        'hero-gradient': 'linear-gradient(to right bottom, #0ea5e9, #8b5cf6, #d946ef)',
       }
     },
   },
-  plugins: [],
+  plugins: [
+    // Add Tailwind CSS plugins here, e.g., require('@tailwindcss/typography')
+    // For more plugins, see: https://tailwindcss.com/docs/plugins
+  ],
 }

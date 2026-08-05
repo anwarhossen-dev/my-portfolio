@@ -40,6 +40,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               <motion.button 
                 onClick={onClose}
                 className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-primary transition-all border border-slate-200 dark:border-slate-700 shadow-sm"
+                aria-label="Close project details"
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -202,7 +203,7 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
           <button onClick={() => onViewMore(project)} className="flex-1 px-6 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all shadow-lg">
             Details
           </button>
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-all">
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="View live site" className="w-12 h-12 rounded-2xl border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-all">
             <span className="material-icons-outlined">launch</span>
           </a>
         </div>

@@ -21,7 +21,7 @@ export const PERSONAL_INFO = {
   email: 'anwarhossendeveloper21@gmail.com',
   phone: '+8801777498421',
   location: 'Bangladesh',
-  profileImage: 'https://i.ibb.co.com/mV56xyVm/profile.jpg'
+  profileImage: 'https://i.ibb.co.com/mV56xyVm/profile.jpg' // Using the requested online URL
 };
 
 // Social Links
@@ -82,7 +82,7 @@ export const PROJECTS = [
     category: 'MERN Stack',
     shortDescription: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences.',
     description: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences. This sophisticated web application features a modern, responsive design with advanced functionality including user authentication, secure payment processing, real-time order tracking, and an intuitive admin dashboard.',
-    image: 'https://i.ibb.co.com/h1VpLnWn/Biryani-2.jpg',
+    image: '/images/projects/local-chef-bazaar.webp', // Example new local path
     videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-chef-preparing-a-salad-in-the-kitchen-4623-large.mp4',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
     liveUrl: 'https://local-chef-bazaar-pied.vercel.app/',

@@ -141,6 +141,7 @@ const Chatbot = () => {
           >
             <button 
               onClick={() => setShowGreeting(false)}
+              aria-label="Close greeting"
               className="absolute -top-2 -right-2 w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-[10px] shadow-lg"
             >
               <span className="material-icons-outlined text-[12px]">close</span>
@@ -274,6 +275,7 @@ const Chatbot = () => {
                 />
                 <button
                   onClick={() => handleSend(inputValue)}
+                  aria-label="Send message"
                   className="absolute right-2 p-2 text-purple-600 hover:bg-purple-500/10 rounded-xl transition-all"
                 >
                   <span className="material-icons-outlined">send</span>
@@ -295,6 +297,7 @@ const Chatbot = () => {
             setIsOpen(!isOpen);
             setShowGreeting(false);
           }}
+          aria-label={isOpen ? 'Close chat assistant' : 'Open chat assistant'}
           className={`w-16 h-16 rounded-[1.5rem] flex items-center justify-center shadow-2xl transition-all duration-500 relative overflow-hidden ${
             isOpen 
               ? 'bg-purple-900 rotate-90' 
