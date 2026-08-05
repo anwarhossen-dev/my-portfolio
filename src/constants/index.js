@@ -82,7 +82,7 @@ export const PROJECTS = [
     category: 'MERN Stack',
     shortDescription: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences.',
     description: 'Local Chef Bazaar is a comprehensive full-stack e-commerce platform built with the MERN stack, designed to connect food enthusiasts with local chefs and authentic culinary experiences. This sophisticated web application features a modern, responsive design with advanced functionality including user authentication, secure payment processing, real-time order tracking, and an intuitive admin dashboard.',
-    image: '/images/projects/local-chef-bazaar.webp', // Example new local path
+    image: 'https://i.ibb.co.com/h1VpLnWn/Biryani-2.jpg', // Using a valid online placeholder
     videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-chef-preparing-a-salad-in-the-kitchen-4623-large.mp4',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
     liveUrl: 'https://local-chef-bazaar-pied.vercel.app/',
@@ -91,19 +91,6 @@ export const PROJECTS = [
   },
   {
     id: 2,
-    title: 'HERO.IO Management App',
-    category: 'Full Stack',
-    shortDescription: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication.',
-    description: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication. This sophisticated platform features comprehensive project management tools including task assignment, progress tracking, deadline management, team collaboration spaces, and interactive dashboards with data visualization.',
-    image: 'https://i.ibb.co.com/6c3DC3HJ/heroio.png',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-at-his-computer-34533-large.mp4',
-    technologies: ['React', 'Socket.io', 'Node.js', 'PostgreSQL'],
-    liveUrl: 'https://taupe-moxie-6c1b13.netlify.app/',
-    githubUrl: 'https://github.com/anwarhossen-dev/B-12-A08-Hero-Apps',
-    featured: true
-  },
-  {
-    id: 3,
     title: 'ARTIFY Website',
     category: 'Frontend',
     shortDescription: 'ARTIFY is a stunning, fully responsive portfolio website that showcases creative work through elegant and modern design aesthetic.',
@@ -116,7 +103,34 @@ export const PROJECTS = [
     featured: false
   },
   {
+    id: 3,
+    title: 'CareerTrack',
+    category: 'next.js',
+    shortDescription: 'A structured system for organizing and managing student admission-related information efficiently.',
+    description: 'This project focuses on organizing and managing admission-related information in a structured and efficient way. It includes student personal details, academic background, document verification status, and admission progress tracking.',
+    image: 'https://i.ibb.co.com/fGQcbTWD/Screenshot-2026-08-05-212827.png',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-hand-of-a-man-typing-on-a-computer-keyboard-40482-large.mp4',
+    technologies: ['JavaScript', 'next.js','react.js','tailwindcss','Node.js, Express.js, TypeScript, REST API', 'PostgreSQL', 'Prisma ORM'],
+    liveUrl: 'https://careertrack-frontend-puce.vercel.app/',
+    githubUrl: 'https://github.com/anwarhossen-dev/CareerTrack.git',
+    featured: false
+  },
+  {
     id: 4,
+    title: 'HERO.IO Management App',
+    category: 'Full Stack',
+    shortDescription: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication.',
+    description: 'HERO.IO is an advanced collaborative task management application that revolutionizes team productivity through real-time updates and seamless communication. This sophisticated platform features comprehensive project management tools including task assignment, progress tracking, deadline management, team collaboration spaces, and interactive dashboards with data visualization.',
+    image: 'https://i.ibb.co.com/6c3DC3HJ/heroio.png',
+    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-at-his-computer-34533-large.mp4',
+    technologies: ['React', 'Socket.io', 'Node.js', 'PostgreSQL'],
+    liveUrl: 'https://taupe-moxie-6c1b13.netlify.app/',
+    githubUrl: 'https://github.com/anwarhossen-dev/B-12-A08-Hero-Apps',
+    featured: true
+  },
+  
+  {
+    id: 5,
     title: 'Emergency-Hotline',
     category: 'JavaScript',
     shortDescription: 'Emergency-Hotline is a comprehensive emergency response platform providing quick access to emergency services with real-time location tracking.',
@@ -129,7 +143,7 @@ export const PROJECTS = [
     featured: false
   },
   {
-    id: 5,
+    id: 7,
     title: 'Green-Earth',
     category: 'Frontend',
     shortDescription: 'Green-Earth is an innovative environmental awareness platform dedicated to promoting eco-friendly practices and sustainability.',
@@ -326,30 +340,77 @@ export const CERTIFICATES = [
     title: 'MERN Stack Web Development Specialization',
     issuer: 'Programming Hero',
     date: '2025',
+    statusLabel: 'Certified',
     icon: 'fas fa-graduation-cap',
     color: 'from-blue-500 to-cyan-500',
     credentialUrl: '/certificate_student.pdf',
-    description: 'Comprehensive specialization covering React, Node.js, Express, MongoDB, Firebase Authentication, and advanced state management.'
+    description: 'Comprehensive specialization covering React, Node.js, Express, MongoDB, Firebase Authentication, and advanced state management.',
+    features: ['React', 'Node.js', 'Express', 'MongoDB'],
+    metrics: [
+      { label: 'Issuer', value: 'Programming Hero' },
+      { label: 'Year', value: '2025' }
+    ]
   },
   {
     title: 'ASP.NET Core & C# Web Development',
     issuer: 'freeCodeCamp / Microsoft',
     date: '13-April-2025',
+    statusLabel: 'Verified',
     icon: 'fas fa-award',
     color: 'from-purple-500 to-indigo-500',
     credentialUrl: 'https://www.freecodecamp.org/certification/fcce202fee5-13de-4218-84e2-1b931dae5a35/foundational-c-sharp-with-microsoft',
-    description: 'Deep dive into ASP.NET Core MVC, Web API, Entity Framework Core, SQL Server, Repository Pattern, and Clean Architecture.'
+    description: 'Deep dive into ASP.NET Core MVC, Web API, Entity Framework Core, SQL Server, Repository Pattern, and Clean Architecture.',
+    features: ['ASP.NET Core', 'Web API', 'EF Core', 'Clean Architecture'],
+    metrics: [
+      { label: 'Issuer', value: 'freeCodeCamp / Microsoft' },
+      { label: 'Date', value: 'Apr 2025' }
+    ]
   },
   {
-  title: 'Laravel PHP Development',
-  issuer: 'Creative IT Institute',
-  date: '2024',
-  icon: 'fab fa-laravel',
-  color: 'from-red-500 to-orange-500',
-  credentialUrl: '/certificates/laravel.pdf',
-  description:
-    'Hands-on training in Laravel, PHP, MySQL, MVC, REST API, Authentication, CRUD operations, Eloquent ORM, Blade Template, and modern web application development.'
-}
+    title: 'Laravel PHP Development',
+    issuer: 'Creative IT Institute',
+    date: '04 February, 2025',
+    statusLabel: 'Recognized',
+    icon: 'fab fa-laravel',
+    color: 'from-red-500 to-orange-500',
+    credentialUrl: '/certificate.pdf',
+    description: 'Hands-on training in Laravel, PHP, MySQL, MVC, REST API, Authentication, CRUD operations, Eloquent ORM, Blade Template, and modern web application development.',
+    features: ['Laravel', 'Eloquent', 'Blade', 'REST API'],
+    metrics: [
+      { label: 'Issuer', value: 'Creative IT Institute' },
+      { label: 'Year', value: '2025' }
+    ]
+  },
+  {
+    title: 'Web Development, NTVQF Level-IV',
+    issuer: 'Bangladesh Technical Education Board (BTEB)',
+    date: '29 March, 2024',
+    statusLabel: 'Board Certified',
+    icon: 'fas fa-award',
+    color: 'from-blue-500 to-cyan-500',
+    credentialUrl: '/14187267024000035.pdf',
+    description: 'Successfully completed the National Skill Certificate-IV in Web Development under the National Technical & Vocational Qualification Framework (NTVQF). Developed competencies in responsive web development, UI/UX mark-up conversion, client-side scripting, CMS development, deployment, workplace communication, and occupational safety.',
+    features: ['HTML/CSS', 'JavaScript', 'UI/UX', 'Deployment'],
+    metrics: [
+      { label: 'Issuer', value: 'BTEB' },
+      { label: 'Date', value: 'Mar 2024' }
+    ]
+  },
+  {
+    title: 'IT Support Technician, NTVQF Level-I',
+    issuer: 'Bangladesh Technical Education Board (BTEB)',
+    date: '09 June, 2023',
+    statusLabel: 'Credentialed',
+    icon: 'fas fa-laptop-medical',
+    color: 'from-cyan-500 to-blue-500',
+    credentialUrl: '/14107237023000134.pdf',
+    description: 'Completed the National Skill Certificate-I in IT Support Technician under NTVQF, building practical competencies in hardware assembly, PC configuration, office applications, email/web communication, workplace safety, and IT support fundamentals.',
+    features: ['Hardware', 'Office Apps', 'Email Systems', 'Support Fundamentals'],
+    metrics: [
+      { label: 'Issuer', value: 'BTEB' },
+      { label: 'Date', value: 'Jun 2023' }
+    ]
+  }
 ];
 
 // FAQ Data

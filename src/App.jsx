@@ -41,7 +41,9 @@ function App() {
       {isLoading && <SplashScreen finishLoading={() => setIsLoading(false)} />}
       <div className="text-slate-800 dark:text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-300">
         
-        <CosmicBackground />
+        <Suspense fallback={null}>
+          <CosmicBackground />
+        </Suspense>
 
         {/* Header - Fixed at Top */}
         <Suspense fallback={<div />}>
@@ -102,10 +104,14 @@ function App() {
         <ScrollToTop />
         
         {/* Chatbot Assistant */}
-        <Chatbot />
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
 
         {/* Custom Interactive Cursor */}
-        <CustomCursor />
+        <Suspense fallback={null}>
+          <CustomCursor />
+        </Suspense>
       </div>
     </ErrorBoundary>
   );

@@ -3,6 +3,8 @@ import { PERSONAL_INFO } from '../constants';
 import { scrollToElement } from '../utils';
 import { Typewriter } from 'react-simple-typewriter';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { FaReact } from 'react-icons/fa';
+import { SiNodedotjs } from 'react-icons/si';
 import GithubStatus from './GithubStatus';
 
 export const HeroSection = () => {
@@ -135,8 +137,8 @@ export const HeroSection = () => {
           >
             <div className="relative w-full h-full rounded-[3rem] overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border-2 border-white/20 dark:border-slate-800">
               <img
-                alt={PERSONAL_INFO.name}
                 className="w-full h-full object-cover object-[center_35%] grayscale-[10%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                alt={`MD. Anwar Hossen - Full Stack Developer Profile Picture`}
                 src={PERSONAL_INFO.profileImage}
                 onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; }}
               />
@@ -166,14 +168,14 @@ export const HeroSection = () => {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className="absolute -top-4 -right-4 w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700 z-30"
           >
-            <i className="fab fa-react text-primary text-3xl"></i>
+            <FaReact className="text-primary text-3xl" />
           </motion.div>
           <motion.div
             animate={{ y: [0, 20, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             className="absolute top-1/2 -left-8 w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700 z-30"
           >
-            <i className="fab fa-node-js text-[#339933] text-2xl"></i>
+            <SiNodedotjs className="text-[#339933] text-2xl" />
           </motion.div>
         </div>
       </motion.div>

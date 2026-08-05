@@ -56,7 +56,7 @@ const ServicesSection = () => {
               description={service.description}
               features={service.features}
               metrics={service.metrics}
-              ctaText={service.ctaText}
+              ctaText={service.ctaText ? service.ctaText : undefined}
               ctaHref={service.ctaHref}
             />
           </motion.div>

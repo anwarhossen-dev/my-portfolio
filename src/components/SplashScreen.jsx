@@ -13,8 +13,8 @@ const SplashScreen = ({ finishLoading }) => {
       setTimeout(() => {
         document.body.style.overflow = 'unset';
         finishLoading();
-      }, 1500); 
-    }, 5500); 
+      }, 500);
+    }, 1200);
 
     return () => {
       clearTimeout(timeout);

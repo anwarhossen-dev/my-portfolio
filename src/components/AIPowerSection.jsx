@@ -45,7 +45,9 @@ const AIPowerSection = () => {
                 color="from-purple-500 to-indigo-500"
                 title={tool.name}
                 description={`Integrating ${tool.name} into the development lifecycle for code optimization and architectural design.`}
-                progress={tool.level}
+                metrics={[
+                  { label: 'Mastery', value: `${tool.level}%` }
+                ]}
               />
             </motion.div>
           ))}

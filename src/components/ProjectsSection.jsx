@@ -64,7 +64,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               )}
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               <div className="lg:col-span-2 space-y-6">
                 <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                   <span className="material-icons-outlined text-primary">description</span>
@@ -113,23 +113,25 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
   const [isHovered, setIsHovered] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const videoRef = useRef(null);
+  const localRef = useRef(null);
+  const cardRef = ref || localRef;
 
   // 3D Tilt Effect
   const handleMouseMove = (e) => {
-    if (!ref.current) return;
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    if (!cardRef.current) return;
+    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - left) / width;
     const y = (e.clientY - top) / height;
     const moveX = (x - 0.5) * 20;
     const moveY = (y - 0.5) * -20;
-    ref.current.style.transform = `perspective(1000px) rotateX(${moveY}deg) rotateY(${moveX}deg)`;
+    cardRef.current.style.transform = `perspective(1000px) rotateX(${moveY}deg) rotateY(${moveX}deg)`;
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     setIsVideoReady(false);
     onLeave();
-    if (ref.current) ref.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    if (cardRef.current) cardRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
@@ -160,9 +162,8 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
       <div className="relative h-64 overflow-hidden">
         <motion.img 
           src={project.image} 
-          loading="lazy"
           decoding="async"
-          alt={project.title}
+          alt={`Screenshot of the ${project.title} project by MD. Anwar Hossen`}
           animate={{ scale: isHovered ? 1.08 : 1 }}
           transition={{ duration: 0.5 }}
           className="w-full h-full object-cover"
@@ -284,17 +285,23 @@ const ProjectsSection = () => {
         </div>
       </motion.div>
 
-      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 relative z-10">
+      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 relative z-10">
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project) => (
-            <ProjectCard 
-              key={project.id} 
-              project={project} 
-              onViewMore={setSelectedProject} 
-              onHover={(video) => setAmbientVideo(video)}
-              onLeave={() => setAmbientVideo(null)}
-            />
-          ))}
+          {filteredProjects.length > 0 ? (
+            filteredProjects.map((project) => (
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                onViewMore={setSelectedProject} 
+                onHover={(video) => setAmbientVideo(video)}
+                onLeave={() => setAmbientVideo(null)}
+              />
+            ))
+          ) : (
+            <div className="col-span-full p-10 rounded-[2rem] bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center text-slate-600 dark:text-slate-300">
+              No projects match this filter yet.
+            </div>
+          )}
         </AnimatePresence>
       </motion.div>
 

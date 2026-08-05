@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { FaGraduationCap, FaAward, FaLaravel } from 'react-icons/fa';
 
 export interface Metric {
   label: string;
@@ -9,6 +10,7 @@ export interface Metric {
 export interface GlassCardProps {
   index: number;
   badge?: string;
+  statusLabel?: string;
   icon: string;
   color: string;
   title: string;
@@ -52,6 +54,7 @@ const getSpotlightColors = (colorStr: string) => {
 export const GlassCard: React.FC<GlassCardProps> = ({
   index,
   badge,
+  statusLabel,
   icon,
   color,
   title,
@@ -124,23 +127,33 @@ export const GlassCard: React.FC<GlassCardProps> = ({
       />
 
       {/* Card Header & Balanced Spacing */}
-      <div className="relative z-20 flex justify-between items-start mb-8">
+      <div className="relative z-20 flex justify-between items-start mb-8 gap-4">
         {/* Icon container with colored gradient */}
         <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg shadow-cyan-500/10 group-hover:scale-110 transition-transform duration-500`}>
-          {icon.startsWith('fa') ? (
-            <i className={`${icon} text-xl`} />
-          ) : (
+          {icon.toLowerCase().includes('graduation-cap') && <FaGraduationCap className="text-2xl" />}
+          {icon.toLowerCase().includes('award') && <FaAward className="text-2xl" />}
+          {icon.toLowerCase().includes('laravel') && <FaLaravel className="text-2xl" />}
+          {icon.toLowerCase().startsWith('fa') && !['graduation-cap', 'award', 'laravel'].some(name => icon.toLowerCase().includes(name)) && (
+            <span className="text-sm">★</span>
+          )}
+          {!icon.toLowerCase().startsWith('fa') && (
             <span className="material-icons-outlined text-3xl">{icon}</span>
           )}
         </div>
 
-        {/* Industry Number Badge */}
-        <div className="flex flex-col items-end">
+        <div className="flex-1" />
+
+        <div className="flex flex-col items-end gap-2">
+          {statusLabel && (
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] px-3 py-1 rounded-full bg-slate-900/90 text-cyan-400 border border-cyan-500/20 shadow-sm">
+              {statusLabel}
+            </span>
+          )}
           <span className="text-4xl font-extrabold text-slate-200/50 dark:text-slate-800/60 font-mono select-none transition-colors group-hover:text-cyan-500/20 leading-none">
             {formattedNumber}
           </span>
           {badge && (
-            <span className="mt-2 text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 shadow-sm">
+            <span className="mt-1 text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 shadow-sm">
               {badge}
             </span>
           )}
@@ -207,15 +220,13 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 
       {/* Professional Call To Action (CTA) */}
       {ctaText && (
-        <div className="relative z-20 mt-auto pt-4 border-t border-slate-200/30 dark:border-slate-800/30">
+        <div className="relative z-20 mt-auto pt-6">
           <a
             href={ctaHref}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white hover:text-cyan-500 dark:hover:text-cyan-400 transition-all duration-300 group/btn"
+            className="inline-flex items-center justify-between w-full px-6 py-4 rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white font-bold uppercase tracking-[0.25em] text-xs shadow-2xl shadow-cyan-500/20 hover:brightness-110 transition-all duration-300"
           >
             <span>{ctaText}</span>
-            <span className="material-icons-outlined text-[14px] transform group-hover/btn:translate-x-1 transition-transform duration-300">
-              arrow_forward
-            </span>
+            <span className="material-icons-outlined text-[16px]">arrow_forward</span>
           </a>
         </div>
       )}
