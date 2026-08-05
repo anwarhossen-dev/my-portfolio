@@ -245,8 +245,8 @@ const DevOpsSection = () => {
                   <div className="w-14 h-14 rounded-3xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 shadow-inner">
                     <MdTerminal className="text-cyan-400 text-3xl animate-pulse" />
                   </div>
-                  <div>
-                    <h4 className="text-white font-black text-3xl tracking-tight">AI Deployment <span className="text-cyan-400 italic">Control</span></h4>
+                  <div >
+                    <h3 className="text-white font-black text-3xl tracking-tight">AI Deployment <span className="text-cyan-400 italic">Control</span></h3>
                     <p className="text-slate-500 text-xs font-bold uppercase tracking-[0.3em]">Advanced Orchestration</p>
                   </div>
                 </div>

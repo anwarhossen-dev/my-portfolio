@@ -3,37 +3,16 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import PropTypes from 'prop-types';
 import { NAV_LINKS, PERSONAL_INFO } from '../constants';
 import { scrollToElement } from '../utils';
-import { useTheme } from '../hooks/useTheme';
-import { gsap } from 'gsap';
+import { useTheme } from '../hooks/useTheme'; 
+import Magnetic from './Magnetic';
 
 const Header = ({ activeSection = '' }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isDark, toggleTheme } = useTheme();
   const { scrollYProgress, scrollY } = useScroll();
-  
-  const isNavigating = useRef(false);
-  const connectBtnRef = useRef(null);
 
-  useEffect(() => {
-    const btn = connectBtnRef.current;
-    if (!btn) return;
-    const handleMouseMove = (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - (rect.left + rect.width / 2);
-      const y = e.clientY - (rect.top + rect.height / 2);
-      gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.5, ease: "power2.out" });
-    };
-    const handleMouseLeave = () => {
-      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-    };
-    btn.addEventListener('mousemove', handleMouseMove);
-    btn.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      btn.removeEventListener('mousemove', handleMouseMove);
-      btn.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
+  const isNavigating = useRef(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 20);
@@ -138,6 +117,7 @@ const Header = ({ activeSection = '' }) => {
               <motion.button
                 onClick={toggleTheme}
                 whileHover={{ scale: 1.1, rotate: 15 }}
+                aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
                 whileTap={{ scale: 0.9 }}
                 className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm"
               >
@@ -154,27 +134,25 @@ const Header = ({ activeSection = '' }) => {
                 </AnimatePresence>
               </motion.button>
 
-              <div className="relative group/btn">
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-20 group-hover/btn:opacity-60 transition duration-1000 group-hover/btn:duration-200"></div>
-                <motion.a
-                  ref={connectBtnRef}
-                  href="#contact"
-                  onClick={(e) => handleNavClick('#contact', e)}
-                  className="relative hidden md:flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl"
-                >
-                  <span>Connect</span>
-                  <motion.span 
-                    className="material-icons-outlined text-sm text-primary"
-                    animate={{ rotate: [0, 15, -15, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+              <Magnetic strength={0.3}>
+                <div className="relative group/btn hidden md:flex">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-20 group-hover/btn:opacity-60 transition duration-1000 group-hover/btn:duration-200"></div>
+                  <a
+                    href="#contact"
+                    onClick={(e) => handleNavClick('#contact', e)}
+                    className="relative flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl"
                   >
-                    bolt
-                  </motion.span>
-                </motion.a>
-              </div>
+                    <span>Connect</span>
+                    <motion.span className="material-icons-outlined text-sm text-primary" animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+                      bolt
+                    </motion.span>
+                  </a>
+                </div>
+              </Magnetic>
 
               <motion.button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 className="flex xl:hidden items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm"
               >
                 <span className="material-icons-outlined text-xl">{isMobileMenuOpen ? 'close' : 'menu'}</span>

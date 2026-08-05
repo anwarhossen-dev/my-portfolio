@@ -4,7 +4,6 @@ import TypewriterText from './TypewriterText';
 
 const Terminal = () => {
   const [lines, setLines] = useState([]);
-  const [isTyping, setIsTyping] = useState(true);
 
   const terminalCommands = [
     { text: 'npm init portfolio', color: 'text-green-400' },
@@ -14,20 +13,20 @@ const Terminal = () => {
     { text: 'Status: ONLINE & READY', color: 'text-cyan-400' }
   ];
 
+  const [isTyping, setIsTyping] = useState(true);
+
   useEffect(() => {
-    let currentLine = 0;
+    if (lines.length >= terminalCommands.length + 1) {
+      setIsTyping(false);
+      return;
+    }
+
     const interval = setInterval(() => {
-      if (currentLine < terminalCommands.length) {
-        setLines(prev => [...prev, terminalCommands[currentLine]]);
-        currentLine++;
-      } else {
-        clearInterval(interval);
-        setIsTyping(false);
-      }
-    }, 2000);
+      setLines(prev => [...prev, terminalCommands[prev.length - 1]]);
+    }, 1500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [lines, terminalCommands.length]);
 
   return (
     <div className="w-full max-w-3xl mx-auto bg-slate-900 rounded-xl overflow-hidden shadow-2xl border border-slate-700 font-mono text-sm mt-12">
@@ -50,12 +49,14 @@ const Terminal = () => {
           &gt; MD. Anwar Hossen: Full Stack Architect
         </div>
 
-        {lines.map((line, i) => (
-          <div key={i} className={`flex items-start gap-2 ${line.color}`}>
-            <span className="opacity-50">#</span>
-            <TypewriterText text={line.text} speed={30} showCursor={false} />
-          </div>
-        ))}
+        {lines.map((line, i) =>
+          line ? (
+            <div key={i} className={`flex items-start gap-2 ${line.color}`}>
+              <span className="opacity-50">#</span>
+              <TypewriterText text={line.text} speed={30} showCursor={false} />
+            </div>
+          ) : null
+        )}
 
         {isTyping && (
           <motion.span

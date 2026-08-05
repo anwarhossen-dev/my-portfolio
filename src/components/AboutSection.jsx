@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import { useSpring, animated, useTrail } from '@react-spring/web';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Terminal from './Terminal.jsx';
 import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
 import {
@@ -15,32 +14,6 @@ import {
 } from '../utils/animations';
 
 const AboutSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  
-  // GSAP scroll reveal
-  const sectionRef = useScrollReveal({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    scrollTrigger: {
-      onEnter: () => setIsVisible(true),
-      start: "top 80%"
-    }
-  });
-
-  const cardsRef = useStaggerAnimation('.about-card', {
-    from: { opacity: 0, y: 50, scale: 0.9 },
-    to: { opacity: 1, y: 0, scale: 1 },
-    scrollTrigger: { start: "top 85%" }
-  });
-
-  // React Spring animations
-  const titleSpring = useSpring({
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0px)' : 'translateY(30px)',
-    config: { tension: 280, friction: 60 },
-    delay: 200,
-  });
-
   const aboutCards = [
     {
       title: "My Programming Journey",
@@ -65,26 +38,15 @@ const AboutSection = () => {
     }
   ];
 
-  // Trail animation for cards
-  const trail = useTrail(aboutCards.length, {
-    from: { opacity: 0, transform: 'translateY(50px) scale(0.9)' },
-    to: { 
-      opacity: isVisible ? 1 : 0, 
-      transform: isVisible ? 'translateY(0px) scale(1)' : 'translateY(50px) scale(0.9)' 
-    },
-    config: { tension: 300, friction: 20 },
-  });
-
   const stats = [
     { number: "2+", label: "Years Experience", icon: "work_history" },
     { number: "15+", label: "Projects Completed", icon: "assignment_turned_in" },
     { number: "5+", label: "Technologies", icon: "code" },
-    { number: "100%", label: "Client Satisfaction", icon: "sentiment_very_satisfied" }
+    { number: "99%", label: "Client Satisfaction", icon: "sentiment_very_satisfied" }
   ];
 
   return (
-    <motion.section 
-      ref={sectionRef}
+    <motion.section
       className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full flex flex-col justify-center relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
       id="about"
       initial="hidden"
@@ -94,30 +56,30 @@ const AboutSection = () => {
     >
       {/* Section Header */}
       <motion.div 
-        className="flex flex-col items-center text-center mb-16"
-        variants={fadeInUp}
+        className="flex flex-col items-center text-center mb-16" 
+        variants={staggerContainer}
       >
         <motion.div 
           className="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 mb-4"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <span className="text-purple-500 font-semibold text-xs tracking-widest uppercase">
+          <span className="text-purple-600 dark:text-purple-400 font-semibold text-xs tracking-widest uppercase">
             Get to know me
           </span>
         </motion.div>
-        
-        <animated.h2 
-          style={titleSpring}
+
+        <motion.h2
           className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
+          variants={fadeInUp}
         >
           About <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
             Me
           </span>
-        </animated.h2>
+        </motion.h2>
         
         <motion.div 
-          className="w-24 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+          className="w-24 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" 
           initial={{ width: 0 }}
           whileInView={{ width: 96 }}
           transition={{ duration: 1, delay: 0.5 }}
@@ -133,15 +95,14 @@ const AboutSection = () => {
       </motion.div>
 
       {/* About Cards */}
-      <motion.div 
-        ref={cardsRef}
+      <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
         variants={staggerContainer}
       >
-        {trail.map((style, index) => (
-          <animated.div key={aboutCards[index].title} style={style}>
+        {aboutCards.map((card, index) => (
+          <motion.div key={card.title} variants={fadeInUp} custom={index}>
             <motion.div
-              className="about-card bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 h-full"
+              className="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 h-full"
               variants={cardHover}
               initial="rest"
               whileHover="hover"
@@ -156,25 +117,25 @@ const AboutSection = () => {
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
                 >
-                  {aboutCards[index].icon}
+                  {card.icon}
                 </motion.span>
               </motion.div>
               
               <motion.h3 
                 className="text-xl font-bold text-slate-900 dark:text-white mb-4"
-                variants={textReveal}
+                variants={staggerItem}
               >
-                {aboutCards[index].title}
+                {card.title}
               </motion.h3>
               
               <motion.p 
                 className="text-slate-600 dark:text-slate-400 leading-relaxed"
-                variants={textReveal}
+                variants={staggerItem}
               >
-                {aboutCards[index].content}
+                {card.content}
               </motion.p>
             </motion.div>
-          </animated.div>
+          </motion.div>
         ))}
       </motion.div>
 

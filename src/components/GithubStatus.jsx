@@ -117,8 +117,8 @@ const GithubStatus = ({ username }) => {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-[0_0_15px_#10b981]"></span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Live Status</span>
-                {!isExpanded && (
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Live Status</span>
+                {!isExpanded && ( 
                   <span className="text-xs font-black text-slate-900 dark:text-white flex items-center gap-2">
                     <FaGithub />
                     {stats.loading ? "Loading..." : `${stats.repos} Repos`}

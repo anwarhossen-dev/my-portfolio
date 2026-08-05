@@ -2,41 +2,14 @@ import { useEffect, useRef } from 'react';
 import { PERSONAL_INFO } from '../constants';
 import { scrollToElement } from '../utils';
 import { Typewriter } from 'react-simple-typewriter';
-import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import GithubStatus from './GithubStatus';
 
 export const HeroSection = () => {
-  const containerRef = useRef(null);
-  const imageRef = useRef(null);
-  const badgeRef = useRef(null);
-
-  useEffect(() => {
-    // GSAP Parallax Effect
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const xPos = (clientX / window.innerWidth - 0.5) * 30;
-      const yPos = (clientY / window.innerHeight - 0.5) * 30;
-
-      gsap.to(imageRef.current, {
-        rotationY: xPos,
-        rotationX: -yPos,
-        duration: 1,
-        ease: "power2.out"
-      });
-
-      gsap.to(".floating-shape", {
-        x: xPos * 1.5,
-        y: yPos * 1.5,
-        stagger: 0.1,
-        duration: 1.5,
-        ease: "power2.out"
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(x, [-0.5, 0.5], ["-15deg", "15deg"]);
 
   const handleContactClick = (e) => {
     e.preventDefault();
@@ -50,9 +23,15 @@ export const HeroSection = () => {
 
   const nameParts = PERSONAL_INFO.name.split(' ');
   const firstName = nameParts[0];
+  
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 lg:px-16 py-20 gap-12 max-w-7xl mx-auto w-full overflow-hidden">
+    <section onMouseMove={handleMouseMove} className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 lg:px-16 py-20 gap-12 max-w-7xl mx-auto w-full overflow-hidden">
       {/* Background Decorative Auras */}
       <div className="absolute top-1/4 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
@@ -64,13 +43,13 @@ export const HeroSection = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="flex-1 w-full text-left space-y-8 order-2 lg:order-1 relative z-10 lg:pt-10"
       >
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800/50 text-primary border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div className="flex flex-wrap items-center gap-4"> 
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary-dark dark:text-primary border border-primary/20 shadow-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            <span className="text-[10px] font-black uppercase tracking-widest">Available for Projects</span>
+            <span className="text-[10px] font-black uppercase tracking-widest">Available for Projects</span> 
           </div>
           <GithubStatus username="anwarhossen-dev" />
         </div>
@@ -150,7 +129,10 @@ export const HeroSection = () => {
           />
 
           {/* Image Container with 3D Interaction */}
-          <div ref={imageRef} className="relative z-10 w-full h-full p-8 sm:p-12">
+          <motion.div 
+            style={{ rotateX, rotateY }}
+            className="relative z-10 w-full h-full p-8 sm:p-12"
+          >
             <div className="relative w-full h-full rounded-[3rem] overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border-2 border-white/20 dark:border-slate-800">
               <img
                 alt={PERSONAL_INFO.name}
@@ -176,7 +158,7 @@ export const HeroSection = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Floating Orbiting Icons */}
           <motion.div

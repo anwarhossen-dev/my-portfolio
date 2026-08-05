@@ -55,7 +55,9 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               transition={{ delay: 0.2 }}
             >
               {project.videoUrl ? (
-                <video src={project.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+                <video src={project.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-cover" aria-hidden="true">
+                  <track kind="captions" />
+                </video>
               ) : (
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
               )}
@@ -157,6 +159,8 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
       <div className="relative h-64 overflow-hidden">
         <motion.img 
           src={project.image} 
+          loading="lazy"
+          decoding="async"
           alt={project.title}
           animate={{ scale: isHovered ? 1.08 : 1 }}
           transition={{ duration: 0.5 }}

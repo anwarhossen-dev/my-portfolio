@@ -1,15 +1,11 @@
 import { motion } from 'framer-motion';
-import { useSpring, animated, useTrail } from '@react-spring/web';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { SKILLS } from '../constants';
-import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
 import MarqueeText from './MarqueeText';
 import {
   fadeInUp,
   staggerContainer,
   staggerItem,
-  scaleIn,
-  progressBar,
   cardHover
 } from '../utils/animations';
 
@@ -17,22 +13,6 @@ const SkillBar = ({ skill, percentage, icon, color = "primary", index }) => {
   const [isVisible, setIsVisible] = useState(false);
   
   // React Spring progress animation
-  const progressSpring = useSpring({
-    width: isVisible ? `${percentage}%` : '0%',
-    config: { tension: 100, friction: 14 },
-    delay: index * 100,
-  });
-
-  // GSAP scroll reveal
-  const skillRef = useScrollReveal({
-    from: { opacity: 0, x: -50 },
-    to: { opacity: 1, x: 0 },
-    scrollTrigger: {
-      onEnter: () => setIsVisible(true),
-      onLeave: () => setIsVisible(false),
-      onEnterBack: () => setIsVisible(true),
-    }
-  });
 
   const colorClasses = {
     primary: "from-primary to-blue-400",
@@ -44,7 +24,6 @@ const SkillBar = ({ skill, percentage, icon, color = "primary", index }) => {
 
   return (
     <motion.div 
-      ref={skillRef}
       className="group"
       variants={staggerItem}
       custom={index}
@@ -75,8 +54,11 @@ const SkillBar = ({ skill, percentage, icon, color = "primary", index }) => {
       </div>
       
       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-        <animated.div
-          style={progressSpring}
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: `${percentage}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
           className={`h-full bg-gradient-to-r ${colorClasses[color]} rounded-full relative overflow-hidden`}
         >
           <motion.div
@@ -84,30 +66,15 @@ const SkillBar = ({ skill, percentage, icon, color = "primary", index }) => {
             animate={{ x: ['-100%', '100%'] }}
             transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
           />
-        </animated.div>
+        </motion.div>
       </div>
     </motion.div>
   );
 };
 
 const SkillCategory = ({ title, skills, icon, color, delay = 0 }) => {
-  const categoryRef = useScrollReveal({
-    from: { opacity: 0, y: 50 },
-    to: { opacity: 1, y: 0 },
-    scrollTrigger: { start: "top 85%" }
-  });
-
-  // Trail animation for skills
-  const trail = useTrail(skills.length, {
-    from: { opacity: 0, transform: 'translateY(20px)' },
-    to: { opacity: 1, transform: 'translateY(0px)' },
-    config: { tension: 300, friction: 20 },
-    delay: delay,
-  });
-
   return (
     <motion.div 
-      ref={categoryRef}
       className="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
       variants={cardHover}
       initial="rest"
@@ -140,8 +107,8 @@ const SkillCategory = ({ title, skills, icon, color, delay = 0 }) => {
       </motion.div>
       
       <div className="space-y-4">
-        {trail.map((style, index) => (
-          <animated.div key={skills[index].name} style={style}>
+        {skills.map((skill, index) => (
+          <motion.div key={skill.name} variants={staggerItem}>
             <SkillBar 
               skill={skills[index].name}
               percentage={skills[index].level}
@@ -149,7 +116,7 @@ const SkillCategory = ({ title, skills, icon, color, delay = 0 }) => {
               color={color.includes('cyan') ? 'info' : color.includes('purple') ? 'secondary' : 'primary'}
               index={index}
             />
-          </animated.div>
+          </motion.div>
         ))}
       </div>
     </motion.div>
@@ -157,12 +124,6 @@ const SkillCategory = ({ title, skills, icon, color, delay = 0 }) => {
 };
 
 const SkillsSection = () => {
-  const sectionRef = useStaggerAnimation('.skill-category', {
-    from: { opacity: 0, y: 60 },
-    to: { opacity: 1, y: 0 },
-    scrollTrigger: { start: "top 80%" }
-  });
-
   const skillCategories = [
     {
       title: "Frontend",
@@ -196,7 +157,6 @@ const SkillsSection = () => {
 
   return (
     <motion.section 
-      ref={sectionRef}
       className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
       id="skills"
       initial="hidden"
@@ -251,7 +211,6 @@ const SkillsSection = () => {
         {skillCategories.map((category, index) => (
           <motion.div
             key={category.title}
-            className="skill-category"
             variants={staggerItem}
             custom={index}
           >

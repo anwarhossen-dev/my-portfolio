@@ -1,60 +1,22 @@
-import { useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { gsap } from 'gsap';
 import { SOCIAL_LINKS } from '../constants';
 import { FaGithub, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
+import Magnetic from './Magnetic';
 
 const MagneticSocialLink = ({ href, icon, iconText, name, color }) => {
-  const linkRef = useRef(null);
-
-  useEffect(() => {
-    const link = linkRef.current;
-    if (!link) return;
-
-    const handleMouseMove = (e) => {
-      const rect = link.getBoundingClientRect();
-      const x = e.clientX - (rect.left + rect.width / 2);
-      const y = e.clientY - (rect.top + rect.height / 2);
-
-      gsap.to(link, {
-        x: x * 0.4,
-        y: y * 0.4,
-        duration: 0.5,
-        ease: "power2.out"
-      });
-    };
-
-    const handleMouseLeave = () => {
-      gsap.to(link, {
-        x: 0,
-        y: 0,
-        duration: 0.5,
-        ease: "elastic.out(1, 0.3)"
-      });
-    };
-
-    link.addEventListener('mousemove', handleMouseMove);
-    link.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      link.removeEventListener('mousemove', handleMouseMove);
-      link.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
   return (
-    <motion.div className="relative group flex items-center justify-end">
-      <div className="absolute right-full mr-4 px-3 py-1.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none shadow-xl whitespace-nowrap z-50 uppercase tracking-tighter">
-        {name}
-        <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45" />
-      </div>
-
-      <a
-        ref={linkRef}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`
+    <Magnetic strength={0.4}>
+      <motion.div className="relative group flex items-center justify-end">
+        <div className="absolute right-full mr-4 px-3 py-1.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none shadow-xl whitespace-nowrap z-50 uppercase tracking-tighter">
+          {name}
+          <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45" />
+        </div>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`
           relative w-11 h-11 flex items-center justify-center rounded-xl
           bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800
           text-slate-500 dark:text-slate-400 hover:text-white transition-colors duration-300
@@ -63,9 +25,10 @@ const MagneticSocialLink = ({ href, icon, iconText, name, color }) => {
         `}
         aria-label={name}
       >
-        <span className="text-lg">{icon}</span>
-      </a>
-    </motion.div>
+          <span className="text-lg">{icon}</span>
+        </a>
+      </motion.div>
+    </Magnetic>
   );
 };
 

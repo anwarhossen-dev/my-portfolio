@@ -1,37 +1,15 @@
 import { motion } from 'framer-motion';
-import { useSpring, animated } from '@react-spring/web';
-import { useState, useEffect } from 'react';
 import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants';
-import { useScrollReveal } from '../hooks/useAnimations';
 import {
   fadeInUp,
   staggerContainer,
   staggerItem,
-  scaleIn
 } from '../utils/animations';
 import { FaGithub, FaLinkedinIn, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 import { MdEmail, MdPhone, MdLocationOn, MdKeyboardArrowUp } from 'react-icons/md';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [isVisible, setIsVisible] = useState(false);
-
-  // GSAP scroll reveal
-  const footerRef = useScrollReveal({
-    from: { opacity: 0, y: 50 },
-    to: { opacity: 1, y: 0 },
-    scrollTrigger: {
-      onEnter: () => setIsVisible(true),
-      start: "top 90%"
-    }
-  });
-
-  // React Spring animations
-  const footerSpring = useSpring({
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0px)' : 'translateY(30px)',
-    config: { tension: 280, friction: 60 },
-  });
 
   const socialLinks = [
     {
@@ -80,7 +58,6 @@ const Footer = () => {
 
   return (
     <motion.footer 
-      ref={footerRef}
       className="bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden"
       initial="hidden"
       whileInView="visible"
@@ -96,7 +73,7 @@ const Footer = () => {
 
       <div className="relative z-10">
         {/* Main Footer Content */}
-        <animated.div style={footerSpring}>
+        <motion.div variants={fadeInUp}>
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {/* Brand Section */}
@@ -142,6 +119,7 @@ const Footer = () => {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Follow me on ${social.name}`}
                       className={`w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition-all duration-300 ${social.color}`}
                       variants={staggerItem}
                       custom={index}
@@ -220,7 +198,7 @@ const Footer = () => {
               </motion.div>
             </div>
           </div>
-        </animated.div>
+        </motion.div>
 
         {/* Bottom Bar */}
         <motion.div 

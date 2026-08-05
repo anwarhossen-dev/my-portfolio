@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import { useTrail, animated } from '@react-spring/web';
-import { useState } from 'react';
 import { EDUCATION } from '../constants';
 import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
 import {
@@ -45,37 +43,9 @@ const getSkillIcon = (skill) => {
 };
 
 const EducationSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  // GSAP scroll reveal
-  const sectionRef = useScrollReveal({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    scrollTrigger: {
-      onEnter: () => setIsVisible(true),
-      start: "top 80%"
-    }
-  });
-
-  const timelineRef = useStaggerAnimation('.education-card', {
-    from: { opacity: 0, y: 60 },
-    to: { opacity: 1, y: 0 },
-    scrollTrigger: { start: "top 85%" }
-  });
-
-  // Trail animation for education cards
-  const trail = useTrail(EDUCATION.length, {
-    from: { opacity: 0, transform: 'translateY(60px)' },
-    to: { 
-      opacity: isVisible ? 1 : 0, 
-      transform: isVisible ? 'translateY(0px)' : 'translateY(60px)' 
-    },
-    config: { tension: 280, friction: 60 },
-  });
 
   return (
     <motion.section 
-      ref={sectionRef}
       className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
       id="education"
       initial="hidden"
@@ -117,7 +87,6 @@ const EducationSection = () => {
 
       {/* Education Timeline */}
       <motion.div 
-        ref={timelineRef}
         className="relative"
         variants={staggerContainer}
       >
@@ -130,10 +99,10 @@ const EducationSection = () => {
         />
         
         <div className="space-y-12">
-          {trail.map((style, index) => (
-            <animated.div key={index} style={style}>
+          {EDUCATION.map((edu, index) => (
+            <motion.div key={index} variants={fadeInUp}>
               <motion.div 
-                className={`education-card flex flex-col md:flex-row items-center gap-8 ${
+                className={`flex flex-col md:flex-row items-center gap-8 ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
                 variants={staggerItem}
@@ -160,12 +129,12 @@ const EducationSection = () => {
                     {/* Header */}
                     <div className="flex items-start gap-4 mb-6">
                       <motion.div 
-                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${EDUCATION[index].bgColor} flex items-center justify-center ${EDUCATION[index].textColor} flex-shrink-0 border ${EDUCATION[index].borderColor}`}
+                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${edu.bgColor} flex items-center justify-center ${edu.textColor} flex-shrink-0 border ${edu.borderColor}`}
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.5 }}
                       >
                         <span className="material-icons-outlined text-2xl">
-                          {EDUCATION[index].icon}
+                          {edu.icon}
                         </span>
                       </motion.div>
                       
@@ -174,7 +143,7 @@ const EducationSection = () => {
                           className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-green-500 transition-colors"
                           whileHover={{ x: 5 }}
                         >
-                          {EDUCATION[index].degree}
+                          {edu.degree}
                         </motion.h3>
                         
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
@@ -182,46 +151,46 @@ const EducationSection = () => {
                             className="text-primary font-semibold"
                             whileHover={{ scale: 1.05 }}
                           >
-                            {EDUCATION[index].institution}
+                            {edu.institution}
                           </motion.span>
                           <span className="hidden sm:inline text-slate-400">•</span>
                           <span className="text-slate-600 dark:text-slate-400">
-                            {EDUCATION[index].year}
+                            {edu.year}
                           </span>
-                          {EDUCATION[index].board && (
+                          {edu.board && (
                             <>
                               <span className="hidden sm:inline text-slate-400">•</span>
                               <span className="text-slate-500 dark:text-slate-400 text-sm">
-                                {EDUCATION[index].board}
+                                {edu.board}
                               </span>
                             </>
                           )}
                         </div>
                         
-                        {EDUCATION[index].period && (
+                        {edu.period && (
                           <div className="mb-3 flex items-center gap-2">
                             <span className="material-icons-outlined text-sm text-slate-500">schedule</span>
                             <span className="text-slate-500 dark:text-slate-400 text-sm">
-                              Duration: {EDUCATION[index].period}
+                              Duration: {edu.period}
                             </span>
                           </div>
                         )}
                         
-                        {EDUCATION[index].board && (
+                        {edu.board && (
                           <div className="mb-3 flex items-center gap-2">
                             <span className="material-icons-outlined text-sm text-slate-500">verified</span>
                             <span className="text-slate-500 dark:text-slate-400 text-sm">
-                              Board: {EDUCATION[index].board}
+                              Board: {edu.board}
                             </span>
                           </div>
                         )}
                         
                         <motion.div 
-                          className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${EDUCATION[index].bgColor} ${EDUCATION[index].textColor} text-sm font-semibold mb-4 flex items-center gap-2`}
+                          className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${edu.bgColor} ${edu.textColor} text-sm font-semibold mb-4 flex items-center gap-2`}
                           whileHover={{ scale: 1.05 }}
                         >
                           <span className="material-icons-outlined text-sm">grade</span>
-                          {EDUCATION[index].grade}
+                          {edu.grade}
                         </motion.div>
                       </div>
                     </div>
@@ -231,11 +200,11 @@ const EducationSection = () => {
                       className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4"
                       variants={staggerItem}
                     >
-                      {EDUCATION[index].description}
+                      {edu.description}
                     </motion.p>
 
                     {/* Skills/Subjects */}
-                    {EDUCATION[index].skills && (
+                    {edu.skills && (
                       <div>
                         <motion.h4 
                           className="text-slate-900 dark:text-white font-semibold mb-3 text-sm flex items-center gap-2"
@@ -248,10 +217,10 @@ const EducationSection = () => {
                           className="flex flex-wrap gap-2"
                           variants={staggerContainer}
                         >
-                          {EDUCATION[index].skills.map((skill, skillIndex) => (
+                          {edu.skills.map((skill, skillIndex) => (
                             <motion.span 
                               key={skillIndex}
-                              className={`px-3 py-1 rounded-full bg-gradient-to-r ${EDUCATION[index].bgColor} ${EDUCATION[index].textColor} text-xs font-medium border ${EDUCATION[index].borderColor} flex items-center gap-1`}
+                              className={`px-3 py-1 rounded-full bg-gradient-to-r ${edu.bgColor} ${edu.textColor} text-xs font-medium border ${edu.borderColor} flex items-center gap-1`}
                               variants={staggerItem}
                               custom={skillIndex}
                               whileHover={{ scale: 1.05, y: -2 }}
@@ -281,7 +250,7 @@ const EducationSection = () => {
                 {/* Spacer for alternating layout */}
                 <div className="flex-1 hidden md:block"></div>
               </motion.div>
-            </animated.div>
+            </motion.div>
           ))}
         </div>
       </motion.div>

@@ -56,7 +56,7 @@ const CertificatesSection = () => {
                   { label: 'Issuer', value: cert.issuer },
                   { label: 'Year', value: cert.date }
                 ]}
-                ctaText={cert.credentialUrl !== '#' ? "Verify Credential" : undefined}
+                ctaText={cert.credentialUrl !== '#' ? `Verify ${cert.title}` : undefined}
                 ctaHref={cert.credentialUrl}
               />
             </motion.div>

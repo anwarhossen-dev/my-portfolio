@@ -192,6 +192,7 @@ const Chatbot = () => {
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
+                aria-label="Close chat"
                 className="hover:bg-white/10 p-2 rounded-xl transition-colors"
               >
                 <span className="material-icons-outlined">close</span>

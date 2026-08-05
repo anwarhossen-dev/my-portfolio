@@ -1,8 +1,5 @@
 import { motion } from 'framer-motion';
-import { useTrail, animated } from '@react-spring/web';
-import { useState } from 'react';
 import { EXPERIENCE } from '../constants';
-import { useScrollReveal, useStaggerAnimation } from '../hooks/useAnimations';
 import {
   fadeInUp,
   staggerContainer,
@@ -11,39 +8,10 @@ import {
 } from '../utils/animations';
 
 const ExperienceSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  
   const experienceData = EXPERIENCE;
-
-  // GSAP scroll reveal
-  const sectionRef = useScrollReveal({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    scrollTrigger: {
-      onEnter: () => setIsVisible(true),
-      start: "top 80%"
-    }
-  });
-
-  const timelineRef = useStaggerAnimation('.experience-card', {
-    from: { opacity: 0, x: -100 },
-    to: { opacity: 1, x: 0 },
-    scrollTrigger: { start: "top 85%" }
-  });
-
-  // Trail animation for experience cards
-  const trail = useTrail(experienceData.length, {
-    from: { opacity: 0, transform: 'translateX(-100px)' },
-    to: { 
-      opacity: isVisible ? 1 : 0, 
-      transform: isVisible ? 'translateX(0px)' : 'translateX(-100px)' 
-    },
-    config: { tension: 280, friction: 60 },
-  });
 
   return (
     <motion.section 
-      ref={sectionRef}
       className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
       id="experience"
       initial="hidden"
@@ -85,7 +53,6 @@ const ExperienceSection = () => {
 
       {/* Experience Timeline */}
       <motion.div 
-        ref={timelineRef}
         className="relative"
         variants={staggerContainer}
       >
@@ -98,10 +65,10 @@ const ExperienceSection = () => {
         />
 
         <div className="space-y-12">
-          {trail.map((style, index) => (
-            <animated.div key={index} style={style}>
+          {experienceData.map((experience, index) => (
+            <motion.div key={index} variants={fadeInUp}>
               <motion.div 
-                className={`experience-card flex flex-col md:flex-row items-start md:items-center gap-8 ${
+                className={`flex flex-col md:flex-row items-start md:items-center gap-8 ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
                 variants={staggerItem}
@@ -142,7 +109,7 @@ const ExperienceSection = () => {
                         transition={{ duration: 0.5 }}
                       >
                         <span className="material-icons-outlined text-2xl">
-                          {experienceData[index].icon}
+                          {experience.icon}
                         </span>
                       </motion.div>
                       
@@ -151,7 +118,7 @@ const ExperienceSection = () => {
                           className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-orange-500 transition-colors"
                           whileHover={{ x: 5 }}
                         >
-                          {experienceData[index].title}
+                          {experience.title}
                         </motion.h3>
                         
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
@@ -159,29 +126,29 @@ const ExperienceSection = () => {
                             className="text-primary font-semibold"
                             whileHover={{ scale: 1.05 }}
                           >
-                            {experienceData[index].company}
+                            {experience.company}
                           </motion.span>
                           <span className="hidden sm:inline text-slate-400">•</span>
                           <span className="text-slate-600 dark:text-slate-400">
-                            {experienceData[index].period}
+                            {experience.period}
                           </span>
                         </div>
                         
                         <div className="flex gap-2 mb-4">
-                          {experienceData[index].type && (
+                          {experience.type && (
                             <motion.span 
                               className="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-500 text-xs font-semibold"
                               whileHover={{ scale: 1.05 }}
                             >
-                              {experienceData[index].type}
+                              {experience.type}
                             </motion.span>
                           )}
-                          {experienceData[index].location && (
+                          {experience.location && (
                             <motion.span 
                               className="inline-block px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold"
                               whileHover={{ scale: 1.05 }}
                             >
-                              {experienceData[index].location}
+                              {experience.location}
                             </motion.span>
                           )}
                         </div>
@@ -193,11 +160,11 @@ const ExperienceSection = () => {
                       className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
                       variants={staggerItem}
                     >
-                      {experienceData[index].description}
+                      {experience.description}
                     </motion.p>
 
                     {/* Responsibilities */}
-                    {experienceData[index].responsibilities && (
+                    {experience.responsibilities && (
                       <div className="mb-6">
                         <motion.h4 
                           className="text-slate-900 dark:text-white font-semibold mb-3"
@@ -209,7 +176,7 @@ const ExperienceSection = () => {
                           className="space-y-2"
                           variants={staggerContainer}
                         >
-                          {experienceData[index].responsibilities.map((responsibility, idx) => (
+                          {experience.responsibilities.map((responsibility, idx) => (
                             <motion.li 
                               key={idx}
                               className="flex items-start gap-2 text-slate-600 dark:text-slate-400 text-sm"
@@ -240,7 +207,7 @@ const ExperienceSection = () => {
                         className="flex flex-wrap gap-2"
                         variants={staggerContainer}
                       >
-                        {experienceData[index].technologies.map((tech, idx) => (
+                        {experience.technologies.map((tech, idx) => (
                           <motion.span 
                             key={idx}
                             className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium"
@@ -260,7 +227,7 @@ const ExperienceSection = () => {
                 {/* Spacer for alternating layout */}
                 <div className="flex-1 hidden md:block" />
               </motion.div>
-            </animated.div>
+            </motion.div>
           ))}
         </div>
       </motion.div>
