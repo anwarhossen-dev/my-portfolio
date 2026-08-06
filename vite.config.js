@@ -14,7 +14,9 @@ export default defineConfig({
     open: true,
     strictPort: false,
     hmr: {
-      overlay: false
+      overlay: false,
+      host: 'localhost',
+      protocol: 'ws'
     }
   },
   build: {
@@ -22,9 +24,15 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          utils: ['prop-types']
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // react-icons লাইব্রেরির প্রতিটি আইকন সেটকে আলাদা চাঙ্কে ভাগ করুন
+            const match = /node_modules[\\/](react-icons[\\/][a-z]{2})/.exec(id);
+            if (match) {
+              return `vendor-react-icons-${match[1].split(/[\\/]/).pop()}`;
+            }
+            return 'vendor'; // বাকি সব ভেন্ডর লাইব্রেরি
+          }
         }
       }
     }
