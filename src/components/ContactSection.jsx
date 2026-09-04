@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants';
-import { FaGithub, FaLinkedinIn, FaFacebookF, FaWhatsapp, FaPaperPlane } from 'react-icons/fa';
+import { FaGithub, FaLinkedinIn, FaFacebookF, FaWhatsapp, FaPaperPlane, FaVideo } from 'react-icons/fa';
 import { MdEmail, MdPhone, MdChat, MdHourglassEmpty } from 'react-icons/md';
 
-const ContactSection = () => {
+const ContactSection = ({ onOpenBooking }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -142,36 +142,48 @@ const ContactSection = () => {
         } catch (err) { console.warn("Formspree background send failed"); }
       }
 
-      // 4. Try FormSubmit.co (Zero-config fallback: works everywhere, even on localhost!)
+      // 4. Try FormSubmit.co (Zero-config fallback: works everywhere!)
+      let isFormSubmitPendingActivation = false;
+
       if (!sentSuccessfully) {
         try {
           const formsubmitResponse = await fetch("https://formsubmit.co/ajax/anwarhossendeveloper21@gmail.com", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            headers: { 
+              "Content-Type": "application/json", 
+              "Accept": "application/json" 
+            },
             body: JSON.stringify({
               name: formData.name,
               email: formData.email,
               subject: formData.subject,
               message: formData.message,
-              _subject: `New Portfolio Message: ${formData.subject}`
+              _subject: `New Portfolio Message from ${formData.name}: ${formData.subject}`,
+              _template: "table"
             }),
           });
           
           if (formsubmitResponse.ok) {
             const formsubmitData = await formsubmitResponse.json();
+            const responseText = (formsubmitData.message || "").toLowerCase();
+            
+            if (responseText.includes("activate") || responseText.includes("confirmation")) {
+              isFormSubmitPendingActivation = true;
+            }
+
             if (formsubmitData.success === "true" || formsubmitData.success === true) {
               sentSuccessfully = true;
               usedService = 'FormSubmit';
             }
           }
         } catch (err) {
-          console.warn("FormSubmit background send failed", err);
+          console.warn("FormSubmit send failed", err);
         }
       }
 
-      // --- Results & Final Fallback ---
+      // --- Results & Final Delivery Fallback ---
       if (sentSuccessfully) {
-        showNotification(`✅ Success! Your message has been sent via ${usedService}.`, 'success');
+        showNotification(`✅ Success! Your message has been sent to anwarhossendeveloper21@gmail.com via ${usedService}.`, 'success');
         
         // Save to history
         const emailHistory = JSON.parse(localStorage.getItem('sentEmails') || '[]');
@@ -179,21 +191,18 @@ const ContactSection = () => {
         localStorage.setItem('sentEmails', JSON.stringify(emailHistory));
         
         resetForm();
-      } else if (import.meta.env.DEV) {
-        // LOCAL DEVELOPMENT SIMULATION: Show success message instead of opening mail app
-        console.info("Local development mode: Simulating successful email send.");
-        showNotification(`✅ [Local Test] Message sent successfully!`, 'success');
+      } else if (isFormSubmitPendingActivation) {
+        showNotification(`📩 Action Required: Please check anwarhossendeveloper21@gmail.com inbox and click 'Activate FormSubmit' to receive messages instantly!`, 'warning');
         
-        // Save to local storage to simulate history
-        const emailHistory = JSON.parse(localStorage.getItem('sentEmails') || '[]');
-        emailHistory.push({ ...formData, timestamp: new Date().toISOString(), service: 'Local Simulation' });
-        localStorage.setItem('sentEmails', JSON.stringify(emailHistory));
+        // Also trigger mailto as fallback so user message is not lost
+        const emailContent = `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
+        const mailtoSubject = encodeURIComponent(`Portfolio Contact: ${formData.subject}`);
+        const mailtoBody = encodeURIComponent(emailContent);
+        window.location.href = `mailto:anwarhossendeveloper21@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
         
         resetForm();
       } else {
-        // ULTIMATE FALLBACK (PRODUCTION): Mailto 
-        console.info("Automatic sending skipped (No keys configured). Using reliable fallback.");
-        
+        // ULTIMATE RELIABLE FALLBACK: Mailto 
         const emailContent = `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
         navigator.clipboard.writeText(emailContent);
         
@@ -201,7 +210,7 @@ const ContactSection = () => {
         const mailtoBody = encodeURIComponent(emailContent);
         window.location.href = `mailto:anwarhossendeveloper21@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
         
-        showNotification('✅ Opening your email app to send the message...', 'info');
+        showNotification('✅ Opening your email client to send the message directly to anwarhossendeveloper21@gmail.com...', 'info');
         resetForm();
       }
 
@@ -326,6 +335,36 @@ const ContactSection = () => {
               Feel free to reach out to me through any of the following channels. I typically respond within 24 hours and would love to hear about your project ideas or collaboration opportunities.
             </p>
           </div>
+
+          {/* Google Calendar & Meet Booking Card */}
+          <motion.div
+            onClick={onOpenBooking}
+            className="group cursor-pointer flex items-center justify-between p-5 rounded-2xl bg-gradient-to-r from-cyan-500/15 via-blue-500/15 to-purple-500/15 backdrop-blur-md border border-cyan-500/30 hover:border-cyan-400 shadow-xl transition-all duration-300 mb-6"
+            whileHover={{ y: -5, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg">
+                <FaVideo className="text-xl" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-cyan-400 transition-colors">
+                    Schedule a 1-on-1 Call
+                  </h4>
+                  <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 text-[9px] font-black uppercase tracking-wider">
+                    Google Meet
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Pick a date & time for Google Calendar & instant Google Meet link.
+                </p>
+              </div>
+            </div>
+            <button type="button" className="px-4 py-2 rounded-xl bg-cyan-500 text-white font-bold text-xs shadow-md group-hover:bg-cyan-400 transition-colors">
+              Book Call
+            </button>
+          </motion.div>
 
           {/* Contact Info Cards */}
           <div className="space-y-4">

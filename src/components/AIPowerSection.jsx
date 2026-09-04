@@ -8,8 +8,8 @@ const AIPowerSection = () => {
   return (
     <section className="px-6 lg:px-16 py-32 max-w-7xl mx-auto w-full relative overflow-hidden">
       {/* Background Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-primary/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[200px] h-[200px] bg-purple-500/10 rounded-full blur-xl pointer-events-none" />
 
       <motion.div 
         variants={staggerContainer}

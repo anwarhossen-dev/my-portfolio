@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://anwarhossen.vercel.app/" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 
-    <!-- 🎯 গুগল সাইট ভেরিফিকেশন ট্যাগ -->
+    <!-- 🎯 Google Site Verification Tag -->
     <meta name="google-site-verification" content="hZa15am4fv33bfDzqLpyKHmdCRsRmZA1A38atfZJIyk" />
 
     <!-- Title Tag -->
@@ -42,14 +42,22 @@
     <link rel="icon" type="https://i.ibb.co.com/mV56xyVm/profile.jpg" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- ⚡ Font & CDN Preconnect -->
+    <!-- ⚡ Preload LCP Profile Image -->
+    <link rel="preload" as="image" href="/anwarhossen.jpg" fetchpriority="high" type="image/jpeg" />
+
+    <!-- ⚡ Font & CDN Preconnect & DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <!-- Google Fonts (with display=swap) & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <!-- Google Fonts & Material Icons (Async Non-Blocking Loading) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined&display=swap">
+    </noscript>
 
     <!-- 🧠 Structured Data for Google Rich Snippets (JSON-LD Schema) -->
     <script type="application/ld+json">

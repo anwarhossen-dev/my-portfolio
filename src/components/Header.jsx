@@ -10,7 +10,7 @@ const Header = ({ activeSection = '' }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isDark, toggleTheme } = useTheme();
-  const { scrollYProgress, scrollY } = useScroll();
+  const { scrollY } = useScroll();
 
   const isNavigating = useRef(false);
 
@@ -32,59 +32,50 @@ const Header = ({ activeSection = '' }) => {
 
   return (
     <>
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-blue-500 to-primary z-[60] origin-left"
-        style={{ scaleX: scrollYProgress }}
-      />
-
-      {/* Smart Header Wrapper with Dynamic Padding (Margin Haba) */}
-      <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500 pointer-events-none ${isScrolled ? 'pt-6 px-6' : 'pt-2 px-4 md:px-10'}`}>
+      {/* Fixed Solid Header Wrapper */}
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 px-4 md:px-8 pointer-events-none">
         <motion.nav 
           initial={{ y: -100, opacity: 0 }}
-          animate={{ 
-            y: 0,
-            opacity: 1,
-            scale: isScrolled ? 0.98 : 1
-          }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          className={`pointer-events-auto relative w-full group transition-all duration-500 ${isScrolled ? 'max-w-5xl' : 'max-w-7xl'}`}
+          className="pointer-events-auto relative w-full max-w-7xl group"
         >
           {/* Smart Animated Gradient Border */}
-          <div className={`absolute -inset-[1px] rounded-[2rem] bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 blur-[2px] transition-opacity duration-500 pointer-events-none ${isScrolled ? 'opacity-30' : ''}`} />
+          <div className={`absolute -inset-[1px] rounded-[2rem] bg-gradient-to-r from-cyan-500/30 via-primary/50 to-blue-500/30 opacity-0 group-hover:opacity-100 blur-[2px] transition-opacity duration-500 pointer-events-none ${isScrolled ? 'opacity-40' : ''}`} />
           
           <div className={`
             relative flex items-center justify-between
-            w-full px-5 py-3 md:px-8
-            rounded-[2rem] transition-all duration-500
+            w-full px-4 py-2.5 md:px-6
+            rounded-[2rem] transition-all duration-300
             ${isScrolled
-              ? 'bg-[#0a192f] border-primary/20 shadow-[0_20px_50px_rgba(0,0,0,0.1)]'
-              : 'bg-[#0a192f] border-white/20 shadow-lg'
+              ? 'bg-[#0a192f]/95 backdrop-blur-xl border border-primary/20 shadow-2xl'
+              : 'bg-[#0a192f]/90 backdrop-blur-md border border-white/10 shadow-lg'
             }
           `}>
             {/* Logo Section */}
-            <div className="flex-1 flex justify-start">
+            <div className="flex items-center">
               <motion.a
                 href="#"
                 onClick={(e) => handleNavClick('#', e)}
                 className="flex items-center gap-2 group/logo"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.03 }}
               >
-                <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-secondary p-[2px]">
-                  <div className="flex items-center justify-center w-full h-full bg-white dark:bg-slate-950 rounded-[10px]">
-                    <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary">
+                <div className="relative flex items-center justify-center w-9 h-9 overflow-hidden rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 p-[2px] shadow-sm">
+                  <div className="flex items-center justify-center w-full h-full bg-slate-950 rounded-[9px]">
+                    <span className="text-base font-black bg-clip-text text-transparent bg-gradient-to-br from-cyan-400 to-blue-500">
                       {PERSONAL_INFO.name.split(' ')[0].charAt(0)}
                     </span>
                   </div>
                 </div>
                 <div className="hidden sm:flex flex-col leading-tight text-left">
-                  <span className="text-sm font-black text-white tracking-tight">{PERSONAL_INFO.name}</span>
-                  <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Creative</span>
+                  <span className="text-xs sm:text-sm font-black text-white tracking-tight truncate max-w-[140px] sm:max-w-none">{PERSONAL_INFO.name}</span>
+                  <span className="text-[9px] font-bold text-cyan-400 uppercase tracking-[0.2em]">Creative</span>
                 </div>
               </motion.a>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden xl:flex items-center bg-slate-100/50 dark:bg-slate-800/50 rounded-2xl p-1 border border-slate-200/50 dark:border-slate-700/50">
+            <div className="hidden xl:flex items-center bg-slate-800/40 rounded-2xl p-1 border border-slate-700/40">
               {NAV_LINKS.map((link) => {
                 const section = link.href.replace('#', '');
                 const isActive = (section === activeId) || (link.href === '#' && activeId === '');
@@ -93,18 +84,18 @@ const Header = ({ activeSection = '' }) => {
                     key={link.name}
                     href={link.href}
                     onClick={(e) => handleNavClick(link.href, e)}
-                    className={`relative px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors duration-300 ${
-                      isActive ? 'text-primary' : 'text-gray-300 hover:text-white'
+                    className={`relative px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-wider transition-colors duration-200 ${
+                      isActive ? 'text-cyan-400' : 'text-slate-300 hover:text-white'
                     }`}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="active-pill"
-                        className="absolute inset-0 bg-white dark:bg-slate-900 rounded-xl shadow-md"
-                        transition={{ type: 'spring', duration: 0.6 }}
+                        className="absolute inset-0 bg-slate-900 rounded-xl shadow-md border border-cyan-500/30"
+                        transition={{ type: 'spring', duration: 0.5 }}
                       />
                     )}
-                    <span className="relative z-10 flex items-center gap-2">
+                    <span className="relative z-10 flex items-center gap-1.5">
                       {link.name}
                     </span>
                   </a>
@@ -113,13 +104,13 @@ const Header = ({ activeSection = '' }) => {
             </div>
 
             {/* Actions Section */}
-            <div className="flex-1 flex justify-end items-center gap-3">
+            <div className="flex items-center gap-3">
               <motion.button
                 onClick={toggleTheme}
                 whileHover={{ scale: 1.1, rotate: 15 }}
                 aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
                 whileTap={{ scale: 0.9 }}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 text-gray-300 border border-white/20 shadow-sm"
+                className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/10 text-gray-300 border border-white/20 shadow-sm"
               >
                 <AnimatePresence mode="wait">
                   <motion.span
@@ -127,7 +118,7 @@ const Header = ({ activeSection = '' }) => {
                     initial={{ opacity: 0, rotate: -45 }}
                     animate={{ opacity: 1, rotate: 0 }}
                     exit={{ opacity: 0, rotate: 45 }}
-                    className="material-icons-outlined text-xl"
+                    className="material-icons-outlined text-lg"
                   >
                     {isDark ? 'light_mode' : 'dark_mode'}
                   </motion.span>

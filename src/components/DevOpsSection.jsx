@@ -51,14 +51,14 @@ const DevOpsSection = () => {
     <section className="px-6 lg:px-16 py-32 max-w-7xl mx-auto w-full relative overflow-hidden" id="devops">
       {/* Cinematic Ambient Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
         <AnimatePresence>
           {activeStage >= 0 && (
             <motion.div 
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.2 }}
+              animate={{ opacity: 0.15 }}
               exit={{ opacity: 0 }}
-              className={`absolute inset-0 blur-[150px] bg-gradient-to-r ${pipelineStages[activeStage].gradient} opacity-20 transition-all duration-1000`}
+              className={`absolute inset-0 blur-3xl bg-gradient-to-r ${pipelineStages[activeStage].gradient} opacity-15 transition-all duration-1000`}
             />
           )}
         </AnimatePresence>
@@ -236,9 +236,9 @@ const DevOpsSection = () => {
         {/* Futuristic Console Output Card */}
         <motion.div 
           variants={fadeInUp}
-          className="mt-24 p-[1px] rounded-[3rem] bg-gradient-to-r from-cyan-500/50 via-blue-500/50 to-purple-500/50 shadow-2xl overflow-hidden"
+          className="mt-12 p-[1px] rounded-2xl bg-gradient-to-r from-cyan-500/50 via-blue-500/50 to-purple-500/50 shadow-xl overflow-hidden"
         >
-          <div className="bg-slate-950/90 backdrop-blur-2xl rounded-[2.95rem] p-8 md:p-12">
+          <div className="bg-slate-950/90 backdrop-blur-2xl rounded-2xl p-5 sm:p-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
                 <div className="flex items-center gap-5">

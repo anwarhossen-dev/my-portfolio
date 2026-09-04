@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { SKILLS } from '../constants';
 import MarqueeText from './MarqueeText';
+import SmartTechIcon from './SmartTechIcon';
 import {
   fadeInUp,
   staggerContainer,
@@ -9,10 +10,8 @@ import {
   cardHover
 } from '../utils/animations';
 
-const SkillBar = ({ skill, percentage, icon, color = "primary", index }) => {
+const SkillBar = ({ skill, percentage, color = "primary", index }) => {
   const [isVisible, setIsVisible] = useState(false);
-  
-  // React Spring progress animation
 
   const colorClasses = {
     primary: "from-primary to-blue-400",
@@ -31,23 +30,18 @@ const SkillBar = ({ skill, percentage, icon, color = "primary", index }) => {
     >
       <div className="flex items-center justify-between mb-2">
         <motion.div 
-          className="flex items-center gap-2"
+          className="flex items-center gap-2.5"
           whileHover={{ x: 5 }}
           transition={{ duration: 0.2 }}
         >
-          <motion.i 
-            className={`${icon} text-lg text-gray-600 dark:text-gray-400`}
-            whileHover={{ scale: 1.2, rotate: 15 }}
-            transition={{ duration: 0.3 }}
-          />
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-primary transition-colors">
+          <SmartTechIcon name={skill} className="text-xl" />
+          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-primary transition-colors">
             {skill}
           </span>
         </motion.div>
         <motion.span 
-          className="text-sm font-semibold text-gray-600 dark:text-gray-400"
-          animate={{ opacity: isVisible ? 1 : 0 }}
-          transition={{ delay: 0.5 }}
+          className="text-xs font-bold text-gray-600 dark:text-gray-400"
+          animate={{ opacity: isVisible ? 1 : 1 }}
         >
           {percentage}%
         </motion.span>
@@ -72,7 +66,7 @@ const SkillBar = ({ skill, percentage, icon, color = "primary", index }) => {
   );
 };
 
-const SkillCategory = ({ title, skills, icon, color, delay = 0 }) => {
+const SkillCategory = ({ title, skills, color, delay = 0 }) => {
   return (
     <motion.div 
       className="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
@@ -90,11 +84,7 @@ const SkillCategory = ({ title, skills, icon, color, delay = 0 }) => {
           whileHover={{ rotate: 360 }}
           transition={{ duration: 0.5 }}
         >
-          <motion.i 
-            className={`${icon} text-xl`}
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
+          <SmartTechIcon name={skills[0]?.name || title} className="text-2xl text-white" />
         </motion.div>
         <motion.h3 
           className="text-xl font-bold text-gray-900 dark:text-white"
@@ -112,7 +102,6 @@ const SkillCategory = ({ title, skills, icon, color, delay = 0 }) => {
             <SkillBar 
               skill={skills[index].name}
               percentage={skills[index].level}
-              icon={skills[index].icon}
               color={color.includes('cyan') ? 'info' : color.includes('purple') ? 'secondary' : 'primary'}
               index={index}
             />
@@ -128,32 +117,30 @@ const SkillsSection = () => {
     {
       title: "Frontend",
       skills: SKILLS.frontend,
-      icon: "fas fa-palette",
       color: "from-cyan-500 to-blue-500",
       delay: 0
     },
     {
       title: "Backend",
       skills: SKILLS.backend,
-      icon: "fas fa-server",
       color: "from-purple-500 to-pink-500",
       delay: 200
     },
     {
       title: "Database",
       skills: SKILLS.database,
-      icon: "fas fa-database",
       color: "from-orange-500 to-red-500",
       delay: 300
     },
     {
-      title: "Tools & Others",
+      title: "Tools & AI",
       skills: SKILLS.tools,
-      icon: "fas fa-tools",
       color: "from-green-500 to-emerald-500",
       delay: 400
     }
   ];
+
+  const aiAndToolsSkills = [...SKILLS.tools, ...(SKILLS.ai || [])];
 
   return (
     <motion.section 
@@ -175,7 +162,7 @@ const SkillsSection = () => {
           whileTap={{ scale: 0.95 }}
         >
           <span className="text-cyan-500 font-semibold text-xs tracking-widest uppercase">
-            Technical Skills
+            Technical Ecosystem
           </span>
         </motion.div>
         
@@ -183,8 +170,8 @@ const SkillsSection = () => {
           className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           variants={staggerItem}
         >
-          My <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-blue-500">
-            Expertise
+          Smart <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-blue-500">
+            Skills & Stack
           </span>
         </motion.h2>
         
@@ -199,13 +186,13 @@ const SkillsSection = () => {
           className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mt-6"
           variants={staggerItem}
         >
-          Here are the technologies and tools I work with to bring ideas to life
+          Comprehensive breakdown of frontend, backend, database, DevOps, and AI automation tools
         </motion.p>
       </motion.div>
 
       {/* Skills Grid */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16"
         variants={staggerContainer}
       >
         {skillCategories.map((category, index) => (
@@ -234,7 +221,7 @@ const SkillsSection = () => {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            Technologies I Work With
+            Interactive Tech Stack Marquee
           </motion.h3>
           <motion.p 
             className="text-slate-600 dark:text-slate-400"
@@ -242,7 +229,7 @@ const SkillsSection = () => {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Constantly learning and adapting to new technologies
+            Authentic brand icons & seamless scrolling ecosystem
           </motion.p>
         </div>
 
@@ -256,15 +243,16 @@ const SkillsSection = () => {
             {SKILLS.frontend.map((skill, index) => (
               <motion.div
                 key={`frontend-${index}`}
-                className="flex items-center gap-3 mx-8 px-6 py-3 bg-white dark:bg-slate-800 rounded-full shadow-lg border border-slate-200 dark:border-slate-700"
-                whileHover={{ scale: 1.1, y: -5 }}
-                transition={{ duration: 0.2 }}
+                className="flex items-center gap-3.5 mx-4 px-6 py-3.5 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl border border-slate-200/80 dark:border-slate-700/80 group transition-all duration-300"
+                whileHover={{ scale: 1.08, y: -4 }}
               >
-                <i className={`${skill.icon} text-2xl text-cyan-500`} />
-                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                <SmartTechIcon name={skill.name} className="text-2.5xl group-hover:scale-125 transition-transform duration-300" />
+                <span className="font-bold text-sm text-slate-900 dark:text-white whitespace-nowrap">
                   {skill.name}
                 </span>
-                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-500 border border-cyan-500/20">
+                  {skill.level}%
+                </span>
               </motion.div>
             ))}
           </MarqueeText>
@@ -280,15 +268,16 @@ const SkillsSection = () => {
             {SKILLS.backend.map((skill, index) => (
               <motion.div
                 key={`backend-${index}`}
-                className="flex items-center gap-3 mx-8 px-6 py-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-full shadow-lg border border-green-200 dark:border-green-700"
-                whileHover={{ scale: 1.1, y: -5 }}
-                transition={{ duration: 0.2 }}
+                className="flex items-center gap-3.5 mx-4 px-6 py-3.5 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl border border-purple-200/80 dark:border-purple-900/50 group transition-all duration-300"
+                whileHover={{ scale: 1.08, y: -4 }}
               >
-                <i className={`${skill.icon} text-2xl text-green-500`} />
-                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                <SmartTechIcon name={skill.name} className="text-2.5xl group-hover:scale-125 transition-transform duration-300" />
+                <span className="font-bold text-sm text-slate-900 dark:text-white whitespace-nowrap">
                   {skill.name}
                 </span>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-500 border border-purple-500/20">
+                  {skill.level}%
+                </span>
               </motion.div>
             ))}
           </MarqueeText>
@@ -304,39 +293,41 @@ const SkillsSection = () => {
             {SKILLS.database.map((skill, index) => (
               <motion.div
                 key={`database-${index}`}
-                className="flex items-center gap-3 mx-8 px-6 py-3 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-full shadow-lg border border-orange-200 dark:border-orange-700"
-                whileHover={{ scale: 1.1, y: -5 }}
-                transition={{ duration: 0.2 }}
+                className="flex items-center gap-3.5 mx-4 px-6 py-3.5 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl border border-orange-200/80 dark:border-orange-900/50 group transition-all duration-300"
+                whileHover={{ scale: 1.08, y: -4 }}
               >
-                <i className={`${skill.icon} text-2xl text-orange-500`} />
-                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                <SmartTechIcon name={skill.name} className="text-2.5xl group-hover:scale-125 transition-transform duration-300" />
+                <span className="font-bold text-sm text-slate-900 dark:text-white whitespace-nowrap">
                   {skill.name}
                 </span>
-                <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20">
+                  {skill.level}%
+                </span>
               </motion.div>
             ))}
           </MarqueeText>
         </motion.div>
 
-        {/* Tools & Others Marquee */}
+        {/* Tools, AI & DevOps Marquee */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <MarqueeText speed={40} className="py-4" direction="right">
-            {SKILLS.tools.map((skill, index) => (
+            {aiAndToolsSkills.map((skill, index) => (
               <motion.div
                 key={`tools-${index}`}
-                className="flex items-center gap-3 mx-8 px-6 py-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-full shadow-lg border border-purple-200 dark:border-purple-700"
-                whileHover={{ scale: 1.1, y: -5 }}
-                transition={{ duration: 0.2 }}
+                className="flex items-center gap-3.5 mx-4 px-6 py-3.5 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl border border-emerald-200/80 dark:border-emerald-900/50 group transition-all duration-300"
+                whileHover={{ scale: 1.08, y: -4 }}
               >
-                <i className={`${skill.icon} text-2xl text-purple-500`} />
-                <span className="font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                <SmartTechIcon name={skill.name} className="text-2.5xl group-hover:scale-125 transition-transform duration-300" />
+                <span className="font-bold text-sm text-slate-900 dark:text-white whitespace-nowrap">
                   {skill.name}
                 </span>
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                  {skill.level}%
+                </span>
               </motion.div>
             ))}
           </MarqueeText>

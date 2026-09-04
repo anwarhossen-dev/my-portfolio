@@ -7,26 +7,30 @@ import Header from './components/Header.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import Chatbot from './components/Chatbot.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
+import HeroSection from './components/HeroSection.jsx';
+import LazySection from './components/LazySection.jsx';
+import BookingModal from './components/BookingModal.jsx';
 import { useScrollSpy } from './hooks/useScrollSpy.js';
 import { getThemePreference, setThemePreference } from './utils';
 
-const HeroSection = lazy(() => import('./components/HeroSection.jsx'));
-const AboutSection = lazy(() => import('./components/AboutSection.jsx'));
-const ServicesSection = lazy(() => import('./components/ServicesSection.jsx'));
-const SkillsSection = lazy(() => import('./components/SkillsSection.jsx'));
+import AboutSection from './components/AboutSection.jsx';
+import ServicesSection from './components/ServicesSection.jsx';
+import SkillsSection from './components/SkillsSection.jsx';
+import ProjectsSection from './components/ProjectsSection.jsx';
+import ContactSection from './components/ContactSection.jsx';
+import Footer from './components/Footer.jsx';
+
 const DevOpsSection = lazy(() => import('./components/DevOpsSection.jsx'));
 const EducationSection = lazy(() => import('./components/EducationSection.jsx'));
 const ExperienceSection = lazy(() => import('./components/ExperienceSection.jsx'));
 const CertificatesSection = lazy(() => import('./components/CertificatesSection.jsx'));
-const ProjectsSection = lazy(() => import('./components/ProjectsSection.jsx'));
 const FAQSection = lazy(() => import('./components/FAQSection.jsx'));
-const ContactSection = lazy(() => import('./components/ContactSection.jsx'));
-const Footer = lazy(() => import('./components/Footer.jsx'));
 
-const LoadingFallback = () => <div className="w-full h-screen flex items-center justify-center"><p>Loading Section...</p></div>;
+const LoadingFallback = () => null;
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const sectionIds = ['', 'about', 'services', 'skills', 'devops', 'education', 'experience', 'certificates', 'projects', 'contact'];
   const activeSection = useScrollSpy(sectionIds, 120);
 
@@ -47,58 +51,101 @@ function App() {
 
         {/* Header - Fixed at Top */}
         <Suspense fallback={<div />}>
-          <Header activeSection={activeSection} />
+          <Header activeSection={activeSection} onOpenBooking={() => setIsBookingOpen(true)} />
         </Suspense>
 
-        <Suspense fallback={<LoadingFallback />}>
-          {/* Hero Section - Full Screen */}
-          <HeroSection />
-          
-          {/* Left Sidebar - Social Links */}
-          <Sidebar activeSection={activeSection} />
-          
-          {/* Main Content */}
-          <main className="relative z-10">
-            <div id="about" className="pt-20">
-              <AboutSection />
-            </div>
-            <div id="services" className="pt-20">
-              <ServicesSection />
-            </div>
-            <div id="skills" className="pt-20">
-              <SkillsSection />
-            </div>
-            {/* <div id="ai" className="pt-20">
-              <AIPowerSection />
-            </div> */}
-            <div id="devops" className="pt-20">
-              <DevOpsSection />
-            </div>
-            <div id="education" className="pt-20">
-              <EducationSection />
-            </div>
-            <div id="experience" className="pt-20">
-              <ExperienceSection />
-            </div>
-            <div id="certificates" className="pt-20">
-              <CertificatesSection />
-            </div>
-            <div id="projects" className="pt-20">
-              <ProjectsSection />
-            </div>
-            {/* <div id="testimonials" className="pt-20">
-              <TestimonialsSection />
-            </div> */}
-            <FAQSection />
-            <div id="contact" className="pt-20">
-              <ContactSection />
-            </div>
-          </main>
-        </Suspense>
+        {/* Hero Section - Statically Loaded for Instant FCP & LCP */}
+        <HeroSection onOpenBooking={() => setIsBookingOpen(true)} />
         
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
+        {/* Left Sidebar - Social Links & Meeting Booking */}
+        <Sidebar activeSection={activeSection} onOpenBooking={() => setIsBookingOpen(true)} />
+        
+        {/* Main Content - Lazy Loaded Offscreen Sections */}
+        <main className="relative z-10">
+          <div id="about" className="pt-20">
+            <LazySection height="400px">
+              <Suspense fallback={<LoadingFallback />}>
+                <AboutSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <div id="services" className="pt-20">
+            <LazySection height="400px">
+              <Suspense fallback={<LoadingFallback />}>
+                <ServicesSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <div id="skills" className="pt-20">
+            <LazySection height="500px">
+              <Suspense fallback={<LoadingFallback />}>
+                <SkillsSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <div id="devops" className="pt-20">
+            <LazySection height="500px">
+              <Suspense fallback={<LoadingFallback />}>
+                <DevOpsSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <div id="education" className="pt-20">
+            <LazySection height="400px">
+              <Suspense fallback={<LoadingFallback />}>
+                <EducationSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <div id="experience" className="pt-20">
+            <LazySection height="400px">
+              <Suspense fallback={<LoadingFallback />}>
+                <ExperienceSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <div id="certificates" className="pt-20">
+            <LazySection height="400px">
+              <Suspense fallback={<LoadingFallback />}>
+                <CertificatesSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <div id="projects" className="pt-20">
+            <LazySection height="600px">
+              <Suspense fallback={<LoadingFallback />}>
+                <ProjectsSection />
+              </Suspense>
+            </LazySection>
+          </div>
+
+          <LazySection height="300px">
+            <Suspense fallback={<LoadingFallback />}>
+              <FAQSection />
+            </Suspense>
+          </LazySection>
+
+          <div id="contact" className="pt-20">
+            <LazySection height="500px">
+              <Suspense fallback={<LoadingFallback />}>
+                <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
+              </Suspense>
+            </LazySection>
+          </div>
+        </main>
+        
+        <LazySection height="200px">
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
+        </LazySection>
         
         {/* Scroll to Top Button */}
         <ScrollToTop />
@@ -112,6 +159,9 @@ function App() {
         <Suspense fallback={null}>
           <CustomCursor />
         </Suspense>
+
+        {/* Google Calendar & Google Meet Booking Modal */}
+        <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
       </div>
     </ErrorBoundary>
   );

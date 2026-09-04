@@ -90,7 +90,7 @@ const EducationSection = () => {
         className="relative"
         variants={staggerContainer}
       >
-        {/* Timeline Line */}
+        {/* Central Timeline Line */}
         <motion.div 
           className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-green-500 to-blue-500 rounded-full hidden md:block"
           initial={{ height: 0 }}
@@ -98,11 +98,11 @@ const EducationSection = () => {
           transition={{ duration: 2, delay: 0.5 }}
         />
         
-        <div className="space-y-12">
+        <div className="space-y-8 md:space-y-12">
           {EDUCATION.map((edu, index) => (
             <motion.div key={index} variants={fadeInUp}>
               <motion.div 
-                className={`flex flex-col md:flex-row items-center gap-8 ${
+                className={`flex flex-col md:flex-row items-center gap-6 md:gap-8 ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
                 variants={staggerItem}
@@ -110,24 +110,23 @@ const EducationSection = () => {
               >
                 {/* Content Card */}
                 <motion.div 
-                  className="flex-1 group"
+                  className="flex-1 w-full group"
                   variants={cardHover}
                   initial="rest"
                   whileHover="hover"
                 >
                   <motion.div 
-                    className="relative p-8 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-md rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-300"
-                    whileHover={{ y: -10 }}
+                    className="relative p-6 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+                    whileHover={{ y: -5 }}
                   >
                     <motion.div 
-                      className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
                       initial={{ scaleX: 0 }}
                       whileHover={{ scaleX: 1 }}
                       transition={{ duration: 0.3 }}
                     />
                     
-                    {/* Header */}
-                    <div className="flex items-start gap-4 mb-6">
+                    <div className="flex items-start gap-4">
                       <motion.div 
                         className={`w-12 h-12 rounded-xl bg-gradient-to-br ${edu.bgColor} flex items-center justify-center ${edu.textColor} flex-shrink-0 border ${edu.borderColor}`}
                         whileHover={{ rotate: 360, scale: 1.1 }}
@@ -139,108 +138,31 @@ const EducationSection = () => {
                       </motion.div>
                       
                       <div className="flex-1">
-                        <motion.h3 
-                          className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-green-500 transition-colors"
-                          whileHover={{ x: 5 }}
-                        >
-                          {edu.degree}
-                        </motion.h3>
-                        
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
-                          <motion.span 
-                            className="text-primary font-semibold"
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            {edu.institution}
-                          </motion.span>
-                          <span className="hidden sm:inline text-slate-400">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                          <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-cyan-400 transition-colors">
+                            {edu.degree}
+                          </h3>
+                          <span className="px-3 py-1 rounded-full bg-slate-200/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 text-xs font-semibold">
                             {edu.year}
                           </span>
-                          {edu.board && (
-                            <>
-                              <span className="hidden sm:inline text-slate-400">•</span>
-                              <span className="text-slate-500 dark:text-slate-400 text-sm">
-                                {edu.board}
-                              </span>
-                            </>
-                          )}
                         </div>
                         
-                        {edu.period && (
-                          <div className="mb-3 flex items-center gap-2">
-                            <span className="material-icons-outlined text-sm text-slate-500">schedule</span>
-                            <span className="text-slate-500 dark:text-slate-400 text-sm">
-                              Duration: {edu.period}
-                            </span>
-                          </div>
-                        )}
-                        
-                        {edu.board && (
-                          <div className="mb-3 flex items-center gap-2">
-                            <span className="material-icons-outlined text-sm text-slate-500">verified</span>
-                            <span className="text-slate-500 dark:text-slate-400 text-sm">
-                              Board: {edu.board}
-                            </span>
-                          </div>
-                        )}
-                        
-                        <motion.div 
-                          className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${edu.bgColor} ${edu.textColor} text-sm font-semibold mb-4 flex items-center gap-2`}
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          <span className="material-icons-outlined text-sm">grade</span>
-                          {edu.grade}
-                        </motion.div>
+                        <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-3">
+                          {edu.institution}
+                        </p>
+
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-semibold">
+                          <span className="material-icons-outlined text-xs">school</span>
+                          <span>Field: {edu.field}</span>
+                        </div>
                       </div>
                     </div>
-                    
-                    {/* Description */}
-                    <motion.p 
-                      className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4"
-                      variants={staggerItem}
-                    >
-                      {edu.description}
-                    </motion.p>
-
-                    {/* Skills/Subjects */}
-                    {edu.skills && (
-                      <div>
-                        <motion.h4 
-                          className="text-slate-900 dark:text-white font-semibold mb-3 text-sm flex items-center gap-2"
-                          variants={staggerItem}
-                        >
-                          <span className="material-icons-outlined text-sm text-green-500">auto_awesome</span>
-                          Key Subjects & Skills:
-                        </motion.h4>
-                        <motion.div 
-                          className="flex flex-wrap gap-2"
-                          variants={staggerContainer}
-                        >
-                          {edu.skills.map((skill, skillIndex) => (
-                            <motion.span 
-                              key={skillIndex}
-                              className={`px-3 py-1 rounded-full bg-gradient-to-r ${edu.bgColor} ${edu.textColor} text-xs font-medium border ${edu.borderColor} flex items-center gap-1`}
-                              variants={staggerItem}
-                              custom={skillIndex}
-                              whileHover={{ scale: 1.05, y: -2 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              <span className="material-icons-outlined text-xs">
-                                {getSkillIcon(skill)}
-                              </span>
-                              {skill}
-                            </motion.span>
-                          ))}
-                        </motion.div>
-                      </div>
-                    )}
                   </motion.div>
                 </motion.div>
 
                 {/* Timeline Dot */}
                 <motion.div 
-                  className="hidden md:flex w-6 h-6 rounded-full bg-gradient-to-r from-green-500 to-blue-500 border-4 border-white dark:border-background-dark shadow-lg flex-shrink-0 z-10"
+                  className="hidden md:flex w-6 h-6 rounded-full bg-gradient-to-r from-green-500 to-blue-500 border-4 border-white dark:border-slate-950 shadow-lg flex-shrink-0 z-10"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}

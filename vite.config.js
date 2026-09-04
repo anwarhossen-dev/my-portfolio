@@ -12,32 +12,35 @@ export default defineConfig({
     port: 5173,
     host: true,
     open: true,
-    strictPort: false,
-    hmr: {
-      overlay: false,
-      host: 'localhost',
-      protocol: 'ws'
-    }
+    strictPort: false
   },
   build: {
     outDir: 'dist',
     sourcemap: false,
+    cssCodeSplit: true,
+    minify: 'esbuild',
+    target: 'es2015',
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // react-icons লাইব্রেরির প্রতিটি আইকন সেটকে আলাদা চাঙ্কে ভাগ করুন
-            const match = /node_modules[\\/](react-icons[\\/][a-z]{2})/.exec(id);
-            if (match) {
-              return `vendor-react-icons-${match[1].split(/[\\/]/).pop()}`;
+            if (id.includes('framer-motion')) return 'vendor-framer';
+            if (id.includes('react-dom')) return 'vendor-reactdom';
+            if (id.includes('react-icons')) {
+              const match = /node_modules[\\/](react-icons[\\/][a-z0-9]+)/.exec(id);
+              if (match) return `vendor-icons-${match[1].split(/[\\/]/).pop()}`;
+              return 'vendor-icons';
             }
-            return 'vendor'; // বাকি সব ভেন্ডর লাইব্রেরি
+            if (id.includes('react-github-calendar') || id.includes('gsap') || id.includes('@emailjs')) {
+              return 'vendor-addons';
+            }
+            return 'vendor-libs';
           }
         }
       }
     }
   },
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'prop-types']
+  esbuild: {
+    drop: ['console', 'debugger']
   }
 })

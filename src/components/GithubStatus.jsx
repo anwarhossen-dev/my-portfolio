@@ -8,14 +8,22 @@ const GitHubCalendar = lazy(() =>
 
 const GithubStatus = ({ username }) => {
   const [stats, setStats] = useState({ 
-    repos: 0, 
-    followers: 0, 
-    stars: 0,
-    events: [],
-    topRepos: [],
-    latestCommit: '',
-    topLanguage: '',
-    loading: true,
+    repos: 24, 
+    followers: 12, 
+    stars: 18,
+    events: [
+      { id: '1', type: 'PushEvent', repo: { name: 'anwarhossen-dev/my-portfolio' }, created_at: new Date().toISOString() },
+      { id: '2', type: 'PushEvent', repo: { name: 'anwarhossen-dev/LocalChefBazaar' }, created_at: new Date().toISOString() },
+      { id: '3', type: 'CreateEvent', repo: { name: 'anwarhossen-dev/CareerTrack' }, created_at: new Date().toISOString() }
+    ],
+    topRepos: [
+      { id: 1, name: 'LocalChefBazaar', html_url: 'https://github.com/anwarhossen-dev/LocalChefBazaar', stargazers_count: 8, language: 'JavaScript' },
+      { id: 2, name: 'ARTIFY-client', html_url: 'https://github.com/anwarhossen-dev/ARTIFY-client', stargazers_count: 5, language: 'React' },
+      { id: 3, name: 'CareerTrack', html_url: 'https://github.com/anwarhossen-dev/CareerTrack', stargazers_count: 3, language: 'TypeScript' }
+    ],
+    latestCommit: 'Building scalable web & enterprise solutions',
+    topLanguage: 'React & C#',
+    loading: false,
     error: null,
   });
   const [isExpanded, setIsExpanded] = useState(false);
@@ -34,7 +42,6 @@ const GithubStatus = ({ username }) => {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-    // empty deps so it runs only on mount
   }, []);
 
   useEffect(() => {
@@ -47,23 +54,16 @@ const GithubStatus = ({ username }) => {
         if (cachedData) {
           const { stats: savedStats, timestamp } = JSON.parse(cachedData);
           if (Date.now() - timestamp < CACHE_TIME) {
-            setStats({ ...savedStats, loading: false, error: null });
+            setStats(prev => ({ ...prev, ...savedStats, loading: false, error: null }));
             return;
           }
         }
 
-        // Concurrent API calls
-        // Fetch from our own serverless API endpoint
         const response = await fetch(`/api/github?username=${username}`);
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || `API request failed with status ${response.status}`);
-        }
+        if (!response.ok) return;
 
         const { user: userData, repos: reposData, events: eventsData } = await response.json();
 
-        // Process data
         let stars = 0;
         let languages = {};
         if (Array.isArray(reposData)) {
@@ -75,23 +75,23 @@ const GithubStatus = ({ username }) => {
           });
         }
 
-        const pushEvents = eventsData.filter(e => e.type === 'PushEvent');
-        const latestMsg = pushEvents[0]?.payload?.commits[0]?.message || 'Improving the world with code';
+        const pushEvents = Array.isArray(eventsData) ? eventsData.filter(e => e.type === 'PushEvent') : [];
+        const latestMsg = pushEvents[0]?.payload?.commits[0]?.message || 'Building scalable web & enterprise solutions';
 
         const topLang = Object.keys(languages).length > 0 
           ? Object.keys(languages).reduce((a, b) => languages[a] > languages[b] ? a : b)
-          : 'JavaScript';
+          : 'React & C#';
 
         const topRepos = Array.isArray(reposData) 
           ? [...reposData].sort((a, b) => b.stargazers_count - a.stargazers_count).slice(0, 5)
           : [];
 
         const newStats = {
-          repos: userData.public_repos || 0,
-          followers: userData.followers || 0,
-          stars: stars,
-          events: eventsData.slice(0, 10), // Latest 10 events
-          topRepos: topRepos,
+          repos: userData?.public_repos || 24,
+          followers: userData?.followers || 12,
+          stars: stars || 18,
+          events: Array.isArray(eventsData) && eventsData.length > 0 ? eventsData.slice(0, 10) : stats.events,
+          topRepos: topRepos.length > 0 ? topRepos : stats.topRepos,
           latestCommit: latestMsg,
           topLanguage: topLang,
           loading: false,
@@ -99,26 +99,9 @@ const GithubStatus = ({ username }) => {
         };
 
         setStats(newStats);
-        // Cache the new data
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ stats: { ...newStats, events: [], topRepos: [] }, timestamp: Date.now() }));
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ stats: newStats, timestamp: Date.now() }));
       } catch (error) {
-        console.error('GitHub API Error:', error);
-        const isRateLimit = error.message.includes('Rate limit exceeded');
-        // Fallback to static data if API fails or rate limit hit
-        const fallbackStats = { 
-          repos: 24, 
-          followers: 12, 
-          stars: 5, 
-          events: [],
-          topRepos: [],
-          latestCommit: 'Refactoring portfolio animations', 
-          topLanguage: 'React', 
-          loading: false,
-          error: isRateLimit ? 'API rate limit reached. Showing cached data.' : 'Could not fetch live data.'
-        };
-        setStats(fallbackStats);
-        // Cache the fallback as well to prevent repetitive 403 logs for the next hour
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ stats: fallbackStats, timestamp: Date.now() }));
+        console.warn('GitHub API background sync:', error);
       }
     };
     fetchGithubData();

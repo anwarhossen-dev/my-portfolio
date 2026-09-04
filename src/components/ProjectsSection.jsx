@@ -157,12 +157,15 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden transition-all duration-200 ease-out"
+      className="group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md hover:shadow-xl overflow-hidden transition-all duration-200 ease-out"
     >
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-44 sm:h-48 overflow-hidden">
         <motion.img 
           src={project.image} 
+          loading="lazy"
           decoding="async"
+          width="400"
+          height="200"
           alt={`Screenshot of the ${project.title} project by MD. Anwar Hossen`}
           animate={{ scale: isHovered ? 1.08 : 1 }}
           transition={{ duration: 0.5 }}
@@ -181,31 +184,31 @@ const ProjectCard = forwardRef(({ project, onViewMore, onHover, onLeave }, ref) 
               loop 
               muted 
               playsInline 
-              preload="auto"
+              preload="none"
               onPlay={() => setIsVideoReady(true)}
               className="w-full h-full object-cover" 
             />
           </motion.div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-20" />
-        <div className="absolute top-4 left-4 z-30 px-3 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest">
+        <div className="absolute top-3 left-3 z-30 px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] font-bold uppercase tracking-widest">
           {project.category}
         </div>
       </div>
 
-      <div className="p-8 space-y-4">
-        <h3 className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+      <div className="p-4 sm:p-5 space-y-2.5">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
           {project.title}
         </h3>
-        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">
+        <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2">
           {project.shortDescription}
         </p>
-        <div className="flex items-center gap-4 pt-4">
-          <button onClick={() => onViewMore(project)} className="flex-1 px-6 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all shadow-lg">
+        <div className="flex items-center gap-3 pt-2">
+          <button onClick={() => onViewMore(project)} className="flex-1 px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all shadow-md">
             Details
           </button>
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="View live site" className="w-12 h-12 rounded-2xl border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-all">
-            <span className="material-icons-outlined">launch</span>
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="View live site" className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-all">
+            <span className="material-icons-outlined text-sm">launch</span>
           </a>
         </div>
       </div>

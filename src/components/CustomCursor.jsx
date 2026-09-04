@@ -6,7 +6,11 @@ const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
+  const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0);
+
   useEffect(() => {
+    if (isMobile) return;
+
     const mouseMove = (e) => {
       setMousePosition({
         x: e.clientX,
@@ -29,16 +33,16 @@ const CustomCursor = () => {
       }
     };
 
-    window.addEventListener('mousemove', mouseMove);
-    window.addEventListener('mouseover', mouseOver);
+    window.addEventListener('mousemove', mouseMove, { passive: true });
+    window.addEventListener('mouseover', mouseOver, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', mouseMove);
       window.removeEventListener('mouseover', mouseOver);
     };
-  }, [isVisible]);
+  }, [isVisible, isMobile]);
 
-  if (!isVisible) return null;
+  if (isMobile || !isVisible) return null;
 
   return (
     <>

@@ -1,18 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { PERSONAL_INFO } from '../constants';
+import { useEffect, useRef, lazy, Suspense } from 'react';
+import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants';
 import { scrollToElement } from '../utils';
 import { Typewriter } from 'react-simple-typewriter';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { FaReact } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaReact, FaGithub, FaLinkedinIn, FaWhatsapp, FaVideo } from 'react-icons/fa';
 import { SiNodedotjs } from 'react-icons/si';
-import GithubStatus from './GithubStatus';
+import { MdEmail } from 'react-icons/md';
 
-export const HeroSection = () => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(x, [-0.5, 0.5], ["-15deg", "15deg"]);
+const GithubStatus = lazy(() => import('./GithubStatus'));
 
+export const HeroSection = ({ onOpenBooking }) => {
   const handleContactClick = (e) => {
     e.preventDefault();
     scrollToElement('contact', 100);
@@ -25,18 +22,12 @@ export const HeroSection = () => {
 
   const nameParts = PERSONAL_INFO.name.split(' ');
   const firstName = nameParts[0];
-  
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
 
   return (
-    <section onMouseMove={handleMouseMove} className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 lg:px-16 py-20 gap-12 max-w-7xl mx-auto w-full overflow-hidden">
+    <section className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 lg:px-16 py-20 gap-12 max-w-7xl mx-auto w-full overflow-hidden">
       {/* Background Decorative Auras */}
-      <div className="absolute top-1/4 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-2xl pointer-events-none" />
 
       {/* 1. Content Section (Left) */}
       <motion.div
@@ -53,64 +44,127 @@ export const HeroSection = () => {
             </span>
             <span className="text-[10px] font-black uppercase tracking-widest">Available for Projects</span> 
           </div>
-          <GithubStatus username="anwarhossen-dev" />
+          <Suspense fallback={null}>
+            <GithubStatus username="anwarhossen-dev" />
+          </Suspense>
         </div>
 
         <div className="space-y-4">
-          <h1 className="text-5xl lg:text-7xl font-black tracking-tight leading-[1.1]">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1]">
             <span className="block text-slate-900 dark:text-white">
-              Hi, I'm <span className="text-primary">{firstName}</span>
+              Hi, I'm <span className="text-primary">{PERSONAL_INFO.name}</span>
             </span>
-            <span className="block bg-gradient-to-r from-primary via-blue-500 to-secondary bg-clip-text text-transparent italic">
-              <Typewriter
-                words={[nameParts.slice(1).join(' ')]}
-                loop={1}
-                cursor
-                cursorStyle="_"
-                typeSpeed={80}
-              />
-            </span>
+            {/* <span className="block bg-gradient-to-r from-primary via-blue-500 to-secondary bg-clip-text text-transparent italic text-3xl sm:text-5xl lg:text-6xl mt-2">
+              Full Stack Developer & Software Engineer
+            </span> */}
           </h1>
 
-          <div className="flex items-center gap-4 text-xl lg:text-2xl font-bold text-slate-600 dark:text-slate-400">
-            <div className="h-[2px] w-12 bg-primary/30" />
+          <div className="flex items-center gap-3 text-lg sm:text-xl lg:text-2xl font-bold text-slate-600 dark:text-slate-400 pt-2">
+            <div className="h-[2px] w-10 bg-primary/40" />
             <span className="text-primary font-mono">&lt;</span>
             <Typewriter
-              words={["Full Stack Architect", "MERN Expert", "ASP.NET Core Dev"]}
+              words={[
+                "Full Stack Developer","Full Stack Developer & Software Engineer",
+                "Next.js Specialist",
+                "Software Engineer",
+                "MERN Stack Architect",
+                "ASP.NET Core Developer"
+              ]}
               loop={0}
               cursor
-              typeSpeed={50}
-              deleteSpeed={30}
-              delaySpeed={1500}
+              cursorStyle="_"
+              typeSpeed={60}
+              deleteSpeed={40}
+              delaySpeed={1800}
             />
             <span className="text-primary font-mono">/&gt;</span>
           </div>
         </div>
 
         <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-xl">
-          Crafting <span className="text-slate-900 dark:text-white font-black underline decoration-primary/30">high-performance</span> digital experiences. Specialized in building scalable applications from vision to reality.
+          Passionate <span className="text-slate-900 dark:text-white font-black underline decoration-primary/30">Software Engineer & Full Stack Specialist</span>. Building scalable web applications using Next.js, React, Node.js, MERN stack, and ASP.NET Core.
         </p>
 
-        <div className="flex flex-wrap items-center gap-5 pt-4">
+        <div className="flex flex-col sm:flex-row flex-wrap items-center gap-4 pt-4 w-full sm:w-auto">
+          <motion.button
+            onClick={onOpenBooking}
+            whileHover={{ scale: 1.05, y: -5 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black shadow-lg shadow-cyan-500/25 transition-all"
+          >
+            <FaVideo className="text-lg text-white" />
+            <span>Book Google Meet</span>
+          </motion.button>
+
           <motion.button
             onClick={handleContactClick}
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black shadow-2xl transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black shadow-2xl transition-all"
           >
             <span>Start a Project</span>
             <span className="material-icons-outlined text-sm">rocket_launch</span>
           </motion.button>
 
           <motion.a
-            href="/resume.pdf"
-            download
+            href="/Anwar_Hossen_Resume.pdf"
+            download="Anwar_Hossen_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-3 px-8 py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
           >
             <span className="material-icons-outlined text-xl">description</span>
             <span>Get Resume</span>
+          </motion.a>
+        </div>
+
+        {/* Social Icons Bar (Matching Sample) */}
+        <div className="flex items-center gap-3 pt-2">
+          <motion.a 
+            href={SOCIAL_LINKS.github} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="GitHub Profile"
+            whileHover={{ scale: 1.1, y: -3 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 shadow-sm transition-all"
+          >
+            <FaGithub className="text-xl" />
+          </motion.a>
+          <motion.a 
+            href={SOCIAL_LINKS.linkedin} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="LinkedIn Profile"
+            whileHover={{ scale: 1.1, y: -3 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 shadow-sm transition-all"
+          >
+            <FaLinkedinIn className="text-xl" />
+          </motion.a>
+          <motion.a 
+            href={SOCIAL_LINKS.whatsapp} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="WhatsApp Contact"
+            whileHover={{ scale: 1.1, y: -3 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-green-400 hover:border-green-400/50 shadow-sm transition-all"
+          >
+            <FaWhatsapp className="text-xl" />
+          </motion.a>
+          <motion.a 
+            href={SOCIAL_LINKS.email} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="Email Address"
+            whileHover={{ scale: 1.1, y: -3 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-red-400 hover:border-red-400/50 shadow-sm transition-all"
+          >
+            <MdEmail className="text-xl" />
           </motion.a>
         </div>
       </motion.div>
@@ -122,7 +176,7 @@ export const HeroSection = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         className="flex-1 w-full flex justify-center items-center relative order-1 lg:order-2"
       >
-        <div className="relative w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] perspective-1000">
+        <div className="relative w-[250px] h-[250px] xs:w-[290px] xs:h-[290px] sm:w-[450px] sm:h-[450px] perspective-1000">
           {/* Animated Background Shapes */}
           <motion.div
             animate={{ rotate: 360, scale: [1, 1.1, 1] }}
@@ -132,14 +186,18 @@ export const HeroSection = () => {
 
           {/* Image Container with 3D Interaction */}
           <motion.div 
-            style={{ rotateX, rotateY }}
-            className="relative z-10 w-full h-full p-8 sm:p-12"
+            className="relative z-10 w-full h-full p-8 sm:p-12 transition-transform duration-500 hover:scale-[1.02]"
           >
             <div className="relative w-full h-full rounded-[3rem] overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border-2 border-white/20 dark:border-slate-800">
               <img
                 className="w-full h-full object-cover object-[center_35%] grayscale-[10%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                 alt={`MD. Anwar Hossen - Full Stack Developer Profile Picture`}
-                src={PERSONAL_INFO.profileImage}
+                src={PERSONAL_INFO.anwarImage || PERSONAL_INFO.profileImage}
+                width="450"
+                height="450"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
                 onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; }}
               />
               {/* Glossy Reflection Overlay */}

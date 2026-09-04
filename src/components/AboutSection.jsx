@@ -16,33 +16,40 @@ import {
 const AboutSection = () => {
   const aboutCards = [
     {
-      title: "My Programming Journey",
-      content: "Started my coding journey in 2020 during my diploma studies. What began as curiosity about how websites work has evolved into a passion for creating digital solutions that make a difference.",
-      icon: "code",
+      title: "Who I Am",
+      content: "Full Stack & MERN Stack Developer based in Bangladesh, passionate about engineering scalable, high-performance web systems.",
+      icon: "person",
       gradient: "from-cyan-500 to-blue-500",
       delay: 0
     },
     {
-      title: "What I Love Doing",
-      content: "I enjoy turning complex problems into simple, beautiful designs. Whether it's a sleek user interface or a robust backend system, I love the challenge of bringing ideas to life through code.",
-      icon: "favorite",
+      title: "What I Do",
+      content: "Building full-stack web applications with React, Next.js, Node.js, Express, MongoDB, and ASP.NET Core APIs.",
+      icon: "code",
       gradient: "from-purple-500 to-pink-500",
-      delay: 200
+      delay: 150
     },
     {
-      title: "Beyond Coding",
-      content: "When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community. I believe in continuous learning and growth.",
-      icon: "explore",
-      gradient: "from-green-500 to-emerald-500",
-      delay: 400
+      title: "My Goals",
+      content: "Crafting clean, maintainable code with scalable architecture, microservices, and exceptional user experiences.",
+      icon: "emoji_events",
+      gradient: "from-emerald-500 to-teal-500",
+      delay: 300
+    },
+    {
+      title: "My Passions",
+      content: "Exploring AI integrations, automation workflows, open-source contribution, and continuous tech advancement.",
+      icon: "auto_awesome",
+      gradient: "from-orange-500 to-amber-500",
+      delay: 450
     }
   ];
 
   const stats = [
     { number: "2+", label: "Years Experience", icon: "work_history" },
     { number: "15+", label: "Projects Completed", icon: "assignment_turned_in" },
-    { number: "5+", label: "Technologies", icon: "code" },
-    { number: "99%", label: "Client Satisfaction", icon: "sentiment_very_satisfied" }
+    { number: "10+", label: "Modern Technologies", icon: "code" },
+    { number: "100%", label: "Clean Code Standard", icon: "verified" }
   ];
 
   return (
@@ -96,44 +103,46 @@ const AboutSection = () => {
 
       {/* About Cards */}
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
         variants={staggerContainer}
       >
         {aboutCards.map((card, index) => (
           <motion.div key={card.title} variants={fadeInUp} custom={index}>
             <motion.div
-              className="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 h-full"
+              className="bg-white dark:bg-surface-dark rounded-2xl p-5 sm:p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-800 h-full flex flex-col justify-between"
               variants={cardHover}
               initial="rest"
               whileHover="hover"
             >
-              <motion.div 
-                className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${aboutCards[index].gradient} flex items-center justify-center text-white shadow-lg mb-6`}
-                whileHover={{ rotate: 360, scale: 1.1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <motion.span 
-                  className="material-icons-outlined text-2xl"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+              <div>
+                <motion.div 
+                  className={`w-11 h-11 rounded-xl bg-gradient-to-r ${aboutCards[index].gradient} flex items-center justify-center text-white shadow-md mb-4`}
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  {card.icon}
-                </motion.span>
-              </motion.div>
-              
-              <motion.h3 
-                className="text-xl font-bold text-slate-900 dark:text-white mb-4"
-                variants={staggerItem}
-              >
-                {card.title}
-              </motion.h3>
-              
-              <motion.p 
-                className="text-slate-600 dark:text-slate-400 leading-relaxed"
-                variants={staggerItem}
-              >
-                {card.content}
-              </motion.p>
+                  <motion.span 
+                    className="material-icons-outlined text-xl"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                  >
+                    {card.icon}
+                  </motion.span>
+                </motion.div>
+                
+                <motion.h3 
+                  className="text-lg font-bold text-slate-900 dark:text-white mb-2"
+                  variants={staggerItem}
+                >
+                  {card.title}
+                </motion.h3>
+                
+                <motion.p 
+                  className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed"
+                  variants={staggerItem}
+                >
+                  {card.content}
+                </motion.p>
+              </div>
             </motion.div>
           </motion.div>
         ))}
@@ -176,39 +185,7 @@ const AboutSection = () => {
         ))}
       </motion.div>
 
-      {/* Personal Quote */}
-      <motion.div 
-        className="text-center max-w-4xl mx-auto"
-        variants={fadeInUp}
-      >
-        <motion.div 
-          className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-3xl p-8 border border-cyan-500/20"
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.3 }}
-        >
-          <motion.div 
-            className="text-6xl text-cyan-500/30 mb-4"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            "
-          </motion.div>
-          
-          <motion.p 
-            className="text-xl md:text-2xl font-medium text-slate-700 dark:text-slate-300 italic leading-relaxed mb-4"
-            variants={textReveal}
-          >
-            Code is like humor. When you have to explain it, it's bad.
-          </motion.p>
-          
-          <motion.p 
-            className="text-slate-500 dark:text-slate-400 font-medium"
-            variants={textReveal}
-          >
-            - Cory House
-          </motion.p>
-        </motion.div>
-      </motion.div>
+
 
       {/* Interactive Coding Terminal */}
       <motion.div

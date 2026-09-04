@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PERSONAL_INFO, SKILLS, PROJECTS, EXPERIENCE, SOCIAL_LINKS } from '../constants';
+import { PERSONAL_INFO, SKILLS, PROJECTS, EXPERIENCE, SOCIAL_LINKS, EDUCATION, CERTIFICATES } from '../constants';
 import TypewriterText from './TypewriterText.jsx';
 import { scrollToElement } from '../utils';
 import Magnetic from './Magnetic.jsx';
@@ -12,7 +12,7 @@ const Chatbot = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState([
     {
-      text: `Hi! I'm Claude 3.5 Sonnet, ${PERSONAL_INFO.name.split(' ')[0]}'s intelligent portfolio assistant. I can help you explore his skills, projects, and professional background. What would you like to know?`,
+      text: `Hi! I'm Claude 3.5 Sonnet, ${PERSONAL_INFO.name}'s intelligent portfolio assistant. I can tell you about his products, skills, current work, WhatsApp (${PERSONAL_INFO.phone}), and contact info. How can I help you?`,
       type: 'bot',
       id: 1
     }
@@ -40,10 +40,11 @@ const Chatbot = () => {
   const scrollRef = useRef(null);
 
   const quickReplies = [
-    { label: '🤖 AI Skills', value: 'ai_skills' },
-    { label: '📂 Top Projects', value: 'projects' },
-    { label: '📧 Contact info', value: 'contact' },
-    { label: '⚡ Scroll to Contact', value: 'scroll_contact' }
+    { label: '📱 WhatsApp', value: 'whatsapp' },
+    { label: '📞 Phone & Contact', value: 'contact' },
+    { label: '🚀 Top Products', value: 'projects' },
+    { label: '💼 Current Work', value: 'job' },
+    { label: '🤖 Tech Skills', value: 'ai_skills' }
   ];
 
   useEffect(() => {
@@ -53,48 +54,77 @@ const Chatbot = () => {
   }, [messages, isTyping, isAnalyzing]);
 
   const processInput = (input) => {
-    const text = input.toLowerCase();
+    const text = input.toLowerCase().trim();
     let response = "";
     let action = null;
 
-    // 1. Action Detection (The "Smart" part)
-    if (text.includes('scroll') || text.includes('go to') || text.includes('show me')) {
-      if (text.includes('contact')) {
-        response = "I'm orchestrating a scroll to the contact section for you. One moment...";
+    // 1. Action & Navigation Queries
+    if (text.includes('scroll') || text.includes('go to') || text.includes('show me') || text.includes('নিয়ে যাও') || text.includes('দেখাও')) {
+      if (text.includes('contact') || text.includes('যোগাযোগ')) {
+        response = "I'm scrolling to Anwar's contact section for you. One moment...";
         action = () => scrollToElement('contact');
-      } else if (text.includes('project')) {
-        response = "Analyzing projects... Initiating navigation to the showcase gallery.";
+      } else if (text.includes('project') || text.includes('product') || text.includes('প্রজেক্ট') || text.includes('প্রোডাক্ট')) {
+        response = "Navigating to Anwar's project showcase gallery.";
         action = () => scrollToElement('projects');
-      } else if (text.includes('skill')) {
-        response = "Synthesizing technical capabilities... Scrolling to skills matrix.";
+      } else if (text.includes('skill') || text.includes('স্কিল')) {
+        response = "Scrolling to Anwar's skills matrix.";
         action = () => scrollToElement('skills');
-      } else if (text.includes('about')) {
-        response = "Retrieving professional profile... Navigating to about section.";
+      } else if (text.includes('about') || text.includes('আমার সম্পর্কে') || text.includes('সম্পর্কে')) {
+        response = "Navigating to Anwar's profile section.";
         action = () => scrollToElement('about');
+      } else if (text.includes('certificate') || text.includes('সার্টিফিকেট')) {
+        response = "Scrolling to Anwar's certificates section.";
+        action = () => scrollToElement('certificates');
       }
     }
 
-    // 2. Information Retrieval
+    // 2. Comprehensive Knowledge Base Responses
     if (!response) {
-      if (text.includes('claude') || text.includes('anthropic')) {
-        response = `As Claude 3.5 Sonnet, I am deeply integrated into Anwar's development workflow. He uses Anthropic's APIs to build intelligent features and automate complex engineering tasks.`;
-      } else if (text.includes('gemini') || text.includes('cli') || text.includes('automated')) {
-        response = `Anwar is a power user of Gemini CLI. It's his primary tool for rapid codebase analysis and architectural mapping. He has a 98% mastery level with it!`;
-      } else if (text.includes('skill') || text.includes('tech') || text.includes('know')) {
-        response = `Anwar's core expertise lies in ${SKILLS.frontend[0].name}, ${SKILLS.backend[0].name}, and Claude-driven AI integrations. He specializes in bridging the gap between traditional code and LLMs.`;
-      } else if (text.includes('project') || text.includes('work') || text.includes('build')) {
-        const p = PROJECTS[0];
-        response = `He has delivered several high-impact projects. A notable one is "${p.title}", which utilizes ${p.technologies.join(', ')} to solve real-world problems.`;
-      } else if (text.includes('contact') || text.includes('email') || text.includes('phone') || text.includes('reach')) {
-        response = `Anwar is available at ${PERSONAL_INFO.email}. Would you like me to initiate a scroll to his contact form?`;
-      } else if (text.includes('resume') || text.includes('cv')) {
-        response = "You can access his full professional resume in the Hero section. It outlines his 2+ years of industry experience.";
-      } else if (text.includes('who') || text.includes('anwar')) {
-        response = `${PERSONAL_INFO.name} is a visionary ${PERSONAL_INFO.title}. He focuses on building ${PERSONAL_INFO.subtitle} with a heavy emphasis on AI-driven efficiency.`;
-      } else if (text.includes('hello') || text.includes('hi') || text.includes('hey')) {
-        response = "Hello! I am Anwar's Claude-powered assistant. How can I facilitate your exploration today?";
-      } else {
-        response = "I'm processing your request. Could you be more specific? I can provide details on Anwar's 'AI skills', 'projects', or 'contact information'.";
+      // WhatsApp Specific Query
+      if (text.includes('whatsapp') || text.includes('হোয়াটসঅ্যাপ') || text.includes('ওয়াটসঅ্যাপ') || text.includes('wa.me') || text.includes('ওয়াতসাপ')) {
+        response = `📱 MD. Anwar Hossen's WhatsApp Number: ${PERSONAL_INFO.phone}\nDirect WhatsApp Link: ${SOCIAL_LINKS.whatsapp}\n\nYou can send him a direct message on WhatsApp anytime for project discussions or hiring!`;
+      }
+      // Phone & General Contact Details
+      else if (text.includes('phone') || text.includes('number') || text.includes('contact') || text.includes('ফোন') || text.includes('নম্বর') || text.includes('মোবাইল') || text.includes('কল') || text.includes('যোগাযোগ') || text.includes('ঠিকানা') || text.includes('email') || text.includes('ইমেইল')) {
+        response = `📞 MD. Anwar Hossen's Contact Details:\n• Phone & WhatsApp: ${PERSONAL_INFO.phone}\n• Direct Email: ${PERSONAL_INFO.email}\n• Location: ${PERSONAL_INFO.location}\n• GitHub: ${SOCIAL_LINKS.github}\n• LinkedIn: ${SOCIAL_LINKS.linkedin}\n\nWould you like me to scroll to his contact form?`;
+        action = () => scrollToElement('contact');
+      }
+      // Products & Projects Showcase
+      else if (text.includes('project') || text.includes('product') || text.includes('প্রজেক্ট') || text.includes('প্রোডাক্ট') || text.includes('কাজ') || text.includes('portfolio') || text.includes('অ্যাপ') || text.includes('app') || text.includes('কি কি বানিয়েছেন')) {
+        const projectList = PROJECTS.map((p, idx) => `${idx + 1}. ${p.title} (${p.category}) - ${p.shortDescription}`).join('\n\n');
+        response = `🚀 MD. Anwar Hossen's Featured Products & Projects:\n\n${projectList}\n\nWould you like to scroll to the project section to view live demos?`;
+        action = () => scrollToElement('projects');
+      }
+      // Current Activity / Work Experience
+      else if (text.includes('doing') || text.includes('currently') || text.includes('job') || text.includes('work') || text.includes('experience') || text.includes('কাজ করতেছি') || text.includes('বর্তমানে') || text.includes('কোথায় কাজ') || text.includes('অভিজ্ঞতা') || text.includes('চাকরি')) {
+        const currentJob = EXPERIENCE[0];
+        response = `💼 Currently, MD. Anwar Hossen is working as a ${currentJob.title} at ${currentJob.company} (${currentJob.period}). He develops enterprise web applications with ASP.NET Core, C#, MS SQL Server, and MERN stack technologies. He has 2+ years of software engineering experience.`;
+      }
+      // Who is Anwar / About Anwar
+      else if (text.includes('who') || text.includes('anwar') || text.includes('about') || text.includes('আনোয়ার') || text.includes('পরিচয়') || text.includes('কে') || text.includes('সম্পর্কে')) {
+        response = `👨‍💻 ${PERSONAL_INFO.name} is a Full Stack Developer (${PERSONAL_INFO.subtitle}) based in ${PERSONAL_INFO.location} with 2+ years of hands-on experience. He builds high-performance web products with MERN stack, ASP.NET Core, and AI integrations (Claude 3.5 Sonnet & Gemini CLI).`;
+      }
+      // Education
+      else if (text.includes('education') || text.includes('degree') || text.includes('diploma') || text.includes('study') || text.includes('পড়াশোনা') || text.includes('শিক্ষা')) {
+        const eduList = EDUCATION.map(e => `• ${e.degree} - ${e.institution} (${e.year})`).join('\n');
+        response = `🎓 Education & Training:\n${eduList}`;
+      }
+      // Certifications
+      else if (text.includes('certificate') || text.includes('certification') || text.includes('সার্টিফিকেট') || text.includes('সনদ')) {
+        const certList = CERTIFICATES.map(c => `• ${c.title} (${c.issuer})`).join('\n');
+        response = `📜 MD. Anwar Hossen's Official Certifications:\n${certList}`;
+      }
+      // Skills & AI Expertise
+      else if (text.includes('skill') || text.includes('tech') || text.includes('stack') || text.includes('দক্ষতা') || text.includes('টেকনোলজি') || text.includes('claude') || text.includes('gemini')) {
+        response = `⚡ Technical Expertise:\n• Frontend: React.js, JavaScript, Next.js, Tailwind CSS, Bootstrap 5\n• Backend: ASP.NET Core, C#, Node.js, Express.js\n• Databases: MS SQL Server, MongoDB, PostgreSQL, Entity Framework\n• AI Workflows: Gemini CLI (98% mastery), Claude 3.5 Sonnet, ChatGPT, OpenAI & Anthropic APIs`;
+      }
+      // Greetings & Friendly Intro
+      else if (text.includes('hello') || text.includes('hi') || text.includes('hey') || text.includes('হ্যালো') || text.includes('হাই') || text.includes('সালাম') || text.includes('assalamu')) {
+        response = `Hello! 👋 I am MD. Anwar Hossen's AI Portfolio Assistant. I have full knowledge of Anwar's products, skills, current work, WhatsApp (${PERSONAL_INFO.phone}), and contact info. How can I help you today?`;
+      }
+      // General Fallback
+      else {
+        response = `I have complete information about MD. Anwar Hossen. You can ask me about:\n• 📱 WhatsApp & Phone Number (${PERSONAL_INFO.phone})\n• 🚀 Products & Projects\n• 💼 Current Job & Work\n• 🎓 Education & Certifications\n• ⚡ Technical & AI Skills`;
       }
     }
 

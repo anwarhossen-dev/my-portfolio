@@ -1,10 +1,10 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SOCIAL_LINKS } from '../constants';
-import { FaGithub, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
+import { FaGithub, FaLinkedinIn, FaWhatsapp, FaVideo } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import Magnetic from './Magnetic';
 
-const MagneticSocialLink = ({ href, icon, iconText, name, color }) => {
+const MagneticSocialLink = ({ href, icon, iconText, name, color, onClick }) => {
   return (
     <Magnetic strength={0.4}>
       <motion.div className="relative group flex items-center justify-end">
@@ -32,7 +32,7 @@ const MagneticSocialLink = ({ href, icon, iconText, name, color }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ onOpenBooking }) => {
   const { scrollYProgress } = useScroll();
   const pathLength = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -80,6 +80,25 @@ const Sidebar = () => {
           AH
         </div>
       </div>
+
+      {/* Google Meet Booking Button in Sidebar */}
+      <Magnetic strength={0.4}>
+        <motion.button
+          onClick={onOpenBooking}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative group flex items-center justify-end"
+          aria-label="Book Google Meet Call"
+        >
+          <div className="absolute right-full mr-4 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-[10px] font-black opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none shadow-xl whitespace-nowrap z-50 uppercase tracking-wider">
+            Book Google Meet Call
+            <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-blue-600 rotate-45" />
+          </div>
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white flex items-center justify-center shadow-lg shadow-cyan-500/30 border border-white/20 hover:scale-105 transition-transform">
+            <FaVideo className="text-lg text-white" />
+          </div>
+        </motion.button>
+      </Magnetic>
 
       {/* Social Dock */}
       <div className="flex flex-col items-center gap-3 p-2.5 bg-white/30 dark:bg-slate-900/30 backdrop-blur-2xl rounded-3xl border border-white/20 dark:border-slate-800/50 shadow-2xl">

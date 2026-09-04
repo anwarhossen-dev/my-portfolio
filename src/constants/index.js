@@ -21,7 +21,8 @@ export const PERSONAL_INFO = {
   email: 'anwarhossendeveloper21@gmail.com',
   phone: '+8801777498421',
   location: 'Bangladesh',
-  profileImage: 'https://i.ibb.co.com/mV56xyVm/profile.jpg' // Using the requested online URL
+  profileImage: '/anwarhossen.jpg',
+  anwarImage: '/anwarhossen.jpg'
 };
 
 // Social Links
@@ -173,55 +174,44 @@ export const PROJECTS = [
 // Education Data
 export const EDUCATION = [
   {
-    degree: "Professional Web Development Course",
+    degree: "Professional Web Development",
     institution: "Programming Hero",
-    year: "2025 - 2025",
-    period: "July 2025 - December 2025",
-    grade: "In Progress",
-    description: "Comprehensive full-stack web development program focusing on modern JavaScript frameworks, MERN stack development, and industry best practices. Learning advanced React.js, Node.js, MongoDB, Express.js, and professional development workflows with hands-on projects.",
-    skills: ["React.js", "Node.js", "MongoDB", "Express.js", "JavaScript ES6+", "REST APIs"],
+    year: "2025",
+    field: "Full-Stack Web Development (MERN Stack)",
     icon: "laptop_mac",
     bgColor: "from-blue-500/20 to-purple-500/20",
     borderColor: "border-blue-500/20",
-    textColor: "text-blue-500"
+    textColor: "text-blue-400"
   },
   {
-    degree: "Diploma in Engineering of Computer Science & Technology",
-    institution: "A K Khan UCEP Polytechnic Institute (AKKUPI)",
+    degree: "Diploma in Computer Science & Technology",
+    institution: "AKK UCEP Polytechnic Institute",
     year: "2020 - 2024",
-    grade: "CGPA: 3.41/4.00",
-    description: "Focused on software engineering, data structures, algorithms, and web development. Completed capstone project on full-stack web application development with modern technologies and best practices.",
-    skills: ["Programming", "Data Structures", "Algorithms", "Web Development", "Database Management", "Software Engineering"],
+    field: "Computer Science & Software Engineering",
     icon: "engineering",
     bgColor: "from-green-500/20 to-teal-500/20",
     borderColor: "border-green-500/20",
-    textColor: "text-green-500"
+    textColor: "text-emerald-400"
   },
   {
     degree: "Higher Secondary Certificate (HSC)",
-    institution: "Govt. Hazi Muhammad Mohsin College, Chattogram",
-    board: "BOU (Bangladesh Open University)",
+    institution: "Govt. Hazi Muhammad Mohsin College",
     year: "2019 - 2021",
-    grade: "GPA: 3.82/5.00",
-    description: "Commerce background with focus on Accounting, Finance & Banking, and Business Studies. Achieved excellent results in all subjects with strong analytical and mathematical skills.",
-    skills: ["Accounting", "Finance & Banking", "Business Studies", "Economics", "Mathematics"],
+    field: "Business Studies & Commerce",
     icon: "account_balance",
     bgColor: "from-orange-500/20 to-red-500/20",
     borderColor: "border-orange-500/20",
-    textColor: "text-orange-500"
+    textColor: "text-orange-400"
   },
   {
     degree: "Secondary School Certificate (SSC)",
-    institution: "Sanowara Islam Boys' High School, Chattogram",
-    board: "BOU (Bangladesh Open University)",
+    institution: "Sanowara Islam Boys' High School",
     year: "2017 - 2018",
-    grade: "GPA: 2.65/5.00",
-    description: "Commerce background with foundational knowledge in Accounting, Business Studies, and Mathematics. Built strong analytical thinking and problem-solving skills during secondary education.",
-    skills: ["Basic Accounting", "Business Studies", "Mathematics", "General Science", "English"],
+    field: "Business Studies",
     icon: "school",
     bgColor: "from-purple-500/20 to-pink-500/20",
     borderColor: "border-purple-500/20",
-    textColor: "text-purple-500"
+    textColor: "text-purple-400"
   }
 ];
 
@@ -266,12 +256,23 @@ export const EXPERIENCE = [
 // Services Data
 export const SERVICES = [
   {
-    title: "Full Stack Development",
-    description: "Building robust and scalable web applications from scratch using modern tech stacks like MERN and ASP.NET Core. I handle everything from database design to frontend polish.",
+    id: 1,
+    title: "Software & Web Development",
+    description: "Building robust, scalable full-stack applications and enterprise solutions tailored to modern business requirements.",
     icon: "layers",
     color: "from-blue-500 to-cyan-500",
-    features: ["Custom Web Apps", "E-commerce Solutions", "API Integration"],
-    badge: "Enterprise Grade",
+    features: [
+      "Database Development",
+      "Cloud Application Development",
+      "Enterprise Content Management",
+      "Application Development",
+      "Financial Accounting",
+      "SaaS Development",
+      "Custom Software Development",
+      "Commercial Real Estate",
+      "Web Development"
+    ],
+    badge: "Development",
     metrics: [
       { label: "Projects Delivered", value: "15+" },
       { label: "Performance Boost", value: "40%" }
@@ -280,25 +281,27 @@ export const SERVICES = [
     ctaHref: "#contact"
   },
   {
+    id: 2,
     title: "AI Integration",
     description: "Transforming traditional workflows with AI power. I specialize in integrating LLMs, building AI-driven chatbots, and automating engineering tasks.",
     icon: "psychology",
     color: "from-purple-500 to-indigo-500",
-    features: ["Chatbot Development", "AI Automation", "Prompt Engineering"],
+    features: ["Chatbot Development", "AI Automation & Agents", "Prompt Engineering & LLMs"],
     badge: "Next Gen",
     metrics: [
       { label: "Agents Configured", value: "10+" },
       { label: "Workflows Automated", value: "85%" }
     ],
     ctaText: "Consult AI Solutions",
-    ctaHref: "contact"
+    ctaHref: "#contact"
   },
   {
+    id: 3,
     title: "DevOps & Cloud",
     description: "Ensuring high availability and performance through modern DevOps practices. From CI/CD pipelines to cloud deployment on Azure and Vercel.",
     icon: "cloud_done",
     color: "from-orange-500 to-red-500",
-    features: ["CI/CD Pipelines", "Docker Containerization", "Cloud Hosting"],
+    features: ["CI/CD Pipelines", "Docker Containerization", "Cloud Hosting & Deploy"],
     badge: "Cloud Certified",
     metrics: [
       { label: "Average Uptime", value: "99.9%" },
@@ -341,75 +344,60 @@ export const CERTIFICATES = [
     issuer: 'Programming Hero',
     date: '2025',
     statusLabel: 'Certified',
+    image: '/certificates/cert_phero.png',
     icon: 'fas fa-graduation-cap',
     color: 'from-blue-500 to-cyan-500',
-    credentialUrl: '/certificate_student.pdf',
+    credentialUrl: '/certificate_anwar.pdf',
     description: 'Comprehensive specialization covering React, Node.js, Express, MongoDB, Firebase Authentication, and advanced state management.',
-    features: ['React', 'Node.js', 'Express', 'MongoDB'],
-    metrics: [
-      { label: 'Issuer', value: 'Programming Hero' },
-      { label: 'Year', value: '2025' }
-    ]
+    features: ['React', 'Node.js', 'Express', 'MongoDB']
   },
   {
     title: 'ASP.NET Core & C# Web Development',
     issuer: 'freeCodeCamp / Microsoft',
     date: '13-April-2025',
     statusLabel: 'Verified',
+    image: '/certificates/cert_microsoft.png',
     icon: 'fas fa-award',
     color: 'from-purple-500 to-indigo-500',
     credentialUrl: 'https://www.freecodecamp.org/certification/fcce202fee5-13de-4218-84e2-1b931dae5a35/foundational-c-sharp-with-microsoft',
     description: 'Deep dive into ASP.NET Core MVC, Web API, Entity Framework Core, SQL Server, Repository Pattern, and Clean Architecture.',
-    features: ['ASP.NET Core', 'Web API', 'EF Core', 'Clean Architecture'],
-    metrics: [
-      { label: 'Issuer', value: 'freeCodeCamp / Microsoft' },
-      { label: 'Date', value: 'Apr 2025' }
-    ]
+    features: ['ASP.NET Core', 'Web API', 'EF Core', 'Clean Architecture']
   },
   {
     title: 'Laravel PHP Development',
     issuer: 'Creative IT Institute',
     date: '04 February, 2025',
     statusLabel: 'Recognized',
+    image: '/certificates/cert_creativeit.png',
     icon: 'fab fa-laravel',
     color: 'from-red-500 to-orange-500',
-    credentialUrl: '/certificate.pdf',
-    description: 'Hands-on training in Laravel, PHP, MySQL, MVC, REST API, Authentication, CRUD operations, Eloquent ORM, Blade Template, and modern web application development.',
-    features: ['Laravel', 'Eloquent', 'Blade', 'REST API'],
-    metrics: [
-      { label: 'Issuer', value: 'Creative IT Institute' },
-      { label: 'Year', value: '2025' }
-    ]
+    credentialUrl: '/certificate-anwar.pdf',
+    description: 'Hands-on training in Laravel, PHP, MySQL, MVC, REST API, Authentication, CRUD operations, Eloquent ORM, and Blade.',
+    features: ['Laravel', 'Eloquent', 'Blade', 'REST API']
   },
   {
     title: 'Web Development, NTVQF Level-IV',
     issuer: 'Bangladesh Technical Education Board (BTEB)',
     date: '29 March, 2024',
     statusLabel: 'Board Certified',
+    image: '/certificates/cert_bteb_level4.png',
     icon: 'fas fa-award',
     color: 'from-blue-500 to-cyan-500',
-    credentialUrl: '/14187267024000035.pdf',
-    description: 'Successfully completed the National Skill Certificate-IV in Web Development under the National Technical & Vocational Qualification Framework (NTVQF). Developed competencies in responsive web development, UI/UX mark-up conversion, client-side scripting, CMS development, deployment, workplace communication, and occupational safety.',
-    features: ['HTML/CSS', 'JavaScript', 'UI/UX', 'Deployment'],
-    metrics: [
-      { label: 'Issuer', value: 'BTEB' },
-      { label: 'Date', value: 'Mar 2024' }
-    ]
+    credentialUrl: '/anwarhossen.pdf',
+    description: 'National Skill Certificate-IV in Web Development under NTVQF framework.',
+    features: ['HTML/CSS', 'JavaScript', 'UI/UX', 'Deployment']
   },
   {
     title: 'IT Support Technician, NTVQF Level-I',
     issuer: 'Bangladesh Technical Education Board (BTEB)',
     date: '09 June, 2023',
     statusLabel: 'Credentialed',
+    image: '/certificates/cert_bteb_level1.png',
     icon: 'fas fa-laptop-medical',
     color: 'from-cyan-500 to-blue-500',
-    credentialUrl: '/14107237023000134.pdf',
-    description: 'Completed the National Skill Certificate-I in IT Support Technician under NTVQF, building practical competencies in hardware assembly, PC configuration, office applications, email/web communication, workplace safety, and IT support fundamentals.',
-    features: ['Hardware', 'Office Apps', 'Email Systems', 'Support Fundamentals'],
-    metrics: [
-      { label: 'Issuer', value: 'BTEB' },
-      { label: 'Date', value: 'Jun 2023' }
-    ]
+    credentialUrl: '/anwarhossen1.pdf',
+    description: 'National Skill Certificate-I in IT Support Technician under NTVQF framework.',
+    features: ['Hardware', 'Office Apps', 'Email Systems', 'Support Fundamentals']
   }
 ];
 

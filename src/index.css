@@ -22,15 +22,15 @@ html {
   @apply from-cyan-500 to-blue-600;
 }
 
-/* Smooth Transitions for All Elements */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+/* Scoped Smooth Transitions for Interactive Elements */
+a, button, .transition-all {
+  transition-property: color, background-color, border-color, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
 
 /* Enhanced Focus States */
-*:focus {
+*:focus-visible {
   outline: 2px solid theme('colors.cyan.500');
   outline-offset: 2px;
 }
@@ -144,8 +144,12 @@ html {
 
 .animate-marquee-left {
   animation: marquee-left-loop var(--duration, 30s) linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .animate-marquee-right {
   animation: marquee-right-loop var(--duration, 30s) linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
