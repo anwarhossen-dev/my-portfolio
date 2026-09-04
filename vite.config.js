@@ -23,17 +23,23 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react/') || id.includes('react-dom') || id.includes('scheduler')) {
+          const normalizedId = id.replace(/\\/g, '/');
+          if (normalizedId.includes('node_modules')) {
+            if (
+              normalizedId.includes('/node_modules/react/') ||
+              normalizedId.includes('/node_modules/react-dom/') ||
+              normalizedId.includes('/node_modules/scheduler/') ||
+              normalizedId.includes('/node_modules/prop-types/')
+            ) {
               return 'vendor-react';
             }
-            if (id.includes('framer-motion')) return 'vendor-framer';
-            if (id.includes('react-icons')) {
+            if (normalizedId.includes('framer-motion')) return 'vendor-framer';
+            if (normalizedId.includes('react-icons')) {
               const match = /node_modules[\\/](react-icons[\\/][a-z0-9]+)/.exec(id);
               if (match) return `vendor-icons-${match[1].split(/[\\/]/).pop()}`;
               return 'vendor-icons';
             }
-            if (id.includes('react-github-calendar') || id.includes('gsap') || id.includes('@emailjs')) {
+            if (normalizedId.includes('react-github-calendar') || normalizedId.includes('gsap') || normalizedId.includes('@emailjs')) {
               return 'vendor-addons';
             }
             return 'vendor-libs';
