@@ -24,8 +24,10 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            if (id.includes('react/') || id.includes('react-dom') || id.includes('scheduler')) {
+              return 'vendor-react';
+            }
             if (id.includes('framer-motion')) return 'vendor-framer';
-            if (id.includes('react-dom')) return 'vendor-reactdom';
             if (id.includes('react-icons')) {
               const match = /node_modules[\\/](react-icons[\\/][a-z0-9]+)/.exec(id);
               if (match) return `vendor-icons-${match[1].split(/[\\/]/).pop()}`;
