@@ -62,7 +62,7 @@ function App() {
         
         {/* Main Content - Lazy Loaded Offscreen Sections */}
         <main className="relative z-10">
-          <div id="about" className="pt-20">
+          <div id="about" className="pt-4 lg:pt-8">
             <LazySection height="400px">
               <Suspense fallback={<LoadingFallback />}>
                 <AboutSection />
@@ -70,7 +70,7 @@ function App() {
             </LazySection>
           </div>
 
-          <div id="services" className="pt-20">
+          <div id="services" className="pt-4 lg:pt-8">
             <LazySection height="400px">
               <Suspense fallback={<LoadingFallback />}>
                 <ServicesSection />
@@ -78,7 +78,7 @@ function App() {
             </LazySection>
           </div>
 
-          <div id="skills" className="pt-20">
+          <div id="skills" className="pt-4 lg:pt-8">
             <LazySection height="500px">
               <Suspense fallback={<LoadingFallback />}>
                 <SkillsSection />
@@ -86,7 +86,7 @@ function App() {
             </LazySection>
           </div>
 
-          <div id="devops" className="pt-20">
+          <div id="devops" className="pt-4 lg:pt-8">
             <LazySection height="500px">
               <Suspense fallback={<LoadingFallback />}>
                 <DevOpsSection />
@@ -94,7 +94,7 @@ function App() {
             </LazySection>
           </div>
 
-          <div id="education" className="pt-20">
+          <div id="education" className="pt-4 lg:pt-8">
             <LazySection height="400px">
               <Suspense fallback={<LoadingFallback />}>
                 <EducationSection />
@@ -102,7 +102,7 @@ function App() {
             </LazySection>
           </div>
 
-          <div id="experience" className="pt-20">
+          <div id="experience" className="pt-4 lg:pt-8">
             <LazySection height="400px">
               <Suspense fallback={<LoadingFallback />}>
                 <ExperienceSection />
@@ -110,7 +110,7 @@ function App() {
             </LazySection>
           </div>
 
-          <div id="certificates" className="pt-20">
+          <div id="certificates" className="pt-4 lg:pt-8">
             <LazySection height="400px">
               <Suspense fallback={<LoadingFallback />}>
                 <CertificatesSection />
@@ -118,7 +118,7 @@ function App() {
             </LazySection>
           </div>
 
-          <div id="projects" className="pt-20">
+          <div id="projects" className="pt-4 lg:pt-8">
             <LazySection height="600px">
               <Suspense fallback={<LoadingFallback />}>
                 <ProjectsSection />
@@ -132,7 +132,7 @@ function App() {
             </Suspense>
           </LazySection>
 
-          <div id="contact" className="pt-20">
+          <div id="contact" className="pt-4 lg:pt-8">
             <LazySection height="500px">
               <Suspense fallback={<LoadingFallback />}>
                 <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />

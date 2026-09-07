@@ -54,7 +54,7 @@ const AboutSection = () => {
 
   return (
     <motion.section
-      className="px-6 lg:px-16 py-24 max-w-7xl mx-auto w-full flex flex-col justify-center relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
+      className="px-6 lg:px-16 py-12 lg:py-16 max-w-7xl mx-auto w-full flex flex-col justify-center relative z-10 border-t border-slate-200/50 dark:border-slate-800/50" 
       id="about"
       initial="hidden"
       whileInView="visible"

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -17,6 +17,10 @@ const CustomCursor = () => {
         y: e.clientY
       });
       if (!isVisible) setIsVisible(true);
+    };
+
+    const mouseLeave = () => {
+      setIsVisible(false);
     };
 
     const mouseOver = (e) => {
@@ -35,10 +39,12 @@ const CustomCursor = () => {
 
     window.addEventListener('mousemove', mouseMove, { passive: true });
     window.addEventListener('mouseover', mouseOver, { passive: true });
+    document.addEventListener('mouseleave', mouseLeave);
 
     return () => {
       window.removeEventListener('mousemove', mouseMove);
       window.removeEventListener('mouseover', mouseOver);
+      document.removeEventListener('mouseleave', mouseLeave);
     };
   }, [isVisible, isMobile]);
 
@@ -52,7 +58,8 @@ const CustomCursor = () => {
         animate={{
           x: mousePosition.x - 6,
           y: mousePosition.y - 6,
-          scale: isHovering ? 2.5 : 1
+          scale: isHovering ? 2.5 : 1,
+          opacity: isVisible ? 1 : 0
         }}
         transition={{ type: 'spring', damping: 30, stiffness: 400, mass: 0.5 }}
       />
@@ -64,7 +71,7 @@ const CustomCursor = () => {
           x: mousePosition.x - 16,
           y: mousePosition.y - 16,
           scale: isHovering ? 1.5 : 1,
-          opacity: isHovering ? 0.5 : 1
+          opacity: isVisible ? (isHovering ? 0.5 : 1) : 0
         }}
         transition={{ type: 'spring', damping: 20, stiffness: 250, mass: 0.8 }}
       />
